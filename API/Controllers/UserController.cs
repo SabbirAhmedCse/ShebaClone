@@ -11,11 +11,9 @@ namespace API.Controllers
     public class UserController : ControllerBase
     {
         private readonly IUserRepository _user;
-        private readonly AppDbContext _appDbContext;
-        public UserController(IUserRepository user, AppDbContext appDbContext)
+        public UserController(IUserRepository user)
         {
             _user = user;
-            _appDbContext = appDbContext;
         }
 
         [HttpGet]
