@@ -36,3 +36,41 @@
     transform: rotate(360deg);
   }
 }
+
+
+
+
+/* Sanchoy's CSS Property Start */ 
+
+.container {
+  margin-top: 50px;
+
+}
+
+.center {
+  text-align: center;
+  margin-left: 35px;
+}
+
+.desc {
+  max-height: 70px;
+  overflow-y: auto;
+}
+
+.servicelist {
+  width: 80%;
+  margin-left: 99px;
+}
+
+.contain {
+  width: 50%;
+  margin-top: 40px;
+  margin-left: 270px;
+}
+
+.main {
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+/* Sanchoy's CSS Property End */
