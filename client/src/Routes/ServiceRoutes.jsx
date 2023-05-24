@@ -1,5 +1,12 @@
+import CreateService from './Pages/CreateService'
+import UpdateService from './Pages/UpdateService'
+import ServiceDetails from './Pages/ServiceDetails'
+import ServicesList from './Pages/ServicesList'
+import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom'
+
 export default function ServiceRoutes(){
     return(
+      
         <Router>
         <Routes>
           <Route exact path='/' element={<ServicesList />}></Route>
@@ -9,5 +16,6 @@ export default function ServiceRoutes(){
           <Route exact path='/Services' element={<ServicesList />}></Route>
         </Routes>
       </Router>
+      
     );
 }
