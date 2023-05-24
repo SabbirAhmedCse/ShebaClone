@@ -40,12 +40,12 @@ export default function UpdateService() {
             <div className="container">
                 <Form>
                     <Form.Group>
-                        <Form.Input width={3} fluid label='Service Title' placeholder='Service Title' onChange={(e) => setServicetitle(e.target.value)} defaultValue={"title"} />
-                        <Form.Input width={3} fluid label='Service Subtitle' placeholder='Service Subtitle' onChange={(e) => setServicesubtitle(e.target.value)} defaultValue={servicesubtitle} />
+                        <Form.Input width={4} fluid label='Service Title' placeholder='Service Title' onChange={(e) => setServicetitle(e.target.value)} defaultValue={"title"} />
+                        <Form.Input width={4} fluid label='Service Subtitle' placeholder='Service Subtitle' onChange={(e) => setServicesubtitle(e.target.value)} defaultValue={servicesubtitle} />
                     </Form.Group>
-                    <Form.Input width={3} fluid label='Service ImageUrl' placeholder='Service ImageUrl' onChange={(e) => setServiceimageurl(e.target.value)} defaultValue={serviceimageurl} />
-                    <Form.Input width={3} fluid label='Service Price' placeholder='Service Price' onChange={(e) => setServiceprice(e.target.value)} defaultValue={serviceprice} />
-                    <Form.TextArea width={6} label='Description' placeholder='Tell us more about service...' onChange={(e) => setServicedescription(e.target.value)} defaultValue={servicedescription} />
+                    <Form.Input width={4} fluid label='Service ImageUrl' placeholder='Service ImageUrl' onChange={(e) => setServiceimageurl(e.target.value)} defaultValue={serviceimageurl} />
+                    <Form.Input width={4} fluid label='Service Price' placeholder='Service Price' onChange={(e) => setServiceprice(e.target.value)} defaultValue={serviceprice} />
+                    <Form.TextArea width={8} label='Description' placeholder='Tell us more about service...' onChange={(e) => setServicedescription(e.target.value)} defaultValue={servicedescription} />
                     <Form.Group>
                         <Form.Button onClick={handleUpdate}>Update</Form.Button>
                         <Form.Button onClick={() => { nav('/Services') }}>Back to Lists</Form.Button>
