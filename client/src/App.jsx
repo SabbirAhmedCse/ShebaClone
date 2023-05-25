@@ -1,10 +1,10 @@
 import "./App.css";
-import layout from './Layout/layout'
-import sanchoyroutes from "./Routes/SanchoyRoutes";
-
+import SignIn from "./pages/SignIn";
 function App() {
   return (
-    
+    <div>
+      <SignIn/>
+    </div>
   );
 }
 

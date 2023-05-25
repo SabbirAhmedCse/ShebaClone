@@ -16,5 +16,7 @@ namespace Repository.Context
         }
 
         public DbSet<User> Users { get; set; } 
+        public DbSet<ServiceRequest> ServiceRequests { get; set; } 
+        public DbSet<RejectReason> RejectReasons { get; set; } 
     }
 }

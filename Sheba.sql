@@ -130,7 +130,8 @@ BEGIN
     Description nvarchar(300) Null,
     ServiceStatus nvarchar(20) Null,
     MechanicStatus nvarchar(20) Null,
-    ServiceData date Not Null,
+	MechanicId bigint NOT NULL FOREIGN KEY REFERENCES Users (Id),
+    ServiceDate date Not Null,
     CreateBy bigint NOT NULL FOREIGN KEY REFERENCES Users (Id),
     CreateAt date Null,
     UpdateBy bigint NOT NULL FOREIGN KEY REFERENCES Users (Id),
@@ -158,7 +159,7 @@ BEGIN
     Reason nvarchar(300) Not Null,
     CreateBy bigint NOT NULL FOREIGN KEY REFERENCES Users (Id),
     CreateAt date Null,
-    UpdateBy bigint NOT NULL FOREIGN KEY REFERENCES Users (Id),
+    UpdateBy bigint NULL FOREIGN KEY REFERENCES Users (Id),
     UpdateAt date Null,
     IsActive bit Not Null DEFAULT 1,
     IsDelete bit Not Null DEFAULT 0
@@ -170,3 +171,6 @@ BEGIN
   PRINT 'RejectReasons Table already exist.'
 END
 GO
+
+
+

@@ -1,4 +1,5 @@
 ﻿using Domain.Models;
+using Domain.Models.Actions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,9 +10,9 @@ namespace Domain.Interfaces
 {
     public interface IServiceRequestRepository
     {
-        public IEnumerable<ServiceRequest> GetAll(string entity);
-        public string Insert(ServiceRequest entity);
+        public IEnumerable<ServiceRequest> GetAll(int pageNumber,int PageSize);
+        public string Create(RejectReason entity);
         public ServiceRequest Get(long Id);
-        public string Delete(long Id);
+        public string Update(ServiceRequest entity);
     }
 }

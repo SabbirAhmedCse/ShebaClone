@@ -1,12 +1,10 @@
 ﻿using Domain.Interfaces;
 using Domain.Models;
-using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using Repository.Context;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace Repository.Repository
 {
@@ -15,44 +13,51 @@ namespace Repository.Repository
         private readonly AppDbContext _appDbContext;
         public UserRepository(AppDbContext appDbContext)
         {
-            this._appDbContext = appDbContext;
+            _appDbContext = appDbContext;
         }
 
-        public string  Insert(User entity)
+        public string Insert(User entity)
         {
             return "";
         }
-        public User SignIn(User entity)
+        public User GetByEmail(string email)
         {
             try
             {
-                var signInResult = _appDbContext.Users.Where(e=> e.Email == entity.Email && e.Password == entity.Password).FirstOrDefault();
-                if(signInResult != null)
-                {
-                    return signInResult;
-                }
-                else
+                var userDetails = _appDbContext.Users.FirstOrDefault(e =>  e.Email == email);
+                if (userDetails == null)
                 {
                     return null;
                 }
+                else
+                {
+                    return userDetails;
+                }
+
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 throw ex;
             }
         }
         public IEnumerable<User> GetAll(string type)
         {
-            var users = _appDbContext.Users.ToList().Where(e=> e.Type == type);
+            var users = _appDbContext.Users.Where(e => e.Type == type).ToList();
             return users;
-            
         }
+
+        public IEnumerable<User> GetAll(string type, string expert)
+        {
+            var users = _appDbContext.Users.Where(e => e.Type == type && e.Expert == expert).ToList();
+            return users;
+        }
+
         public User Get(long Id)
         {
             try
             {
                 var userDtails = _appDbContext.Users.Find(Id);
-                if(userDtails == null)
+                if (userDtails == null)
                 {
                     return null;
                 }
@@ -62,7 +67,7 @@ namespace Repository.Repository
                 }
 
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 throw ex;
             }
@@ -73,7 +78,7 @@ namespace Repository.Repository
             throw new NotImplementedException();
         }
 
-        public string  Delete(long Id)
+        public string Delete(long Id)
         {
             throw new NotImplementedException();
         }

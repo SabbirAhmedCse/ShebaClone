@@ -10,7 +10,7 @@ namespace Domain.Models
     public class User
     {
         [Key]
-        public long Id { get; set; } 
+        public long Id { get; set; } = 1000;
         public string? Type { get; set; }
         public string? Name { get; set; } 
         public string? Email { get; set; } 
