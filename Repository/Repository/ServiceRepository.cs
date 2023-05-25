@@ -1,5 +1,9 @@
-﻿using Domain.Interfaces;
+﻿using API.Models;
+using Domain.Interfaces;
 using Domain.Models;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Repository.Context;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,29 +14,46 @@ namespace Repository.Repository
 {
     public class ServiceRepository : IServiceRepository
     {
-        public string Delete(int Id)
+        private readonly AppDbContext _appDbContext;
+        public ServiceRepository(AppDbContext appDbContext)
         {
-            throw new NotImplementedException();
+            this._appDbContext = appDbContext;
         }
 
-        public User Get(long Id)
+        public async Task<Service> Delete(int Id)
         {
-            throw new NotImplementedException();
+            var service = await _appDbContext.Services.FindAsync(Id);
+            if(service == null)
+            {
+                return service;
+            }
+            _appDbContext.Services.Remove(service);
+            await _appDbContext.SaveChangesAsync();
+            return service;
         }
 
-        public IEnumerable<Service> GetAll()
+        public async Task<Service> Get(int Id)
         {
-            throw new NotImplementedException();
+            return await _appDbContext.Services.FindAsync(Id);
         }
 
-        public string Insert(User entity)
+        public async Task<List<Service>> GetAll()
         {
-            throw new NotImplementedException();
+            return await _appDbContext.Services.ToListAsync();
         }
 
-        public string Update(User entity)
+        public async Task<Service> Insert(Service srv)
         {
-            throw new NotImplementedException();
+            _appDbContext.Add(srv);
+            await _appDbContext.SaveChangesAsync();
+            return srv;
         }
-    }
+
+        public async Task<Service> Update(Service srv)
+        {
+            _appDbContext.Entry(srv).State = EntityState.Modified;
+            await _appDbContext.SaveChangesAsync();
+            return srv;
+        }
+    }   
 }
