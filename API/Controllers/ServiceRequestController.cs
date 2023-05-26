@@ -23,6 +23,7 @@ namespace API.Controllers
         }
 
         [HttpGet]
+        [Route("details")]
         public ActionResult<ServiceRequest> GetById(long Id)
         {
             try
@@ -37,6 +38,7 @@ namespace API.Controllers
         }
 
         [HttpGet]
+        [Route("all")]
         public ActionResult<ServiceRequest> GetAll(int pageNumber, int pageSize)
         {
             try
