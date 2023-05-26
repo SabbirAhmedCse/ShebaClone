@@ -13,14 +13,14 @@ public partial class AppDbContext : DbContext
     {
     }
 
-    public virtual DbSet<Service> Services { get; set; }
+        public virtual DbSet<Service> Services { get; set; }
 
-    public virtual DbSet<ServiceCategory> ServiceCategories { get; set; }
+        public virtual DbSet<ServiceCategory> ServiceCategories { get; set; }
 
         public DbSet<User> Users { get; set; } 
         public DbSet<ServiceRequest> ServiceRequests { get; set; } 
         public DbSet<RejectReason> RejectReasons { get; set; } 
-    }
+    
 }
-    public DbSet<User> Users { get; set; }
-}
+   
+

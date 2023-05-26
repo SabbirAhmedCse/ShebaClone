@@ -43,8 +43,8 @@ export default function ServicesList() {
         nav('/Details', { state: id });
     }
 
-    const arr = ["Service Id", "Sub Category", "Description", "Price", "Image Url"];
-    const dbData = ["id", "subCategory", "description", "price", "image"];
+    const arr = ["Service Id", "Sub Category", "Description", "Price", "Image Url", "IsActive"];
+    const dbData = ["id", "subCategory", "description", "price", "image", "isActive"];
 
     return (
         <div className="servicelist">
@@ -53,9 +53,7 @@ export default function ServicesList() {
             </div>
             <SearchBar />
             <Button onClick={() => { nav('/Create'); }}>Create Services</Button>
-
-            <CommonTable data = {data} headers={arr} dbData = {dbData} />
-
+            <CommonTable data = {data} headers={arr} dbData = {dbData} actions = {1} />
             <Pagination defaultActivePage={5} totalPages={3}/>
         </div>
     );
