@@ -10,11 +10,12 @@ import MechanicRoutes from './Routes/MechanicRouter';
 
 
 
+>>>>>>> b53844611b00ea2625f25630c8100ecd16043179
 function App() {
 
   return (
- <MechanicRoutes/>
-    );
+    
+  );
 }
 
 export default App;

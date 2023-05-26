@@ -4,7 +4,7 @@ import { Filter } from "../@redux/listSlice";
 import { keys } from "../common/constants";
 
 
-export const commonDataAccess = {
+export const CommonDataAccess = {
 
   get: (url: string, params?: any) => {
 

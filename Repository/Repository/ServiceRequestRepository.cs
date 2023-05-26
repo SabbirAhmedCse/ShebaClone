@@ -1,5 +1,8 @@
 ﻿using Domain.Interfaces;
 using Domain.Models;
+using Domain.Models.Actions;
+using Domain.Models.Pagination;
+using Repository.Context;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,24 +13,86 @@ namespace Repository.Repository
 {
     public class ServiceRequestRepository : IServiceRequestRepository
     {
-        public string Delete(long Id)
+        private readonly AppDbContext _appDbContext;
+        private readonly PageResponse _pageResponse;
+
+        public ServiceRequestRepository(AppDbContext appDbContext, PageResponse pageResponse)
         {
-            throw new NotImplementedException();
+            _appDbContext = appDbContext;
+            _pageResponse = pageResponse;
+        }
+
+
+        public string Create(RejectReason entity)
+        {
+            try
+            {
+                var acceptResult = _appDbContext.RejectReasons.Add(entity);
+                if (acceptResult != null)
+                {
+                    _appDbContext.SaveChanges();
+                    return "Add Successfull.";
+                }
+                else
+                {
+                    return "Add faild";
+                }
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         public ServiceRequest Get(long Id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var serviceRequests = _appDbContext.ServiceRequests.Find(Id);
+                return serviceRequests;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
-        public IEnumerable<ServiceRequest> GetAll(string entity)
+        public IEnumerable<ServiceRequest> GetAll(int pageNumber, int pageSize)
         {
-            throw new NotImplementedException();
+            try{
+                _pageResponse.TotalRecords = _appDbContext.ServiceRequests.Count();
+                _pageResponse.PageNumber = pageNumber;
+                _pageResponse.PageSize = pageSize;
+                var pagedServiceRequestData = _appDbContext.ServiceRequests.Skip((_pageResponse.PageNumber - 1) * _pageResponse.PageSize).Take(_pageResponse.PageSize).ToList();
+                return pagedServiceRequestData;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
-        public string Insert(ServiceRequest entity)
+        public string Update(ServiceRequest entity)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var acceptResult = _appDbContext.ServiceRequests.Update(entity);
+                if (acceptResult != null)
+                {
+                    _appDbContext.SaveChanges();
+                    return "Successfull Update.";
+                }
+                else
+                {
+                    return "Update faild";
+                }
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
     }
 }
