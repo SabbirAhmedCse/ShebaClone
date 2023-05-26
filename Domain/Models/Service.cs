@@ -1,24 +1,39 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
 
-namespace Domain.Models
+namespace API.Models;
+
+public partial class Service
 {
-    public class Service
+    [Key]
+    public int Id { get; set; }
+
+    public int ServicesCategoryId { get; set; }
+
+    public string? SubCategory { get; set; }
+
+    public string? Description { get; set; }
+
+    public decimal? Price { get; set; }
+
+    public string? Image { get; set; }
+
+    public DateTime? CreateAt { get; set; }
+
+    public DateTime? UpdateAt { get; set; }
+
+    public bool? IsActive { get; set; }
+
+    public bool? IsDelete { get; set; }
+
+    public static explicit operator Task<object>(Service v)
     {
-        public long Id { get; set; }
-        public long ServicesCategoryId { get; set; }
-        public string SubCategory { get; set; }
-        public string? Description { get; set; }
-        public long Price { get; set; }
-        public DateTime Image { get; set; }
-        public long CreateBy { get; set; }
-        public DateTime? CreateAt { get; set; }
-        public long UpdateBy { get; set; }
-        public DateTime? UpdateAt { get; set; }
-        public bool IsActive { get; set; }
-        public bool IsDelete { get; set; }
+        throw new NotImplementedException();
+    }
+
+    public static explicit operator Service(ValueTask<Service?> v)
+    {
+        throw new NotImplementedException();
     }
 }
