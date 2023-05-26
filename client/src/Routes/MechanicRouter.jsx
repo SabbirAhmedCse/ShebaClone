@@ -1,7 +1,8 @@
 //import Layout from "../Layout/layout";
 import DashBoard from "../Pages/DashBoard";
 import MechanicDetails from "../Pages/MechanicDetails";
-import MechanicsList from "../Pages/MechanicList";
+//import MechanicsList from "../Pages/MechanicList";
+import MechanicListWithSearch from "../Pages/MechanicListWithSearch";
 
 
 import React from "react";
@@ -14,7 +15,7 @@ export default function MechanicRoutes(){
     <Router>
         <Routes>
           <Route exact path='/' element={<DashBoard/>}></Route>
-          <Route exact path='/MechanicList' element={<MechanicsList />}></Route>
+          <Route exact path='/MechanicListWithSearch' element={<MechanicListWithSearch />}></Route>
           <Route exact path='/MechanicDetails' element={<MechanicDetails />}></Route>
       
           
