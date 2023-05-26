@@ -9,9 +9,10 @@ namespace Domain.Interfaces
 {
     public interface IUserRepository
     {
-        public IEnumerable<User> GetAll(string entity);
+        public IEnumerable<User> GetAll(string type);
+        public IEnumerable<User> GetAll(string type, string expert);
         public string Insert(User entity);
-        public User SignIn(User entity);
+        public User GetByEmail(string email);
         public User Get(long Id);
         public string Update(User entity);
         public string Delete(long Id);

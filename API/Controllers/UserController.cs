@@ -1,19 +1,28 @@
-﻿using Domain.Interfaces;
+﻿using API.Services;
+using Domain.Interfaces;
 using Domain.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
 using Repository.Context;
 using Repository.Repository;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
 
 namespace API.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class UserController : ControllerBase
     {
         private readonly IUserRepository _user;
-        public UserController(IUserRepository user)
+        private readonly TokenService _userToken;
+        public UserController(IUserRepository user, TokenService userToken)
         {
             _user = user;
+            _userToken = userToken;
         }
 
         [HttpGet]
@@ -40,19 +49,20 @@ namespace API.Controllers
                 throw ex;
             }
         }
+        
         [HttpGet("{*type}")]
         public ActionResult<User> GetAllUserByType(string type)
         {
             try
             {
-                var obj = _user.GetAll(type);
-                if (obj == null)
+                var allUsers = _user.GetAll(type);
+                if (allUsers == null)
                 {
                     return NotFound();
                 }
-                else if (obj != null)
+                else if (allUsers != null)
                 {
-                    return Ok(obj);
+                    return Ok(allUsers);
                 }
                 else
                 {
@@ -64,18 +74,34 @@ namespace API.Controllers
                 throw ex;
             }
         }
+        
+        [AllowAnonymous]
         [HttpPost]
-        public ActionResult<User> SignIn(User user)
+        [Route("signin")]
+        public ActionResult<UserAuthDetails> SignIn(UserAuth userCardinalitis)
         {
             try
             {
-                var result = _user.SignIn(user);
-                return Ok(result);
+                if(userCardinalitis != null)
+                {
+                    var userDetails = _user.GetByEmail(userCardinalitis.Email);
+                    var authData = _userToken.CreateToken(userDetails);
+                    if (authData == null)
+                    {
+                        return Unauthorized();
+                    }
+
+                    return Ok(authData);
+                }
+
+                return NotFound("Enter User Data");
+                 
             }
             catch(Exception ex)
             {
                 throw ex;
             }
+            
         }
 
     }
