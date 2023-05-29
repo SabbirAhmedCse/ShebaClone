@@ -2,25 +2,24 @@
   box-sizing: border-box;
 }
 
+
+
+
 /* Sanchoy's CSS Property Start */ 
 
 .container {
   margin-top: 50px;
-  
+
 }
 
 .center {
   text-align: center;
-  margin-top: 10px;
-  margin-left:40px;
-  margin-bottom: 10px;
+  margin-left: 35px;
 }
 
 .desc {
-  max-width: 150px;
-  max-height: 150px;
+  max-height: 70px;
   overflow-y: auto;
-  
 }
 
 .servicelist {

@@ -1,34 +1,36 @@
-import { Routes, Route } from 'react-router-dom'
-import config from './utils/config';
-import SignUp from './Pages/SignUp';
-import SignIn from './pages/SignIn';
-import DashBoard from './Pages/admin/dashboard'
-import { useEffect, useState } from 'react';
-import ServiceRequestList from './Pages/admin/serviceRequestList/ServiceRequestList';
-import PrivateOutlet from './Pages/PrivateOutlet';
+
+import './App.css';
+//import DashBoard from './Pages/DashBoard';
+//import MechanicsList from './Pages/MechanicList';
+//import Layout from './Layout/layout';
+//import MyNavbar from './Pages/MyNavBar';
+import Router from './Routes/Route'
+
+
+
+
+
+
 
 function App() {
   const [user, setUser] = useState(null);
-  const [auth, setAuth] =useState(false);
   const key = () => {
     if (config.key != null) {
+      console.log(config.key)
       setUser(config.key.type);
-      setAuth(true);
     }
   }
   useEffect(() => {
     key();
   }, []);
-  console.log(config.key.token)
+  
   return (
     <div>
       <Routes>
-        { user == 'admin' &&
-          <Route path='/*' element={<PrivateOutlet auth={auth} />}>
+        <Route path='/*' element={<PrivateOutlet auth={user} />}>
           <Route path='dashboard' element={<DashBoard />}></Route>
           <Route path="requestedservices" element={<ServiceRequestList/>}></Route>
         </Route>
-        }
         <Route path='/signin' element={<SignIn />}></Route>
         <Route path='/signup' element={<SignUp />}></Route>
       </Routes>
