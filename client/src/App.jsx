@@ -1,9 +1,10 @@
 
 import './App.css';
+//import DashBoard from './Pages/DashBoard';
 //import MechanicsList from './Pages/MechanicList';
 //import Layout from './Layout/layout';
 //import MyNavbar from './Pages/MyNavBar';
-import Routes from './Routes/Route';
+import Router from './Routes/Route'
 
 
 
@@ -12,9 +13,10 @@ import Routes from './Routes/Route';
 
 
 function App() {
-
   return (
-   <Routes></Routes>
+    <>
+    <Router></Router>
+    </>
   );
 }
 

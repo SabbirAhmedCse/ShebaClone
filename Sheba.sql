@@ -43,18 +43,18 @@ BEGIN
   CREATE TABLE Users (
     Id bigint NOT NULL PRIMARY KEY IDENTITY (1000, 1),
     Type nvarchar(10) NOT NULL,
-    Name nvarchar(100) NULL,
-    Email nvarchar(100) NULL,
-    Password nvarchar(50) NULL,
-    MobileNumber nvarchar(20) NULL,
-    Gender nvarchar(50) NULL,
-    DateOfBirth nvarchar(100)NULL,
+    Name nvarchar(100) Not NULL,
+    Email nvarchar(100) Not NULL,
+    Password nvarchar(50) Not NULL,
+    MobileNumber nvarchar(20) Not NULL,
+    Gender nvarchar(10) not NULL,
+    DateOfBirth date not NULL,
     City nvarchar(100) NULL,
     Area nvarchar(100) NULL,
     Address nvarchar(200) NULL,
 	Expert nvarchar(20) NULL,
     IsAvailable bit Not Null DEFAULT 1,
-    CreateAt date Null,
+    CreateAt date not Null,
     UpdateAt date Null,
     IsActive BIT Not Null DEFAULT 1,
     IsDelete BIT Not Null DEFAULT 0
@@ -76,8 +76,8 @@ BEGIN
     Id int NOT NULL PRIMARY KEY IDENTITY (1, 1),
     CategoryName nvarchar(100) Not Null,
 	CreateBy bigint NOT NULL FOREIGN KEY REFERENCES Users (Id),
-    CreateAt date Null,
-	UpdateBy bigint NOT NULL FOREIGN KEY REFERENCES Users (Id),
+    CreateAt date Not Null,
+	UpdateBy bigint NULL FOREIGN KEY REFERENCES Users (Id),
     UpdateAt date Null,
     IsActive bit Not Null DEFAULT 1,
     IsDelete bit Not Null DEFAULT 0 
@@ -104,8 +104,8 @@ BEGIN
 	Price Money Null,
     Image nvarchar(100) Null,
 	CreateBy bigint NOT NULL FOREIGN KEY REFERENCES Users (Id),
-    CreateAt date Null,
-	UpdateBy bigint NOT NULL FOREIGN KEY REFERENCES Users (Id),
+    CreateAt date Not Null,
+	UpdateBy bigint NULL FOREIGN KEY REFERENCES Users (Id),
     UpdateAt date Null,
     IsActive bit Not Null DEFAULT 1,
     IsDelete bit Not Null DEFAULT 0
@@ -133,8 +133,8 @@ BEGIN
 	MechanicId bigint NOT NULL FOREIGN KEY REFERENCES Users (Id),
     ServiceDate date Not Null,
     CreateBy bigint NOT NULL FOREIGN KEY REFERENCES Users (Id),
-    CreateAt date Null,
-    UpdateBy bigint NOT NULL FOREIGN KEY REFERENCES Users (Id),
+    CreateAt date NOT Null,
+    UpdateBy bigint  NULL FOREIGN KEY REFERENCES Users (Id),
     UpdateAt date Null,
     IsActive bit Not Null DEFAULT 1,
     IsDelete bit Not Null DEFAULT 0
@@ -158,7 +158,7 @@ BEGIN
     ServiceRequestId bigint NOT NULL FOREIGN KEY REFERENCES ServiceRequests (Id),
     Reason nvarchar(300) Not Null,
     CreateBy bigint NOT NULL FOREIGN KEY REFERENCES Users (Id),
-    CreateAt date Null,
+    CreateAt date NOT Null,
     UpdateBy bigint NULL FOREIGN KEY REFERENCES Users (Id),
     UpdateAt date Null,
     IsActive bit Not Null DEFAULT 1,
@@ -173,4 +173,22 @@ END
 GO
 
 
+-- insert  data for all tables.
 
+USE [Sheba]
+GO
+
+INSERT INTO [Users]([Type],[Name],[Email],[Password],[MobileNumber],[Gender],[DateOfBirth],
+			[City],[Area],[Address],[Expert],[IsAvailable],[CreateAt])
+     VALUES ('Admin','Sabbir ahmed','sabbir.cse.18@gmail.com'
+           ,'sabbir'
+           ,'01639527363'
+           ,'Male'
+           ,'1997-07-15'
+           ,'Dhaka'
+           ,'Sector-13'
+           ,'Road-20, House-61'
+           ,'All'
+           ,1
+           ,'1997-07-15')
+GO

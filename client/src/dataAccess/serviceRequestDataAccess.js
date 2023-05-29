@@ -1,12 +1,8 @@
-import dataAccess from "./DataAccess";
+import dataAccess from "./commonDataAccess";
 import config from "../utils/config";
 
-const serviceRequestGetById = (params) => {
-  return dataAccess.get(`${config.apiUrl} /details`, params);
-};
-
-const serviceRequestsGetAll = (params) => {
-  return dataAccess.get(`${config.apiUrl}/ServiceRequest/all`, params);
+const serviceRequestGetById = async (id) => {
+   return await dataAccess.get(`${config.baseUrl}/ServiceRequest/details?Id=${id}`);
 };
 
 const serviceRequestAccept = (data, params) => {
@@ -15,6 +11,10 @@ const serviceRequestAccept = (data, params) => {
     data,
     params
   );
+};
+
+const serviceRequestAccept = (data) => {
+  return dataAccess.update(`${config.apiUrl}/ServiceRequest/accept`, data);
 };
 
 const serviceExpertMechanicGetAll = (data, params) => {
@@ -27,7 +27,7 @@ const serviceExpertMechanicGetAll = (data, params) => {
 
 const serviceRequestAddMechanic = (data, params) => {
   return dataAccess.update(
-    `${config.apiUrl}/ServiceRequest/addmachanic`,
+    `${config.baseUrl}/ServiceRequest/addmachanic`,
     data,
     params
   );
@@ -35,7 +35,7 @@ const serviceRequestAddMechanic = (data, params) => {
 
 const serviceRequestReject = (data, params) => {
   return dataAccess.update(
-    `${config.apiUrl}/ServiceRequest/reject`,
+    `${config.baseUrl}/ServiceRequest/reject`,
     data,
     params
   );
