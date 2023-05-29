@@ -9,23 +9,26 @@ import PrivateOutlet from './Pages/PrivateOutlet';
 
 function App() {
   const [user, setUser] = useState(null);
+  const [auth, setAuth] =useState(false);
   const key = () => {
     if (config.key != null) {
-      console.log(config.key)
       setUser(config.key.type);
+      setAuth(true);
     }
   }
   useEffect(() => {
     key();
   }, []);
-  
+  console.log(config.key.token)
   return (
     <div>
       <Routes>
-        <Route path='/*' element={<PrivateOutlet auth={user} />}>
+        { user == 'admin' &&
+          <Route path='/*' element={<PrivateOutlet auth={auth} />}>
           <Route path='dashboard' element={<DashBoard />}></Route>
           <Route path="requestedservices" element={<ServiceRequestList/>}></Route>
         </Route>
+        }
         <Route path='/signin' element={<SignIn />}></Route>
         <Route path='/signup' element={<SignUp />}></Route>
       </Routes>

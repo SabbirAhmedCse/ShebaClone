@@ -4,8 +4,13 @@ import config from "../utils/config";
 const token = `Bearer ${config.key.token}`;
 
 const get = async (url) => {
-  return (await axios.get(url, { headers: { Authorization: token } }))
-    .data;
+  try{
+    const list = (await axios.get(url, { headers: { Authorization: token } }));
+    return  list.data;
+  }
+  catch(ex){
+
+  }
 };
 const post = async (url, data) => {
   return (

@@ -17,16 +17,15 @@ const SignIn = () => {
     );
   };
 
-  const signInHandeler = async (e) => {
+  const signInHandeler =  (e) => {
     e.preventDefault();
-    const signInResponse = await AuthAccess.signin(signInData);
+    const signInResponse =  AuthAccess.signin(signInData);
     if (signInResponse) {
       Navigate("/")
       window.location.reload();
     }
   };
-
-
+  
   return (
     <div className="col-md-12 d-flex align-items-center justify-content-center">
       <div className="card">

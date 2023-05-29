@@ -10,7 +10,7 @@ namespace Domain.Interfaces
     public interface IUserRepository
     {
         public IEnumerable<User> GetAll(string type);
-        public IEnumerable<User> GetAll(string type, string expert);
+        public IEnumerable<User> GetAll(string type, int id);
         public string Insert(User entity);
         public User GetByEmail(string email);
         public User Get(long Id);

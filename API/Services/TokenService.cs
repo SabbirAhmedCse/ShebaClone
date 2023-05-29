@@ -41,8 +41,6 @@ namespace API.Services
                         claims,
                         expires: DateTime.UtcNow.AddDays(5),
                         signingCredentials: signIn);
-
-
                     var accessToken = new JwtSecurityTokenHandler().WriteToken(token);
 
                     _userAuthDetails.Token = accessToken;
