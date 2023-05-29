@@ -1,19 +1,24 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useLocation } from 'react-router-dom'
-import axios from 'axios'
-import { Table, TableHeader, Button } from 'semantic-ui-react'
+import { Table, TableHeader, Button} from 'semantic-ui-react'
+import dataAccess from '../DataAccess/dataAccess'
 
 export default function ServiceDetails() {
 
     const [data, setData] = useState([]);
+
     const nav = useNavigate();
     const location = useLocation();
-    const Sid = location.state;
+    const link = location.state;
 
-    axios.get('https://localhost:7194/api/Service/' + Sid).then((response) => {
-        setData(response.data);
-    })
+    useEffect(() => {
+        dataAccess.get(link.url + '/' + link.id).then((response) => {
+            setData(response);
+        }).catch((error) => {
+            console.error(error);
+        });  
+     }, []);
 
     return (
         <div className="contain">

@@ -1,9 +1,12 @@
-import { Container, Form, Grid } from 'semantic-ui-react'
-import { json, useNavigate } from 'react-router-dom';
-import { useState, useEffect } from 'react'
-import axios from 'axios'
+import {useNavigate } from 'react-router-dom';
+import { useState} from 'react'
+import {Form} from 'semantic-ui-react'
+import { useLocation } from 'react-router-dom';
+import dataAccess from '../DataAccess/dataAccess';
 
 export default function CreateService() {
+
+    const [data, setData] = useState([]);
 
     const [servicetitle, setServicetitle] = useState(null);
     const [servicesubtitle, setServicesubtitle] = useState(null);
@@ -12,14 +15,12 @@ export default function CreateService() {
     const [serviceprice, setServiceprice] = useState(null);
 
     const nav = useNavigate();
+    const location = useLocation();
+    const url = location.state;
 
     const handleCreate = () => {
-        axios.post('https://localhost:7194/api/Service', {
-
-            servicesCategoryId: 1, subCategory: servicesubtitle, description: servicedescription, price: serviceprice, image: serviceimageurl
-
-        }).then((response) => {
-
+        var data = {servicesCategoryId: 1, subCategory: servicesubtitle, description: servicedescription, price: serviceprice, image: serviceimageurl};
+        dataAccess.post(url,data).then((response) => {
         }).catch((error) => {
             console.error(error);
         });
