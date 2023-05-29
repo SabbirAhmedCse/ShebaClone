@@ -1,20 +1,18 @@
 import dataAccess from "./DataAccess";
 import config from "../utils/config";
 
-const serviceRequestGetById = (params) => {
-  return dataAccess.get(`${config.apiUrl} /details`, params);
+const serviceRequestGetById = async (id) => {
+   return await dataAccess.get(`${config.apiUrl}/ServiceRequest/details?Id=${id}`);
 };
 
-const serviceRequestsGetAll = (params) => {
-  return dataAccess.get(`${config.apiUrl}/ServiceRequest/all`, params);
-};
-
-const serviceRequestAccept = (data, params) => {
-  return dataAccess.update(
-    `${config.apiUrl}/ServiceRequest/accept`,
-    data,
-    params
+const serviceRequestsGetAll = (pageNumber, pageSize) => {
+  return dataAccess.get(
+    `${config.apiUrl}/ServiceRequest/all?pageNumber=${pageNumber}&pageSize=${pageSize}`
   );
+};
+
+const serviceRequestAccept = (data) => {
+  return dataAccess.update(`${config.apiUrl}/ServiceRequest/accept`, data);
 };
 
 const serviceExpertMechanicGetAll = (data, params) => {
