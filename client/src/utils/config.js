@@ -1,6 +1,9 @@
-const config ={}
 
-config.key = `Bearer ${JSON.parse(localStorage.getItem('authDetails')).token} `;
-config.apiUrl = "https://localhost:7194/api";
 
+const key = JSON.parse(localStorage.getItem('authDetails')) ;
+const baseUrl = "https://localhost:7194/api";
+const config = {
+    key,
+    baseUrl
+}
 export default config;
