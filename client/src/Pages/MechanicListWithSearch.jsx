@@ -44,11 +44,19 @@ export default function MechanicListWithSearch(){
     return(<>
        <Container>
  <br />
-
-
-     <input placeholder='Serch' value={filterVal} onInput={(e)=>handleFilter(e)} />
-  
-  
+ 
+ 
+    
+  <div className="main">
+            <div class="ui search">
+                <div class="ui icon input">
+                     <input placeholder='Serch' value={filterVal} onInput={(e)=>handleFilter(e)} />
+                    <i class="search icon"></i>
+                </div>
+                <div class="results"></div>
+            </div>
+        </div>
+ 
 
  <Header as='h2' icon textAlign='center'>
     <Header.Content>Mechanics List</Header.Content>

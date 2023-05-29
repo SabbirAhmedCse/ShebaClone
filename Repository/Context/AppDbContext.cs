@@ -8,8 +8,7 @@ namespace Repository.Context;
 
 public partial class AppDbContext : DbContext
 {
-    public AppDbContext(DbContextOptions<AppDbContext> conn)
-        : base(conn)
+    public AppDbContext(DbContextOptions<AppDbContext> conn): base(conn)
     {
     }
 
@@ -20,7 +19,5 @@ public partial class AppDbContext : DbContext
         public DbSet<User> Users { get; set; } 
         public DbSet<ServiceRequest> ServiceRequests { get; set; } 
         public DbSet<RejectReason> RejectReasons { get; set; } 
-    }
-}
-    public DbSet<User> Users { get; set; }
+    
 }

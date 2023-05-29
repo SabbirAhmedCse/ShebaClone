@@ -1,5 +1,5 @@
 import React from 'react'
-import { Segment,Grid,Card,Button,Container } from 'semantic-ui-react'
+import { Segment,Grid,Card,Button,Container,Header } from 'semantic-ui-react'
 //import {  useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 
@@ -9,10 +9,12 @@ import { Link } from 'react-router-dom';
 
 export default function DashBoard() {
 
-   // const nav = useNavigate();
-  
+   // const nav = useNavigate()
    return <>
  <Container>
+   <Header as='h2' icon textAlign='center'>
+    <Header.Content>Dash Board</Header.Content>
+    </Header>
  <Grid columns='equal'>
     <Grid.Row>
       <Grid.Column>
@@ -42,7 +44,7 @@ export default function DashBoard() {
    
   >
   <Button >
-    <Link to={"./ServicesList"}>
+    <Link to={"./Services"}>
    Services List
   </Link>
   </Button>
@@ -80,7 +82,7 @@ export default function DashBoard() {
         <Segment>
         <Card
     
-    header='Mechanic List'
+    header='Customer List'
     meta='List'
    
   >

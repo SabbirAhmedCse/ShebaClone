@@ -23,6 +23,7 @@ namespace API.Controllers
         }
 
         [HttpGet]
+        [Route("details")]
         public ActionResult<ServiceRequest> GetById(long Id)
         {
             try
