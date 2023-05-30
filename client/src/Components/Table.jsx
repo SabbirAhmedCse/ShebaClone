@@ -1,15 +1,8 @@
 import {Table, Button} from 'semantic-ui-react'
 
-export default function CommonTable({data, headers, dbData, actions}){
-    var Actions;
-    if(actions === 3)
-    {
-        Actions = <><Button type="submit">Details</Button> <Button type="submit">Update</Button> <Button type="submit">Delete</Button></>
-    }
-    else
-    {
-        Actions = <Button type="submit">Details</Button>
-    }
+export default function CommonTable({data, headers, dbData}){
+
+
     return (
         <Table singleLine fixed>
             <Table.Header>
@@ -19,7 +12,7 @@ export default function CommonTable({data, headers, dbData, actions}){
                             return(<Table.HeaderCell textAlign='center'>{item}</Table.HeaderCell>)                   
                         })
                     }
-                    <Table.HeaderCell colspan={actions} textAlign='center'>Actions</Table.HeaderCell>
+                    <Table.HeaderCell colspan='3' textAlign='center'>Actions</Table.HeaderCell>
                 </Table.Row>
             </Table.Header>
             <Table.Body>
@@ -35,7 +28,7 @@ export default function CommonTable({data, headers, dbData, actions}){
                                     })
                                 }
                                 <div className='center'>
-                                    {Actions}
+                                    <Button type='submit'>Details</Button> <Button type='submit'>Update</Button> <Button type='submit'>Delete</Button>
                                     </div>
                             </Table.Row>
                         )

@@ -1,6 +1,7 @@
 import React, {useState, useEffect } from 'react'
 import serviceRequestDataAccess from '../../../dataAccess/serviceRequestDataAccess';
 import Searching from '../../../Components/Searching'
+import CommonTable from '../../../components/table/CommonTable';
 
 const ServiceRequestList = () => {
   const [serviceRequestlist, setServiceRquestList] =useState([]);
@@ -16,6 +17,7 @@ const ServiceRequestList = () => {
   return (
     <div>
         <Searching/>
+        <CommonTable/>
     </div>
   )
 }

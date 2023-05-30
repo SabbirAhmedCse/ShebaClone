@@ -27,11 +27,10 @@ const serviceRequestAddMechanic = (data, params) => {
   );
 };
 
-const serviceRequestReject = (data, params) => {
-  return commonDataAccess.update(
+const serviceRequestReject = (data) => {
+  return commonDataAccess.post(
     `${config.baseUrl}/ServiceRequest/reject`,
-    data,
-    params
+    data
   );
 };
 
