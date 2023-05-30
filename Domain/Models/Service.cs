@@ -27,13 +27,5 @@ public partial class Service
 
     public bool? IsDelete { get; set; }
 
-    public static explicit operator Task<object>(Service v)
-    {
-        throw new NotImplementedException();
-    }
-
-    public static explicit operator Service(ValueTask<Service?> v)
-    {
-        throw new NotImplementedException();
-    }
+    
 }

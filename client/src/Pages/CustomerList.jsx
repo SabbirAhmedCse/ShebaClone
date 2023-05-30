@@ -2,7 +2,6 @@ import { Table,Button,Container,Header } from 'semantic-ui-react'
 import axios from 'axios';
 import React from 'react';
 import {  useNavigate } from 'react-router-dom';
-import { Search } from 'semantic-ui-react'
 
 
 const baseURL = "https://localhost:7194/api/User/Customer";
@@ -31,9 +30,7 @@ export default function CustomerList() {
  <Header as='h2' icon textAlign='center'>
     <Header.Content>CustomerList</Header.Content>
     </Header>
-  <Search>
-
-  </Search> 
+  
   <Table striped>
     <Table.Header>
     

@@ -3,23 +3,18 @@ import { Segment,Grid,Card,Button,Container,Header } from 'semantic-ui-react'
 //import {  useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 
-
-
-
-
 export default function DashBoard() {
-
-   // const nav = useNavigate()
-   return <>
- <Container>
+  return(
+     <>
+    <Container>
    <Header as='h2' icon textAlign='center'>
-    <Header.Content>Dash Board</Header.Content>
+    <Header.Content >Dash Board</Header.Content>
     </Header>
  <Grid columns='equal'>
     <Grid.Row>
       <Grid.Column>
         <Segment>
-        <Card>
+        <Card  alignment="Center">
   <Button >
     <Link to={"./MechanicListWithSearch"}>
    Mechanic List
@@ -102,4 +97,5 @@ export default function DashBoard() {
   </Grid>
  </Container>
 </>
+  )
 }

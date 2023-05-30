@@ -15,6 +15,7 @@ export default function MechanicListWithSearch(){
     const [filterVal,SetFilterVal]=useState('');
     useEffect(()=>{
         const FetchData=()=>{
+
             fetch('https://localhost:7194/api/User/Mechanics')
             .then(response=>response.json())
             .then(json=>{
