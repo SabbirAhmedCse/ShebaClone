@@ -18,8 +18,8 @@ namespace Domain.Models
         public DateTime? ServiceDate { get; set; }
         public long? MechanicId { get; set; }
         public long CreateBy { get; set; }
-        public DateTime? CreateAt { get; set; }
-        public long UpdateBy { get; set; }
+        public DateTime CreateAt { get; set; }
+        public long? UpdateBy { get; set; }
         public DateTime? UpdateAt { get; set; }
         public bool IsActive { get; set; }
         public bool IsDelete { get; set; }

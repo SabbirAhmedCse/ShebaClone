@@ -1,7 +1,15 @@
-import React from 'react'
-
+import React, { useState, useEffect } from "react";
+import {Route} from 'react-router-dom'
+import Details from "../../../components/serviceRequest/Details";
+import CommonTable from "../../../components/table/CommonTable";
 const Dashboard = () => {
-  return <div>Dashboard</div>;
+  return (
+    <div>
+      <h1>Dashboard</h1>
+      <Details></Details>
+      <CommonTable></CommonTable>
+    </div>
+  );
 };
 
-export default Dashboard
+export default Dashboard;

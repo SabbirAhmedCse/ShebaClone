@@ -11,6 +11,9 @@ export default function CommonTable({url, headers, dbData, options}){
          setData(data)); 
       }, []);
 
+export default function CommonTable({data, headers, dbData}){
+
+
     return (
         <Table singleLine fixed>
             <Table.Header>
@@ -20,7 +23,7 @@ export default function CommonTable({url, headers, dbData, options}){
                             return(<Table.HeaderCell key={index} textAlign='center'>{item}</Table.HeaderCell>)                   
                         })
                     }
-                    <Table.HeaderCell colspan={options} textAlign='center'>Actions</Table.HeaderCell>
+                    <Table.HeaderCell colspan='3' textAlign='center'>Actions</Table.HeaderCell>
                 </Table.Row>
             </Table.Header>
             <Table.Body>
@@ -37,8 +40,8 @@ export default function CommonTable({url, headers, dbData, options}){
                                         )
                                     })
                                 }
-                                <div className='centerActions'>
-                                    <Actions key={item.id} url = {url} Id = {item.id} options = {options} />
+                                <div className='center'>
+                                    <Button type='submit'>Details</Button> <Button type='submit'>Update</Button> <Button type='submit'>Delete</Button>
                                     </div>
                             </Table.Row>
                         )

@@ -1,5 +1,8 @@
-import {Button} from 'semantic-ui-react'
+import { useState, useEffect } from 'react';
+import { Table, TableHeader, Pagination } from 'semantic-ui-react'
 import { useNavigate } from 'react-router-dom'
+import axios from 'axios'
+import { Button, Grid, Search } from 'semantic-ui-react'
 import CommonTable from '../Components/Table';
 
 function SearchBar() {

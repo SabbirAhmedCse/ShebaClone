@@ -2,8 +2,13 @@ import axios from "axios";
 import config from "../utils/config";
 
 const get = async (url) => {
-  return (await axios.get(url, { headers: { Authorization: config.key } }))
-    .data;
+  try{
+    const list = (await axios.get(url, { headers: { Authorization: token } }));
+    return  list.data;
+  }
+  catch(ex){
+
+  }
 };
 const post = async (url, data) => {
   return (
