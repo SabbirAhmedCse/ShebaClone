@@ -31,11 +31,11 @@ namespace Repository.Repository
                 if (acceptResult != null)
                 {
                     _appDbContext.SaveChanges();
-                    return "Add Successfull.";
+                    return "Reject Successfully.";
                 }
                 else
                 {
-                    return "Add faild";
+                    return "Reject faild";
                 }
 
             }
