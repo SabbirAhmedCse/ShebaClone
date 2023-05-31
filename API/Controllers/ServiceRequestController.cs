@@ -38,7 +38,6 @@ namespace API.Controllers
         }
 
         [HttpGet]
-        [Route("all")]
         public ActionResult<ServiceRequest> GetAll(int pageNumber, int pageSize)
         {
             try
@@ -81,11 +80,11 @@ namespace API.Controllers
 
         [HttpGet]
         [Route("expertmechanics")]
-        public ActionResult<User> GetAllExpertMechanicsByCategory(string category)
+        public ActionResult<User> GetAllExpertMechanicsByCategory(int serviceId)
         {
             try
             {
-                var allExpertMechanics = _user.GetAll("Mechanic", category);
+                var allExpertMechanics = _user.GetAll("Mechanic", serviceId);
                 return Ok(allExpertMechanics);
             }
             catch (Exception ex)

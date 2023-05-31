@@ -46,8 +46,12 @@ namespace Repository.Repository
             return users;
         }
 
-        public IEnumerable<User> GetAll(string type, string expert)
+        public IEnumerable<User> GetAll(string type, int id)
         {
+            var expert = (from s in _appDbContext.Services
+                         join sc in _appDbContext.ServiceCategories on s.ServicesCategoryId equals sc.Id
+                         where s.ServicesCategoryId == id
+                         select sc.CategoryName).SingleOrDefault();
             var users = _appDbContext.Users.Where(e => e.Type == type && e.Expert == expert).ToList();
             return users;
         }

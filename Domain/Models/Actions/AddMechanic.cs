@@ -8,8 +8,7 @@ namespace Domain.Models.Actions
 {
     public class AddMechanic
     {
-        public long Id { get; set; }
+        public long ServiceId { get; set; }
         public long MechanicId { get; set; }
-        public long UpdateBy { get; set; }
     }
 }

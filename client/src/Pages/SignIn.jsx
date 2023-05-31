@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import AuthAccess from "../DataAccess/AuthAccess";
-import { Navigate } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 
 const SignIn = () => {
   const [signInData, setSignInData] = useState({ email: "", password: "" });
@@ -17,18 +17,15 @@ const SignIn = () => {
     );
   };
 
-  const signInHandeler = async (e) => {
+  const signInHandeler =  (e) => {
     e.preventDefault();
-    const loginResult = await AuthAccess.signin(signInData);
-    console.log(loginResult);
-    // if (signInData) {
-    //   navigate("/");
-    //   window.location.reload();
-    // }
+    const signInResponse =  AuthAccess.signin(signInData);
+    if (signInResponse) {
+      Navigate("/")
+      window.location.reload();
+    }
   };
-
-  console.log(signInData);
-
+  
   return (
     <div className="col-md-12 d-flex align-items-center justify-content-center">
       <div className="card">
@@ -36,7 +33,7 @@ const SignIn = () => {
           <div className="card-body">
             <h3 className="">Sign In</h3>
             <div className="text-center">
-              Already registered? <span className="link-primary">Sign In</span>
+              Already registered? <Link to={"/signup"} className="link-primary">Sign Up</Link>
             </div>
 
             <div className="form-group mt-3">

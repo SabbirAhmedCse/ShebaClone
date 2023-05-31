@@ -1,41 +1,36 @@
-import dataAccess from "./DataAccess";
+import commonDataAccess  from "./commonDataAccess";
 import config from "../utils/config";
 
-const serviceRequestGetById = async (id) => {
-   return await dataAccess.get(`${config.apiUrl}/ServiceRequest/details?Id=${id}`);
+const  serviceRequestGetById = async (id) => {
+   return await commonDataAccess.get(`${config.baseUrl}/ServiceRequest/details?Id=${id}`);
 };
 
 const serviceRequestsGetAll = (pageNumber, pageSize) => {
-  return dataAccess.get(
-    `${config.apiUrl}/ServiceRequest/all?pageNumber=${pageNumber}&pageSize=${pageSize}`
+  return commonDataAccess.get(
+    `${config.baseUrl}/ServiceRequest/all?pageNumber=${pageNumber}&pageSize=${pageSize}`
   );
 };
 
 const serviceRequestAccept = (data) => {
-  return dataAccess.update(`${config.apiUrl}/ServiceRequest/accept`, data);
+  return commonDataAccess.update(`${config.baseUrl}/ServiceRequest/accept`, data);
 };
 
-const serviceExpertMechanicGetAll = (data, params) => {
-  return dataAccess.get(
-    `${config.apiUrl}ServiceRequest/expertmechanics`,
-    data,
-    params
-  );
+const serviceExpertMechanicGetAll = async (id) => {
+  return commonDataAccess.get( `${config.baseUrl}/ServiceRequest/expertmechanics?serviceId=${id}`);
 };
 
 const serviceRequestAddMechanic = (data, params) => {
-  return dataAccess.update(
-    `${config.apiUrl}/ServiceRequest/addmachanic`,
+  return commonDataAccess.update(
+    `${config.baseUrl}/ServiceRequest/addmachanic`,
     data,
     params
   );
 };
 
-const serviceRequestReject = (data, params) => {
-  return dataAccess.update(
-    `${config.apiUrl}/ServiceRequest/reject`,
-    data,
-    params
+const serviceRequestReject = (data) => {
+  return commonDataAccess.post(
+    `${config.baseUrl}/ServiceRequest/reject`,
+    data
   );
 };
 
