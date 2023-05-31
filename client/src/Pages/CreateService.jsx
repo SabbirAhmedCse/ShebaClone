@@ -20,7 +20,7 @@ export default function CreateService() {
 
     const handleCreate = () => {
         var data = {servicesCategoryId: 1, subCategory: servicesubtitle, description: servicedescription, price: serviceprice, image: serviceimageurl};
-        dataAccess.post(url,data).then((response) => {
+        commonDataAccess.post(url,data).then((response) => {
         }).catch((error) => {
             console.error(error);
         });

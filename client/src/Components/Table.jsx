@@ -10,7 +10,7 @@ export default function CommonTable({url, headers, dbData, options}){
     const nav = useNavigate();
 
     useEffect(() => {
-         dataAccess.get(url).then((data) =>
+         commonDataAccess.get(url).then((data) =>
          setData(data)); 
       }, []);
 

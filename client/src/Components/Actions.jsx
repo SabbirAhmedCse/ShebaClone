@@ -11,7 +11,7 @@ export default function Actions({url, Id, options}) {
     }
     
     const handleRemove = () => {
-        dataAccess.remove(url + '/' + Id).then((response) => {
+        commonDataAccess.remove(url + '/' + Id).then((response) => {
         }).catch((error) => {
             console.error(error);
         });

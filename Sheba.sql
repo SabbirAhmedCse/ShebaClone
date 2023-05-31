@@ -75,12 +75,10 @@ BEGIN
   Create TABLE ServiceCategories (
     Id int NOT NULL PRIMARY KEY IDENTITY (1, 1),
     CategoryName nvarchar(100) Not Null,
-	CreateBy bigint NOT NULL FOREIGN KEY REFERENCES Users (Id),
-    CreateAt date Not Null,
-	UpdateBy bigint NULL FOREIGN KEY REFERENCES Users (Id),
+    CreateAt date,
     UpdateAt date Null,
-    IsActive bit Not Null DEFAULT 1,
-    IsDelete bit Not Null DEFAULT 0 
+    IsActive bit  DEFAULT 1,
+    IsDelete bit  DEFAULT 0 
   );
 
   PRINT 'ServiceCategories Table Created Succesfully.'
@@ -103,12 +101,10 @@ BEGIN
     Description nvarchar(300) Not Null,
 	Price Money Null,
     Image nvarchar(100) Null,
-	CreateBy bigint NOT NULL FOREIGN KEY REFERENCES Users (Id),
-    CreateAt date Not Null,
-	UpdateBy bigint NULL FOREIGN KEY REFERENCES Users (Id),
+    CreateAt date Null,
     UpdateAt date Null,
-    IsActive bit Not Null DEFAULT 1,
-    IsDelete bit Not Null DEFAULT 0
+    IsActive bit DEFAULT 1,
+    IsDelete bit DEFAULT 0
   );
 
   PRINT 'Services Table Created Succesfully.'

@@ -27,4 +27,5 @@ public partial class Service
 
     public bool? IsDelete { get; set; }
 
+    
 }

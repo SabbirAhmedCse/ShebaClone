@@ -20,7 +20,7 @@ export default function UpdateService() {
 
     useEffect(() => {
         if(link.url&&link.id)
-        dataAccess.get(link.url + '/' + link.id).then((response) => {
+        commonDataAccess.get(link.url + '/' + link.id).then((response) => {
             
             setData(response);
             setServicetitle(null);
@@ -40,7 +40,7 @@ export default function UpdateService() {
     
     const handleUpdate = () => {
         var data = {id: link.id, servicesCategoryId: 1, subCategory: servicesubtitle, description: servicedescription, price: serviceprice, image: serviceimageurl};
-        dataAccess.update(link.url + '/' + link.id, data).then((response) => {
+        commonDataAccess.update(link.url + '/' + link.id, data).then((response) => {
              nav('/Services');
         }).catch((error) => {
             console.error(error);

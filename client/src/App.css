@@ -8,6 +8,11 @@
   margin-top: 50px;
 }
 
+.centerActions {
+  text-align: center;
+  margin-left: 55px;
+}
+
 .center {
   text-align: center;
   margin-top: 10px;
@@ -38,9 +43,6 @@
   text-align: center;
 }
 
-/* Sanchoy's CSS Property End */
-
-
 
 /* Dashboard Design Start */
 
@@ -49,9 +51,11 @@
 }
 
 .custom-card {
-  max-width: 700px; /* Adjust the width as per your preference */
-  margin: 0 auto; /* Centers the card horizontally */
+  max-width: 700px;
+  /* Adjust the width as per your preference */
+  margin: 0 auto;
+  /* Centers the card horizontally */
 }
 
+/* Dashboard
 
-/* Dashboard Design End */
