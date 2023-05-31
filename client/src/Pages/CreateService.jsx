@@ -2,7 +2,7 @@ import {useNavigate } from 'react-router-dom';
 import { useState} from 'react'
 import {Form} from 'semantic-ui-react'
 import { useLocation } from 'react-router-dom';
-import dataAccess from '../DataAccess/dataAccess';
+import commonDataAccess from '../DataAccess/CommonDataAccess';
 
 export default function CreateService() {
 

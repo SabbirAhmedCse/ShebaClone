@@ -1,7 +1,7 @@
 import {Table, Button} from 'semantic-ui-react'
 import {useState, useEffect} from 'react'
 import { useNavigate } from 'react-router-dom';
-import dataAccess from '../DataAccess/dataAccess'
+import commonDataAccess from '../DataAccess/CommonDataAccess'
 import Actions from '../Components/Actions'
 
 export default function CommonTable({url, headers, dbData, options}){

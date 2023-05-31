@@ -1,66 +1,32 @@
-// import axios, { AxiosError, AxiosResponse } from "axios";
-// import { CustomAxiosResponse } from "../models/response";
-// import { Filter } from "../@redux/listSlice";
-// import { keys } from "../common/constants";
+import axios from "axios";
+import config from "../utils/config";
 
+//const token = `Bearer ${config.key.token}`;
 
-// export const CommonDataAccess = {
-
-//   get: (url: string, params?: any) => {
-
-//     return axios
-//       .get(url, {
-//         headers: {
-//           mid: `${localStorage.getItem("mid")}`,
-//           Authorization: `Token ${localStorage.getItem(keys.authorization)}`,
-//         },
-//         params: params,
-//       })
-//       .then(commonDataAccess.handleResponse)
-//       .catch(commonDataAccess.handleError);
-//   },
-
-//   post: (url: string, data?: any, params?: any) => {
-
-//     return axios
-//       .post(url, data, {
-//         headers: {
-//           Authorization: `Token ${localStorage.getItem(keys.authorization)}`,
-//         },
-//         params: params,
-//       })
-//       .then(commonDataAccess.handleResponse)
-//       .catch(commonDataAccess.handleError);
-//   },
-
-//   delete: (url: string, params?: any) => {
-
-//     return axios
-//       .delete(url, {
-//         headers: {
-//           Authorization: `Token ${localStorage.getItem(keys.authorization)}`,
-//         },        
-//           params:params              
-//       })
-//       .then(commonDataAccess.handleResponse)
-//       .catch(commonDataAccess.handleError);
-//   },
-
-//   handleResponse: (response: CustomAxiosResponse) => {
-//     const responseData = response.data;
-//     // if (responseData.success !== true) {
-//     //   throw new Error(responseData.message);
-//     // }
-//     return responseData;
-//   },
-
-//   handleError: (error: AxiosError) => {
-//     if (error.response?.status === 401) {
-//       window.location.href = "/login";
-//     }
-
-//     if (error.response?.data.message) throw Error(error.response.data.message);
-//     throw Error(error.message);
-//   },
-  
-// };
+const get = async (url) => {
+  return (await axios.get(url, { headers: { Authorization: config.key } }))
+    .data;
+};
+const post = async (url, data) => {
+  return (
+    await axios.post(url, data, {
+      headers: { Authorization: config.key },
+    })
+  ).data;
+};
+const update = async (url, data) => {
+  return (
+    await axios.put(url, data, { headers: { Authorization: config.key } })
+  ).data;
+};
+const remove = async (url) => {
+  return (await axios.delete(url, { headers: { Authorization: config.key } }))
+    .data;
+};
+const commonDataAccess = {
+  get,
+  post,
+  update,
+  remove,
+};
+export default commonDataAccess;

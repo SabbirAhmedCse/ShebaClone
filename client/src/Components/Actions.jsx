@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import {Button} from 'semantic-ui-react'
-import dataAccess from "../DataAccess/dataAccess";
+import commonDataAccess from "../DataAccess/CommonDataAccess";
 
 export default function Actions({url, Id, options}) {
 

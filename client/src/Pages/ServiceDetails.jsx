@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useLocation } from 'react-router-dom'
 import { Table, TableHeader, Button} from 'semantic-ui-react'
-import dataAccess from '../DataAccess/dataAccess'
+import commonDataAccess from '../DataAccess/CommonDataAccess'
 
 export default function ServiceDetails() {
 

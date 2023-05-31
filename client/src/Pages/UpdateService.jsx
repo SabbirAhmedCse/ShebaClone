@@ -2,7 +2,7 @@ import { Form } from 'semantic-ui-react'
 import { useNavigate } from 'react-router-dom'
 import { useLocation } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import dataAccess from '../DataAccess/dataAccess';
+import commonDataAccess from '../DataAccess/CommonDataAccess';
 
 
 export default function UpdateService() {
