@@ -11,7 +11,7 @@ import CreateService from "../Pages/CreateService";
 import UpdateService from "../Pages/UpdateService";
 import CustomerList from "../Pages/CustomerList";
 import CustomerDetails from "../Pages/CustomerDetails";
-
+import Dashboard from "../Pages/DashboardPractice";
 
 
 export default function MechanicRoutes(){
@@ -27,6 +27,7 @@ export default function MechanicRoutes(){
           <Route exact path='/Services' element={<ServicesList />}></Route>
            <Route path="/customerList" element={<CustomerList/>}/> 
          <Route path="/customerDetails" element={<CustomerDetails/>}/>
+         
 
 
 

@@ -99,7 +99,7 @@ namespace API.Controllers
         public ActionResult<string> AddMechanic(AddMechanic addMechanic)
         {
             try { 
-                var serviceRequestDetails = _serviceRequest.Get(addMechanic.Id);
+                var serviceRequestDetails = _serviceRequest.Get(addMechanic.ServiceId);
                 if (serviceRequestDetails != null)
                 {
                     serviceRequestDetails.MechanicId = addMechanic.MechanicId;

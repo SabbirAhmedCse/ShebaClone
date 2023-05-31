@@ -60,7 +60,5 @@ body {
 
 .custom-card {
   max-width: 700px;
-  /* Adjust the width as per your preference */
   margin: 0 auto;
-  /* Centers the card horizontally */
 }
