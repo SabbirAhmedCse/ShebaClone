@@ -10,3 +10,54 @@ body {
 .container {
   margin-left: 420px;
 }
+
+.container {
+  margin-top: 50px;
+
+}
+
+.centerActions {
+  text-align: center;
+  margin-left: 55px;
+}
+
+.center {
+  text-align: center;
+  margin-top: 10px;
+  margin-left: 40px;
+  margin-bottom: 10px;
+}
+
+.desc {
+  max-width: 150px;
+  max-height: 150px;
+  overflow-y: auto;
+
+}
+
+.servicelist {
+  width: 80%;
+  margin-left: 99px;
+}
+
+.contain {
+  width: 50%;
+  margin-top: 40px;
+  margin-left: 270px;
+}
+
+.main {
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.custom-card {
+  max-width: 700px;
+  /* Adjust the width as per your preference */
+  margin: 0 auto;
+  /* Centers the card horizontally */
+}

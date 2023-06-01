@@ -1,29 +1,33 @@
-import {Table} from 'semantic-ui-react'
+import {Table, Button} from 'semantic-ui-react'
 import {useState, useEffect} from 'react'
-import commonDataAccess from '../DataAccess/CommonDataAccess'
+import { useNavigate } from 'react-router-dom';
+import commonDataAccess from '../dataAccess/CommonDataAccess'
 import Actions from '../Components/Actions'
 
-export default function CommonTable({url, headers, dbData, options}){
+export default function CommonTable({url, Columns, actions, functions, options}){
 
     const [data, setData] = useState([]);
+    const nav = useNavigate();
+
     useEffect(() => {
-         commonDataAccess.get(url).then((data) =>
-         setData(data)); 
-      }, []);
-
-export default function CommonTable({data, headers, dbData}){
-
+        commonDataAccess.get(url)
+          .then((data) => setData(data))
+          .catch((error) => {
+            
+            console.error('Error fetching data:', error);
+          });
+      }, [url]);
 
     return (
         <Table singleLine fixed>
             <Table.Header>
                 <Table.Row>
                     {
-                        headers.map((item, index) => {
-                            return(<Table.HeaderCell key={index} textAlign='center'>{item}</Table.HeaderCell>)                   
+                        Columns.map((item, index) => {
+                            return(<Table.HeaderCell key={index} textAlign='center'>{item.name}</Table.HeaderCell>)                   
                         })
                     }
-                    <Table.HeaderCell colspan='3' textAlign='center'>Actions</Table.HeaderCell>
+                    <Table.HeaderCell colspan={options} textAlign='center'>Actions</Table.HeaderCell>
                 </Table.Row>
             </Table.Header>
             <Table.Body>
@@ -32,16 +36,16 @@ export default function CommonTable({data, headers, dbData}){
                         return(
                             <Table.Row key={item.id}>
                                 {
-                                    dbData.map((idx, innderIndex) => {
+                                    Columns.map((idx, innderIndex) => {
                                         return (
                                             <Table.Cell key={innderIndex} textAlign='center'>
-                                                {item[idx]}
+                                                {item[idx.value]}
                                             </Table.Cell>
                                         )
                                     })
                                 }
                                 <div className='center'>
-                                    <Button type='submit'>Details</Button> <Button type='submit'>Update</Button> <Button type='submit'>Delete</Button>
+                                    <Actions id = {item.id} actions = {actions} functions={functions} />
                                     </div>
                             </Table.Row>
                         )

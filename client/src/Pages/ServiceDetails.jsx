@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useLocation } from 'react-router-dom'
 import { Table, Button} from 'semantic-ui-react'
-import commonDataAccess from '../DataAccess/CommonDataAccess'
+import commonDataAccess from '../dataAccess/CommonDataAccess'
 
 export default function ServiceDetails() {
 
@@ -111,7 +111,7 @@ export default function ServiceDetails() {
                     </Table.Row>
                 </Table.Body>
             </Table>
-            <Button onClick={() => { nav('/Services') }}>Back to Lists</Button>
+            <Button onClick={() => { nav('/ServiceList') }}>Back to Lists</Button>
         </div>
     );
 }
