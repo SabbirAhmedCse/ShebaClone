@@ -19,11 +19,11 @@ const post = async (url, data) => {
 };
 const update = async (url, data) => {
   return (
-    await axios.put(url, data, { headers: { Authorization: config.key } })
+    await axios.put(url, data, { headers: { Authorization: token } })
   ).data;
 };
 const remove = async (url) => {
-  return (await axios.delete(url, { headers: { Authorization: config.key } }))
+  return (await axios.delete(url, { headers: { Authorization: token } }))
     .data;
 };
 const commonDataAccess = {
