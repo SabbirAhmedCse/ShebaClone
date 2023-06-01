@@ -9,7 +9,7 @@ namespace API.Controllers
     [Authorize]
     [Route("api/[controller]")]
     [ApiController]
-    
+
     public class ServiceRequestController : ControllerBase
     {
         private readonly IServiceRequestRepository _serviceRequest;
@@ -58,7 +58,7 @@ namespace API.Controllers
             try
             {
                 var serviceRequestDetails = _serviceRequest.Get(acceptService.Id);
-                if(serviceRequestDetails != null)
+                if (serviceRequestDetails != null)
                 {
                     serviceRequestDetails.ServiceStatus = "Approve";
                     serviceRequestDetails.UpdateBy = acceptService.UserId;
@@ -70,7 +70,7 @@ namespace API.Controllers
                 {
                     return NotFound("Service is not available.");
                 }
-                    
+
             }
             catch (Exception ex)
             {
@@ -98,8 +98,9 @@ namespace API.Controllers
         [Route("addmachanic")]
         public ActionResult<string> AddMechanic(AddMechanic addMechanic)
         {
-            try { 
-                var serviceRequestDetails = _serviceRequest.Get(addMechanic.Id);
+            try
+            {
+                var serviceRequestDetails = _serviceRequest.Get(addMechanic.ServiceId);
                 if (serviceRequestDetails != null)
                 {
                     serviceRequestDetails.MechanicId = addMechanic.MechanicId;
@@ -118,7 +119,7 @@ namespace API.Controllers
             {
                 throw ex;
             }
-}
+        }
 
         [HttpPost("reject")]
         public ActionResult<string> RejectService(RejectService rejectService)
@@ -126,7 +127,7 @@ namespace API.Controllers
             try
             {
                 var serviceRequestDetails = _serviceRequest.Get(rejectService.Id);
-                if(serviceRequestDetails != null)
+                if (serviceRequestDetails != null)
                 {
                     serviceRequestDetails.ServiceStatus = "Reject";
                     var acceptResult = _serviceRequest.Update(serviceRequestDetails);
