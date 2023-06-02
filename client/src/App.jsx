@@ -16,6 +16,7 @@ import MechanicDetails from './Pages/MechanicDetails';
 import ServicesList from './Pages/ServicesList';
 import CreateService from './Pages/CreateService';
 import ServiceDetails from './Pages/ServiceDetails';
+import UpdateService from './Pages/UpdateService';
 
 
 //Customer List 
@@ -59,6 +60,7 @@ function App() {
           <Route  path='Services' element={<ServicesList/>}></Route>
           <Route path='CreateService' element={<CreateService/>}></Route>
           <Route  path='ServiceDetails' element={<ServiceDetails/>}></Route>
+          <Route path='UpdateService' element ={<UpdateService/>}></Route>
           <Route path='requestedservices' element={<ServiceRequestList/>}></Route>
           <Route path='requestedservices' element={<ServiceRequestList/>}></Route>
           <Route path='addmechanic/:id' element={<Details/>}></Route>

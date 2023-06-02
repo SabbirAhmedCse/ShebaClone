@@ -3,7 +3,6 @@ import { Table, TableHeader, Pagination, Search, Button} from 'semantic-ui-react
 import { useNavigate } from 'react-router-dom'
 import CommonTable from '../Components/Table';
 import commonDataAccess from '../dataAccess/CommonDataAccess';
-import commonDataAccess from '../dataAccess/CommonDataAccess';
 
 function SearchBar() {
     return (

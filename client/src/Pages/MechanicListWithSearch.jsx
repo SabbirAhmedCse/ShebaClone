@@ -48,15 +48,16 @@ export default function MechanicListWithSearch(){
  
  
     
-  <div className="main">
+  <div className='main'>
             <div class="ui search">
                 <div class="ui icon input">
-                     <input placeholder='Serch' value={filterVal} onInput={(e)=>handleFilter(e)} />
+                     <input placeholder='Search' value={filterVal} onInput={(e)=>handleFilter(e)} />
                     <i class="search icon"></i>
                 </div>
                 <div class="results"></div>
             </div>
         </div>
+
  
 
  <Header as='h2' icon textAlign='center'>
