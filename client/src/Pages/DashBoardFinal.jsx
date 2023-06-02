@@ -1,49 +1,53 @@
+import { Link, useNavigate } from "react-router-dom";
+
 export default function Dashboard() {
-    return (
-      <>
-      <h1 class="text-center main">Dashboard</h1>
-      <div class="custom-card">
-      <div class="container-fluid">
-          <div class="row justify-content-center">
-            <div class="col-md-6 col-lg-6 mb-4">
-              <div class="card flex-fill">
-                <div class="card-body text-center">
-                  <h5 class="card-title">Service List</h5>
-                  <p class="card-text">View and manage the list of services.</p>
-                  <a href="#" class="btn btn-primary">Service List</a>
+  const navigate = useNavigate();
+
+  return (
+    <>
+      <h1 className="text-center-top main">Admin Dashboard</h1>
+      <div className="custom-card">
+        <div className="container-fluid">
+          <div className="row justify-content-center">
+            <div className="col-md-6 col-lg-6 mb-4">
+              <div className="card flex-fill">
+                <div className="card-body text-center">
+                  <h5 className="card-title">Service List</h5>
+                  <p className="card-text">View and manage the list of services.</p>
+                  <Link to="/Services" className="btn btn-primary">Service List</Link>
                 </div>
               </div>
             </div>
-            <div class="col-md-6 col-lg-6 mb-4">
-              <div class="card flex-fill">
-                <div class="card-body text-center">
-                  <h5 class="card-title">Customer List</h5>
-                  <p class="card-text">View and manage the list of customers.</p>
-                  <a href="#" class="btn btn-primary">Customer List</a>
+            <div className="col-md-6 col-lg-6 mb-4">
+              <div className="card flex-fill">
+                <div className="card-body text-center">
+                  <h5 className="card-title">Customer List</h5>
+                  <p className="card-text">View and manage the list of customers.</p>
+                  <Link to="/Customers" className="btn btn-primary">Customer List</Link>
                 </div>
               </div>
             </div>
-            <div class="col-md-6 col-lg-6 mb-4">
-              <div class="card flex-fill">
-                <div class="card-body text-center">
-                  <h5 class="card-title">Mechanic List</h5>
-                  <p class="card-text">View and manage the list of mechanics.</p>
-                  <a href="#" class="btn btn-primary">Mechanic List</a>
+            <div className="col-md-6 col-lg-6 mb-4">
+              <div className="card flex-fill">
+                <div className="card-body text-center">
+                  <h5 className="card-title">Mechanic List</h5>
+                  <p className="card-text">View and manage the list of mechanics.</p>
+                  <Link to="/Mechanics" className="btn btn-primary">Mechanic List</Link>
                 </div>
               </div>
             </div>
-            <div class="col-md-6 col-lg-6 mb-4">
-              <div class="card flex-fill">
-                <div class="card-body text-center">
-                  <h5 class="card-title">Request List</h5>
-                  <p class="card-text">View and manage the list of service requests.</p>
-                  <a href="#" class="btn btn-primary">Request List</a>
+            <div className="col-md-6 col-lg-6 mb-4">
+              <div className="card flex-fill">
+                <div className="card-body text-center">
+                  <h5 className="card-title">Request List</h5>
+                  <p className="card-text">View and manage the list of service requests.</p>
+                  <Link to="/requestedservices" className="btn btn-primary">Request List</Link>
                 </div>
               </div>
             </div>
           </div>
         </div>
-        </div>        
-      </>
-    );
-  }
+      </div>
+    </>
+  );
+}

@@ -42,8 +42,8 @@ export default function CreateService() {
                     <Form.Input width={4} fluid label='Service Price' placeholder='Service Price' onChange={(e) => setServiceprice(e.target.value)} />
                     <Form.TextArea width={8} label='Description' placeholder='Tell us more about service...' onChange={(e) => setServicedescription(e.target.value)} />
                     <Form.Group>
-                        <Form.Button onClick={handleCreate}>Create</Form.Button>
-                        <Form.Button onClick={() => { nav('/Services') }}>Back to Lists</Form.Button>
+                        <Form.Button primary onClick={handleCreate}>Create</Form.Button>
+                        <Form.Button primary onClick={() => { nav('/Services') }}>Back to Lists</Form.Button>
                     </Form.Group>
                 </Form>
             </div>

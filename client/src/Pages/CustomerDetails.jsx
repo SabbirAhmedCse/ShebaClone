@@ -27,7 +27,7 @@ export default function CustomerDetails() {
     return (
       
         
-        <Container>
+        <div className='contain'>
            
             <Header as='h2' icon textAlign='center'>
             <Header.Content>CustomerDetails</Header.Content>
@@ -91,13 +91,9 @@ export default function CustomerDetails() {
                             {post.gender}
                         </Table.Cell>
                     </Table.Row>
-                     
-     
-                  
                 </Table.Body>
             </Table>
             <Button primary onClick={() => { nav('/Customers') }}>Back to Lists</Button>
-
-            </Container>
+            </div>
     );
 }

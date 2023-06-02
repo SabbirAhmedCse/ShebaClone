@@ -84,7 +84,7 @@ export default function ServicesList() {
                 <h2>Service Lists</h2>
             </div>
             <SearchBar />
-            <Button type="submit" onClick={() => nav('/CreateService', {state:url})}>Create Service</Button>
+            <Button primary type="submit" onClick={() => nav('/CreateService', {state:url})}>Create Service</Button>
             <CommonTable data={data} Columns = {Columns} actions={actions} functions={functions}/>
         </div>
     );

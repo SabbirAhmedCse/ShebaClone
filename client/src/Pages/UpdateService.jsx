@@ -63,8 +63,8 @@ export default function UpdateService() {
                     <Form.Input width={4} fluid label='Service Price' placeholder='Service Price' onChange={(e) => setServiceprice(e.target.value)} defaultValue={serviceprice} />
                     <Form.TextArea width={8} label='Description' placeholder='Tell us more about service...' onChange={(e) => setServicedescription(e.target.value)} defaultValue={servicedescription} />
                     <Form.Group>
-                        <Form.Button onClick={handleUpdate}>Update</Form.Button>
-                        <Form.Button onClick={() => { nav('/Services')}}>Back to Lists</Form.Button>
+                        <Form.Button primary onClick={handleUpdate}>Update</Form.Button>
+                        <Form.Button primary onClick={() => { nav('/Services')}}>Back to Lists</Form.Button>
                     </Form.Group>
                 </Form>
             </div>

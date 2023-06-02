@@ -9,7 +9,7 @@ export default function Actions({id, actions, functions}) {
           {
             actions.map((item, idx) => (
 
-            <Button key={idx} type="submit" onClick={() => {functions[idx](id)}}>
+            <Button primary key={idx} type="submit" onClick={() => {functions[idx](id)}}>
 
               {item}
 

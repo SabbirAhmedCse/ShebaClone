@@ -2,7 +2,7 @@ import { Routes, Route } from 'react-router-dom'
 import config from './utils/config';
 import SignUp from './Pages/SignUp';
 import SignIn from './pages/SignIn';
-import DashBoard from './Pages/admin/dashboard'
+import DashBoardFinal from './Pages/DashBoardFinal'
 import { useEffect, useState } from 'react';
 import ServiceRequestList from './Pages/admin/serviceRequestList/ServiceRequestList';
 
@@ -52,7 +52,7 @@ function App() {
       <Routes>
         { user == 'admin' &&(
           <Route path='/*' element={<PrivateOutlet auth={auth} />}>
-          <Route path='dashboard' element={<DashBoard />}></Route>
+          <Route path='dashboard' element={<DashBoardFinal />}></Route>
           <Route  path='Mechanics' element={<MechanicListWithSearch/>}></Route>
           <Route  path='MechanicDetails' element={<MechanicDetails/>}></Route>
           <Route path='Customers'element={<CustomerList/>}></Route>
