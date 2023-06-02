@@ -1,15 +1,16 @@
+import axios from "axios";
 import config from "../utils/config";
 import commonDataAccess  from "./commonDataAccess";
 
 
-const signin =  (signinData) => {
+const signin = async (signinData) => {
   console.log(signinData);
-  const authData =  commonDataAccess.post(`${config.baseUrl}/User/signin`, signinData);
+  const authData = (await  axios.post(`${config.baseUrl}/User/signin`, signinData)).data;
    console.log(JSON.stringify(authData))
   if (authData !=null) {
     localStorage.setItem('authDetails', JSON.stringify(authData));
     console.log(JSON.parse(localStorage.getItem('authDetails')).token)
-    return true
+    return true;
   }
   else{
     localStorage.removeItem("authDetails");

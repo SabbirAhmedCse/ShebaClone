@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useLocation } from 'react-router-dom'
 import { Table, Button} from 'semantic-ui-react'
-import commonDataAccess from '../DataAccess/CommonDataAccess'
+import commonDataAccess from '../dataAccess/CommonDataAccess'
 
 export default function ServiceDetails() {
 
@@ -10,7 +10,7 @@ export default function ServiceDetails() {
 
     const nav = useNavigate();
     const location = useLocation();
-    const link = location.state;
+    const {link} = location.state;
 
     useEffect(() => {
         commonDataAccess.get(link.url + '/' + link.id).then((response) => {

@@ -2,7 +2,7 @@ import {useNavigate } from 'react-router-dom';
 import { useState} from 'react'
 import {Form} from 'semantic-ui-react'
 import { useLocation } from 'react-router-dom';
-import commonDataAccess from '../DataAccess/CommonDataAccess';
+import commonDataAccess from '../dataAccess/CommonDataAccess';
 
 export default function CreateService() {
 
@@ -19,7 +19,7 @@ export default function CreateService() {
     const url = location.state;
 
     const handleCreate = () => {
-        var data = {servicesCategoryId: 1, subCategory: servicesubtitle, description: servicedescription, price: serviceprice, image: serviceimageurl};
+        var data = {servicesCategoryId: 2, subCategory: servicesubtitle, description: servicedescription, price: serviceprice, image: serviceimageurl};
         commonDataAccess.post(url,data).then((response) => {
         }).catch((error) => {
             console.error(error);

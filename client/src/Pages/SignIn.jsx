@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import AuthAccess from "../DataAccess/AuthAccess";
+import AuthAccess from "../dataAccess/AuthAccess";
 import { Link, Navigate } from "react-router-dom";
 
 const SignIn = () => {
@@ -21,7 +21,7 @@ const SignIn = () => {
     e.preventDefault();
     const signInResponse =  AuthAccess.signin(signInData);
     if (signInResponse) {
-      Navigate("/")
+      Navigate("/dashboard")
       window.location.reload();
     }
   };

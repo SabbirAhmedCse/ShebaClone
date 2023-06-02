@@ -1,7 +1,7 @@
 import axios from "axios";
 import config from "../utils/config";
 
-const token = `Bearer ${config.key.token}`;
+const token = config?.key?.token;
 
 const get = async (url) => {
   try{

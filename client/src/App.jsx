@@ -9,6 +9,7 @@ import PrivateOutlet from './Pages/PrivateOutlet';
 import Details from './components/serviceRequest/Details';
 import RejectReson from './components/serviceRequest/RejectReson';
 
+
 function App() {
   const [user, setUser] = useState(null);
   const [auth, setAuth] =useState(false);
@@ -17,11 +18,17 @@ function App() {
       setUser(config.key.type);
       setAuth(true);
     }
+    else {
+      setUser(null);
+      setAuth(false);
+    }
   }
+
+  
   useEffect(() => {
     key();
   }, []);
-  console.log(config.key.token)
+  
   return (
     <div>
       <Routes>
@@ -38,6 +45,6 @@ function App() {
       </Routes>
     </div>
   );
-}
+      }
 
 export default App;

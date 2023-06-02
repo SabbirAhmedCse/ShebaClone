@@ -2,7 +2,7 @@ import { Form } from 'semantic-ui-react'
 import { useNavigate } from 'react-router-dom'
 import { useLocation } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import commonDataAccess from '../DataAccess/CommonDataAccess';
+import commonDataAccess from '../dataAccess/CommonDataAccess';
 
 
 export default function UpdateService() {
@@ -16,7 +16,7 @@ export default function UpdateService() {
 
     const nav = useNavigate();
     const location = useLocation();
-    const link = location.state;
+    const {link} = location.state;
 
     useEffect(() => {
         if(link.url&&link.id)
@@ -39,7 +39,7 @@ export default function UpdateService() {
      },[data]);
     
     const handleUpdate = () => {
-        var data = {id: link.id, servicesCategoryId: 1, subCategory: servicesubtitle, description: servicedescription, price: serviceprice, image: serviceimageurl};
+        var data = {id: link.id, servicesCategoryId: 2, subCategory: servicesubtitle, description: servicedescription, price: serviceprice, image: serviceimageurl};
         commonDataAccess.update(link.url + '/' + link.id, data).then((response) => {
              nav('/Services');
         }).catch((error) => {

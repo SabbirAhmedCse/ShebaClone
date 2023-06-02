@@ -21,7 +21,7 @@ namespace Domain.Models
         public string? City { get; set; } 
         public string? Area { get; set; } 
         public string? Address { get; set; }
-        public string Expert { get; set; }
+        public string? Expert { get; set; }
         public bool IsAvailable { get; set; }
         public DateTime CreateAt { get; set; }
         public DateTime UpdateAt { get; set; }

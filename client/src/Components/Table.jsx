@@ -1,29 +1,21 @@
 import {Table, Button} from 'semantic-ui-react'
 import {useState, useEffect} from 'react'
 import { useNavigate } from 'react-router-dom';
-import commonDataAccess from '../DataAccess/CommonDataAccess'
+import commonDataAccess from '../dataAccess/CommonDataAccess'
 import Actions from '../Components/Actions'
 
-export default function CommonTable({url, headers, dbData, options}){
-
-    const [data, setData] = useState([]);
-    const nav = useNavigate();
-
-    useEffect(() => {
-         commonDataAccess.get(url).then((data) =>
-         setData(data)); 
-      }, []);
-
+export default function CommonTable({data, Columns, actions, functions}){
+    
     return (
         <Table singleLine fixed>
             <Table.Header>
                 <Table.Row>
                     {
-                        headers.map((item, index) => {
-                            return(<Table.HeaderCell key={index} textAlign='center'>{item}</Table.HeaderCell>)                   
+                        Columns.map((item, index) => {
+                            return(<Table.HeaderCell key={index} textAlign='center'>{item.name}</Table.HeaderCell>)                   
                         })
                     }
-                    <Table.HeaderCell colspan={options} textAlign='center'>Actions</Table.HeaderCell>
+                    <Table.HeaderCell colspan={actions.length} textAlign='center'>Actions</Table.HeaderCell>
                 </Table.Row>
             </Table.Header>
             <Table.Body>
@@ -32,16 +24,16 @@ export default function CommonTable({url, headers, dbData, options}){
                         return(
                             <Table.Row key={item.id}>
                                 {
-                                    dbData.map((idx, innderIndex) => {
+                                    Columns.map((idx, innderIndex) => {
                                         return (
                                             <Table.Cell key={innderIndex} textAlign='center'>
-                                                {item[idx]}
+                                                {item[idx.value]}
                                             </Table.Cell>
                                         )
                                     })
                                 }
                                 <div className='center'>
-                                    <Actions key={item.id} url = {url} Id = {item.id} options = {options} />
+                                    <Actions id = {item.id} actions = {actions} functions={functions} />
                                     </div>
                             </Table.Row>
                         )

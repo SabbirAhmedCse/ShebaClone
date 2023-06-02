@@ -1,37 +1,22 @@
 import { useNavigate } from "react-router-dom";
 import {Button} from 'semantic-ui-react'
-import commonDataAccess from "../DataAccess/CommonDataAccess";
+import commonDataAccess from "../dataAccess/CommonDataAccess";
 
-export default function Actions({url, Id, options}) {
+export default function Actions({id, actions, functions}) {
 
-    const nav = useNavigate();
-    const link = {
-        url: url,
-        id : Id
-    }
-    
-    const handleRemove = () => {
-        commonDataAccess.remove(url + '/' + Id).then((response) => {
-        }).catch((error) => {
-            console.error(error);
-        });
+    return (
+        <>
+          {
+            actions.map((item, idx) => (
 
-        nav('/Services');
-    }
+            <Button key={idx} type="submit" onClick={() => {functions[idx](id)}}>
 
-    if(options === 3)
-    {
-        return (
+              {item}
 
-            <>
-            <Button type="submit" onClick={() => nav('/ServiceDetails', {state:link})}>Details</Button>
-            <Button type="submit" onClick={() => nav('/UpdateService', {state:link})}>Update</Button>
-            <Button type="submit" onClick={handleRemove}>Delete</Button>
-            </> 
-        )
-    }
-    else
-    {
-        return (<Button type="submit" onClick={() => nav('/ServiceDetails', {state:link})}>Details</Button>)
-    }
+            </Button>
+
+            ))
+          }
+        </>
+      );
 }
