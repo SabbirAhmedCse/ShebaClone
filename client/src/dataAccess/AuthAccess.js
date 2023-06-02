@@ -1,6 +1,6 @@
 import axios from "axios";
+import axios from "axios";
 import config from "../utils/config";
-import commonDataAccess  from "./commonDataAccess";
 
 
 const signin = async (signinData) => {

@@ -16,13 +16,13 @@ const AdminNavBar = () => {
               <Link className="nav-link" to='requestedservices'>Requested Services </Link>
               </li>
               <li className="nav-item">
-              <Link className="nav-link" to='services'>Services</Link>
+              <Link className="nav-link" to='Services'>Services</Link>
               </li>
               <li className="nav-item">
-              <Link className="nav-link" to='customers'>Customers</Link>
+              <Link className="nav-link" to='Customers'>Customers</Link>
               </li>
               <li className="nav-item">
-              <Link className="nav-link" to='mechanics'>Mechanics</Link>
+              <Link className="nav-link" to='Mechanics'>Mechanics</Link>
               </li>
               
             </ul>

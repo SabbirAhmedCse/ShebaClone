@@ -111,7 +111,7 @@ export default function ServiceDetails() {
                     </Table.Row>
                 </Table.Body>
             </Table>
-            <Button onClick={() => { nav('/Services') }}>Back to Lists</Button>
+            <Button onClick={() => { nav('/ServiceList') }}>Back to Lists</Button>
         </div>
     );
 }

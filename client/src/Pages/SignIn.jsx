@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import AuthAccess from "../dataAccess/AuthAccess";
-import { Link, Navigate } from "react-router-dom";
+import { Link, useNavigate,  } from "react-router-dom";
 
 const SignIn = () => {
   const [signInData, setSignInData] = useState({ email: "", password: "" });
-
+  const navigate = useNavigate();
   const signIn = (e) => {
     let name = e.target.name;
     let value = e.target.value;
@@ -17,11 +17,11 @@ const SignIn = () => {
     );
   };
 
-  const signInHandeler =  (e) => {
+  const signInHandeler = async  (e) => {
     e.preventDefault();
-    const signInResponse =  AuthAccess.signin(signInData);
+    const signInResponse = await AuthAccess.signin(signInData);
     if (signInResponse) {
-      Navigate("/dashboard")
+      navigate('/dashboard')
       window.location.reload();
     }
   };

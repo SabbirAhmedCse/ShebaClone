@@ -100,7 +100,7 @@ export default function MechanicDetails() {
                   
                 </Table.Body>
             </Table>
-            <Button primary onClick={() => { nav('/MechanicListwithSearch') }}>Back to Lists</Button>
+            <Button primary onClick={() => { nav('/Mechanics') }}>Back to Lists</Button>
 
             </Container>
     );

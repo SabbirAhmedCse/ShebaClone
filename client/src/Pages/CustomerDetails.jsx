@@ -96,7 +96,7 @@ export default function CustomerDetails() {
                   
                 </Table.Body>
             </Table>
-            <Button primary onClick={() => { nav('/CustomerList') }}>Back to Lists</Button>
+            <Button primary onClick={() => { nav('/Customers') }}>Back to Lists</Button>
 
             </Container>
     );
