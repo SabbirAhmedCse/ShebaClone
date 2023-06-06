@@ -68,6 +68,10 @@ namespace API.Controllers
         {
             try
             {
+                var claimData = (User.Identity as ClaimsIdentity).Claims.ToList();
+                long userId = Convert.ToInt64((User.Identity as ClaimsIdentity).Claims.First(c=>c.Type == "UserId").Value);
+                string Type = (User.Identity as ClaimsIdentity).Claims.First(c=>c.Type == "UserType").Value;
+                
                 var serviceRequestedData = _serviceRequest.GetAll(pageNumber, pageSize);
                 return Ok(serviceRequestedData);
             }
