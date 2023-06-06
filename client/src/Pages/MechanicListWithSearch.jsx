@@ -13,13 +13,20 @@ export default function MechanicListWithSearch(){
    const nav=useNavigate();
     const [data,setData]=useState([]);
     const[searchApiData,setSearchApiData]=useState([]);
-  const [filterVal, SetFilterVal] = useState('');
-  const datalist = async () => {
-    const mechanics = await commonDataAccess.get('https://localhost:7194/api/User/mechanic')
-    setData([...mechanics]);
-  }
-  useEffect(() => {
-    datalist();
+    const [filterVal,SetFilterVal]=useState('');
+    useEffect(()=>{
+        const FetchData=()=>{
+
+            fetch('https://localhost:7194/api/User/Mechanics')
+            .then(response=>response.json())
+            .then(json=>{
+                setData(json)
+                setSearchApiData(json)
+
+            })
+
+        }
+        FetchData();
     },[])
     const handleFilter=(e)=>{
         if(e.target.value==='')

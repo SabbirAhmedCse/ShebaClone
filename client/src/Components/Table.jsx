@@ -1,10 +1,11 @@
 import {Table, Button} from 'semantic-ui-react'
 import {useState, useEffect} from 'react'
 import { useNavigate } from 'react-router-dom';
+import commonDataAccess from '../dataAccess/CommonDataAccess'
 import Actions from '../Components/Actions'
 
 export default function CommonTable({data, Columns, actions, functions}){
-    console.log(data, Columns);
+    
     return (
         <Table singleLine fixed>
             <Table.Header>
@@ -19,7 +20,7 @@ export default function CommonTable({data, Columns, actions, functions}){
             </Table.Header>
             <Table.Body>
                 {
-                  data && data.map((item) => {
+                  data.map((item) => {
                         return(
                             <Table.Row key={item.id}>
                                 {

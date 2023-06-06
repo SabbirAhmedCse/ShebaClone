@@ -102,13 +102,13 @@ BEGIN
     SubCategory nvarchar(100) Null,
     Description nvarchar(300) Not Null,
 	Price Money Null,
-    ImageUrl nvarchar(100) Null,
-    CreateBy bigint NOT NULL FOREIGN KEY REFERENCES Users (Id),
-    CreateAt DateTime NOT Null,
-    UpdateBy bigint  NULL FOREIGN KEY REFERENCES Users (Id),
-    UpdateAt DateTime Null,
-    IsActive bit DEFAULT 1,
-    IsDelete bit DEFAULT 0
+    Image nvarchar(100) Null,
+	CreateBy bigint NOT NULL FOREIGN KEY REFERENCES Users (Id),
+    CreateAt date Not Null,
+	UpdateBy bigint NULL FOREIGN KEY REFERENCES Users (Id),
+    UpdateAt date Null,
+    IsActive bit Not Null DEFAULT 1,
+    IsDelete bit Not Null DEFAULT 0
   );
 
   PRINT 'Services Table Created Succesfully.'
@@ -240,7 +240,17 @@ INSERT INTO [dbo].[ServiceRequests] VALUES (6,'Door is not closing',Null,Null,Nu
 
 /*Insert data for Reject resons table*/
 
-INSERT INTO [dbo].[RejectReasons] VALUES (1,'This service mechanic is not available',1000,getDate(),Null,Null,1,0)
-INSERT INTO [dbo].[RejectReasons] VALUES (1,'This service mechanic is not available',1000,getDate(),Null,Null,1,0)
-INSERT INTO [dbo].[RejectReasons] VALUES (1,'This service mechanic is not available',1000,getDate(),Null,Null,1,0)
-INSERT INTO [dbo].[RejectReasons] VALUES (1,'This service mechanic is not available',1000,getDate(),Null,Null,1,0)
+INSERT INTO [Users]([Type],[Name],[Email],[Password],[MobileNumber],[Gender],[DateOfBirth],
+			[City],[Area],[Address],[Expert],[IsAvailable],[CreateAt])
+     VALUES ('Admin','Sabbir ahmed','sabbir.cse.18@gmail.com'
+           ,'sabbir'
+           ,'01639527363'
+           ,'Male'
+           ,'1997-07-15'
+           ,'Dhaka'
+           ,'Sector-13'
+           ,'Road-20, House-61'
+           ,'All'
+           ,1
+           ,'1997-07-15')
+GO

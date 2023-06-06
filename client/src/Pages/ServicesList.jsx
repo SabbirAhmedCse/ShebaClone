@@ -68,7 +68,7 @@ export default function ServicesList() {
           });
       }, [url]);
 
-    console.log(data);
+
     const functions = [
 
     (id) => nav('/ServiceDetails', { state: { link: { url, id } } }),

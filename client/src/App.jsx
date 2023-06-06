@@ -2,7 +2,7 @@ import { Routes, Route } from 'react-router-dom'
 import config from './utils/config';
 import SignUp from './Pages/SignUp';
 import SignIn from './pages/SignIn';
-import DashBoard from './Pages/admin/dashboard'
+import DashBoardFinal from './Pages/DashBoardFinal'
 import { useEffect, useState } from 'react';
 import ServiceRequestList from './Pages/admin/serviceRequestList/ServiceRequestList';
 

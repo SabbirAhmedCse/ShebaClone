@@ -63,7 +63,6 @@ namespace API.Controllers
         }
 
         [HttpGet]
-        [Route("all")]
         public ActionResult<ServiceRequest> GetAll(int pageNumber, int pageSize)
         {
             try

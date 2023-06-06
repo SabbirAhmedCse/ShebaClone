@@ -1,22 +1,22 @@
 import { Table,Button,Container,Header } from 'semantic-ui-react'
 import axios from 'axios';
-import React, {useState,useEffect} from 'react';
+import React from 'react';
 import {  useNavigate } from 'react-router-dom';
 import commonDataAccess from '../dataAccess/CommonDataAccess';
 
 
-const baseURL = "https://localhost:7194/api/User/customer";
+const baseURL = "https://localhost:7194/api/User/Customer";
 export default function CustomerList() {
 
-  const [post, setPost] = useState([]);
+  const [post, setPost] = React.useState(null);
   const nav=useNavigate();
  
-  useEffect(() => {
-   commonDataAccess.get(baseURL).then((response) => {
-      setPost([...response]);     
+  React.useEffect(() => {
+    axios.get(baseURL).then((response) => {
+      setPost(response.data);     
     });
   }, []);
-console.log(post);
+
   if (!post) return null;
   const handleDetails=(id)=>{
     nav('/CustomerDetails',{state:id});
