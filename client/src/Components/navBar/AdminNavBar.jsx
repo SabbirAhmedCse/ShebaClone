@@ -1,7 +1,15 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, Navigate, useNavigate } from 'react-router-dom'
+import AuthAccess from '../../DataAccess/AuthAccess'
+import Button from '../button/Button';
 
 const AdminNavBar = () => {
+  const navigate = useNavigate()
+  const logoutHandle = async () =>{
+    AuthAccess.signout();
+    navigate('/signin');
+
+  }
   return (
       <div>
         <nav className="navbar navbar-expand-lg navbar-light bg-light">
@@ -16,18 +24,18 @@ const AdminNavBar = () => {
               <Link className="nav-link" to='requestedservices'>Requested Services </Link>
               </li>
               <li className="nav-item">
-              <Link className="nav-link" to='services'>Services</Link>
+              <Link className="nav-link" to='Services'>Services</Link>
               </li>
               <li className="nav-item">
-              <Link className="nav-link" to='customers'>Customers</Link>
+              <Link className="nav-link" to='Customers'>Customers</Link>
               </li>
               <li className="nav-item">
-              <Link className="nav-link" to='mechanics'>Mechanics</Link>
+              <Link className="nav-link" to='Mechanics'>Mechanics</Link>
               </li>
               
             </ul>
             <form className="form-inline my-2 my-lg-0">
-              <button className="btn btn-outline-dark my-2 my-sm-0" type="submit">Logout</button>
+              <Button className="btn btn-outline-dark my-2 my-sm-0" name={'Logout'} method={logoutHandle}/>
             </form>
           </div>
         </nav>

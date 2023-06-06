@@ -11,28 +11,29 @@ import CreateService from "../Pages/CreateService";
 import UpdateService from "../Pages/UpdateService";
 import CustomerList from "../Pages/CustomerList";
 import CustomerDetails from "../Pages/CustomerDetails";
-
+import Dashboard from "../Pages/DashboardPractice";
 
 
 export default function MechanicRoutes(){
     return(
-    <Router>
+   
         <Routes>
           <Route exact path='/' element={<DashBoard/>}></Route>
-          <Route exact path='/MechanicListWithSearch' element={<MechanicListWithSearch />}></Route>
+          <Route exact path='/MechanicListWithSearch' element={<MechanicListWithSearch/>}></Route>
           <Route exact path='/MechanicDetails' element={<MechanicDetails />}></Route>
-          <Route exact path='/Create' element={<CreateService />}></Route>
-          <Route exact path='/Update' element={<UpdateService />}></Route>
-          <Route Route exact path='/Details' element={<ServiceDetails />}></Route>
+          <Route exact path='/CreateService' element={<CreateService />}></Route>
+          <Route exact path='/UpdateService' element={<UpdateService />}></Route>
+          <Route Route exact path='/ServiceDetails' element={<ServiceDetails />}></Route>
           <Route exact path='/Services' element={<ServicesList />}></Route>
            <Route path="/customerList" element={<CustomerList/>}/> 
          <Route path="/customerDetails" element={<CustomerDetails/>}/>
+         
 
 
 
       
           
        </Routes>
-      </Router>
+    
     );
 }

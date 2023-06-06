@@ -1,9 +1,9 @@
 import React from 'react'
-import Dashboard from "./Dashboard";
+import DashBoard from './Dashboard'
 
 const index = () => {
     return (
-        <Dashboard/>
+        <DashBoard/>
     )
 }
 

@@ -13,27 +13,21 @@ public partial class Service
 
     public string? SubCategory { get; set; }
 
-    public string? Description { get; set; }
+    public string Description { get; set; }
 
     public decimal? Price { get; set; }
 
-    public string? Image { get; set; }
+    public string? ImageUrl { get; set; }
 
-    public DateTime? CreateAt { get; set; }
+    public long CreateBy { get; set; }
+    public DateTime CreateAt { get; set; }
 
+    public long? UpdateBy { get; set; }
     public DateTime? UpdateAt { get; set; }
 
     public bool? IsActive { get; set; }
 
     public bool? IsDelete { get; set; }
 
-    public static explicit operator Task<object>(Service v)
-    {
-        throw new NotImplementedException();
-    }
-
-    public static explicit operator Service(ValueTask<Service?> v)
-    {
-        throw new NotImplementedException();
-    }
+    
 }

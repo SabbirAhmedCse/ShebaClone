@@ -21,12 +21,12 @@ namespace Domain.Models
         public string? City { get; set; } 
         public string? Area { get; set; } 
         public string? Address { get; set; }
-        public string? Expert { get; set; }
-        public bool IsAvailable { get; set; }
+        public int? Expert { get; set; }
+        public bool IsAvailable { get; set; } = true;
         public DateTime CreateAt { get; set; }
         public DateTime? UpdateAt { get; set; }
-        public bool IsActive { get; set; }
-        public bool IsDelete { get; set; }
+        public bool IsActive { get; set; } = true;
+        public bool IsDelete { get; set; } = false;
 
     }
 }

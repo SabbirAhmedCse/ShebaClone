@@ -11,7 +11,7 @@ namespace Domain.Interfaces
     {
         public IEnumerable<User> GetAll(string type);
         public IEnumerable<User> GetAll(string type, int id);
-        public string Insert(User entity);
+        public bool Create(User entity);
         public User GetByEmail(string email);
         public User Get(long Id);
         public string Update(User entity);

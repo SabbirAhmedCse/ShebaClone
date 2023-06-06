@@ -2,6 +2,7 @@ using API.Services;
 using Domain.Interfaces;
 using Domain.Models;
 using Domain.Models.Pagination;
+using Domain.Models.Views;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -41,13 +42,14 @@ builder.Services.AddCors(opt => opt.AddPolicy("AppCors", builder =>
 // Add Scope
 //builder.Services.AddScoped(typeof(IGenericRepository), typeof(GenericRepository);
 builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IServiceCategoryRepository, ServiceCategoryRepository>();
 builder.Services.AddScoped<IServiceRepository, ServiceRepository>();
 builder.Services.AddScoped<IServiceRequestRepository, ServiceRequestRepository>();
 builder.Services.AddScoped<TokenService>();
 builder.Services.AddScoped<UserAuthDetails>();
+builder.Services.AddScoped<ServiceRequestDetails>();
 builder.Services.AddScoped<PageResponse>();
 builder.Services.AddScoped<RejectReason>();
-builder.Services.AddScoped<PageResponse>();
 
 
 // Add services to the container.

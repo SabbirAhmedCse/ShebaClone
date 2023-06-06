@@ -1,19 +1,24 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useLocation } from 'react-router-dom'
-import axios from 'axios'
-import { Table, TableHeader, Button } from 'semantic-ui-react'
+import { Table, Button} from 'semantic-ui-react'
+import commonDataAccess from '../dataAccess/CommonDataAccess'
 
 export default function ServiceDetails() {
 
     const [data, setData] = useState([]);
+
     const nav = useNavigate();
     const location = useLocation();
-    const Sid = location.state;
+    const {link} = location.state;
 
-    axios.get('https://localhost:7194/api/Service/' + Sid).then((response) => {
-        setData(response.data);
-    })
+    useEffect(() => {
+        commonDataAccess.get(link.url + '/' + link.id).then((response) => {
+            setData(response);
+        }).catch((error) => {
+            console.error(error);
+        });  
+     }, []);
 
     return (
         <div className="contain">
@@ -106,7 +111,7 @@ export default function ServiceDetails() {
                     </Table.Row>
                 </Table.Body>
             </Table>
-            <Button onClick={() => { nav('/Services') }}>Back to Lists</Button>
+            <Button primary onClick={() => { nav('/Services') }}>Back to Lists</Button>
         </div>
     );
 }

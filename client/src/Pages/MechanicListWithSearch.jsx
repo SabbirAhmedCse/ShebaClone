@@ -4,6 +4,7 @@ import React from 'react';
 import {  useNavigate } from 'react-router-dom';
 import { Pagination } from 'semantic-ui-react'
 import { useEffect, useState } from "react"
+import commonDataAccess from '../dataAccess/commonDataAccess';
 
 
 
@@ -12,19 +13,13 @@ export default function MechanicListWithSearch(){
    const nav=useNavigate();
     const [data,setData]=useState([]);
     const[searchApiData,setSearchApiData]=useState([]);
-    const [filterVal,SetFilterVal]=useState('');
-    useEffect(()=>{
-        const FetchData=()=>{
-            fetch('https://localhost:7194/api/User/Mechanics')
-            .then(response=>response.json())
-            .then(json=>{
-                setData(json)
-                setSearchApiData(json)
-
-            })
-
-        }
-        FetchData();
+  const [filterVal, SetFilterVal] = useState('');
+  const datalist = async () => {
+    const mechanics = await commonDataAccess.get('https://localhost:7194/api/User/mechanic')
+    setData([...mechanics]);
+  }
+  useEffect(() => {
+    datalist();
     },[])
     const handleFilter=(e)=>{
         if(e.target.value==='')
@@ -47,15 +42,16 @@ export default function MechanicListWithSearch(){
  
  
     
-  <div className="main">
+  <div className='main'>
             <div class="ui search">
                 <div class="ui icon input">
-                     <input placeholder='Serch' value={filterVal} onInput={(e)=>handleFilter(e)} />
+                     <input placeholder='Search' value={filterVal} onInput={(e)=>handleFilter(e)} />
                     <i class="search icon"></i>
                 </div>
                 <div class="results"></div>
             </div>
         </div>
+
  
 
  <Header as='h2' icon textAlign='center'>

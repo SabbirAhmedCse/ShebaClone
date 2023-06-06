@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Navigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import swal from "sweetalert";
 import serviceRequestDataAccess from "../../dataAccess/serviceRequestDataAccess";
 import Button from "../button/Button";
@@ -7,13 +7,17 @@ import Button from "../button/Button";
 
 const RejectReson = () => {
   const [requestedServiceDetails, setEequestedServiceDetails] = useState({});
-  const [rejectReason, setRejectReason] = useState({id: 0,userId: 1003,reason: ''});
-  const id = 7;
+  const [rejectReason, setRejectReason] = useState({id: null,userId: 1000,reason: ''});
+  const {id} = useParams();
+  const navigate = useNavigate();
+ const cancelHandle = () =>{
+  navigate(-1);
+ }
   const rejectReasonHandle = async () => {
     console.log(rejectReason);
     const willDelete = await swal({
         title: "Are you sure?",
-        text: "Are you sure that you want to delete this file?",
+        text: "you want to reject this service?",
         icon: "warning",
         dangerMode: true,
       });
@@ -24,28 +28,28 @@ const RejectReson = () => {
         swal(`${res}`);
       }
   };
-  useEffect(() => {
-    details();
-  }, []);
-  console.log(rejectReason);
+ 
   const details = async () => {
     const serviceRequestData =
       await serviceRequestDataAccess.serviceRequestGetById(id);
-    console.log(serviceRequestData.serviceId);
+    console.log(serviceRequestData);
     setEequestedServiceDetails({ ...serviceRequestData });
     setRejectReason(prevState=>({
         ...prevState,
-        id: serviceRequestData.id
+        id: id
       }))
   };
+  useEffect(() => {
+    details();
+  }, []);
   return (
     <div className="form-inline">
       <div className="form-group">
         <label>Service Category: </label>
-        <span>{requestedServiceDetails?.description}</span>
+        <span>{requestedServiceDetails?.serviceCategory}</span>
       </div>
       <div>
-        <label>Service sub-Category : </label>
+        <label>Service description : </label>
         <span>{requestedServiceDetails?.description}</span>
       </div>
       <div className="form-group">
@@ -60,7 +64,7 @@ const RejectReson = () => {
       </div>
       <div>
         <Button className={"btn btn-primary"} name={"Submit"}method={rejectReasonHandle}/>
-        <Button className={"btn btn-danger"} name={"Cancel"} />
+        <Button className={"btn btn-danger"} name={"Cancel"} method={cancelHandle} />
       </div>
     </div>
   );

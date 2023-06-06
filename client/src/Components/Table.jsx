@@ -1,34 +1,38 @@
 import {Table, Button} from 'semantic-ui-react'
+import {useState, useEffect} from 'react'
+import { useNavigate } from 'react-router-dom';
+import Actions from '../Components/Actions'
 
-export default function CommonTable({data, headers, dbData}){
-
-
+export default function CommonTable({data, Columns, actions, functions}){
+    console.log(data, Columns);
     return (
         <Table singleLine fixed>
             <Table.Header>
                 <Table.Row>
                     {
-                        headers.map((item) => {
-                            return(<Table.HeaderCell textAlign='center'>{item}</Table.HeaderCell>)                   
+                        Columns.map((item, index) => {
+                            return(<Table.HeaderCell key={index} textAlign='center'>{item.name}</Table.HeaderCell>)                   
                         })
                     }
-                    <Table.HeaderCell colspan='3' textAlign='center'>Actions</Table.HeaderCell>
+                    <Table.HeaderCell colspan={actions.length} textAlign='center'>Actions</Table.HeaderCell>
                 </Table.Row>
             </Table.Header>
             <Table.Body>
                 {
-                    data.map((item) => {
+                  data && data.map((item) => {
                         return(
-                            <Table.Row>
+                            <Table.Row key={item.id}>
                                 {
-                                    dbData.map((idx) => {
+                                    Columns.map((idx, innderIndex) => {
                                         return (
-                                            <Table.Cell textAlign='center'>{item[idx]}</Table.Cell>
+                                            <Table.Cell key={innderIndex} textAlign='center'>
+                                                {item[idx.value]}
+                                            </Table.Cell>
                                         )
                                     })
                                 }
                                 <div className='center'>
-                                    <Button type='submit'>Details</Button> <Button type='submit'>Update</Button> <Button type='submit'>Delete</Button>
+                                    <Actions id = {item.id} actions = {actions} functions={functions} />
                                     </div>
                             </Table.Row>
                         )

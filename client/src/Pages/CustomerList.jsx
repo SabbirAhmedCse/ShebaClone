@@ -1,22 +1,22 @@
 import { Table,Button,Container,Header } from 'semantic-ui-react'
 import axios from 'axios';
-import React from 'react';
+import React, {useState,useEffect} from 'react';
 import {  useNavigate } from 'react-router-dom';
-import { Search } from 'semantic-ui-react'
+import commonDataAccess from '../dataAccess/CommonDataAccess';
 
 
-const baseURL = "https://localhost:7194/api/User/Customer";
+const baseURL = "https://localhost:7194/api/User/customer";
 export default function CustomerList() {
 
-  const [post, setPost] = React.useState(null);
+  const [post, setPost] = useState([]);
   const nav=useNavigate();
  
-  React.useEffect(() => {
-    axios.get(baseURL).then((response) => {
-      setPost(response.data);     
+  useEffect(() => {
+   commonDataAccess.get(baseURL).then((response) => {
+      setPost([...response]);     
     });
   }, []);
-
+console.log(post);
   if (!post) return null;
   const handleDetails=(id)=>{
     nav('/CustomerDetails',{state:id});
@@ -31,9 +31,7 @@ export default function CustomerList() {
  <Header as='h2' icon textAlign='center'>
     <Header.Content>CustomerList</Header.Content>
     </Header>
-  <Search>
-
-  </Search> 
+  
   <Table striped>
     <Table.Header>
     

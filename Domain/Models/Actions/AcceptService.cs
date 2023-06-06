@@ -9,7 +9,6 @@ namespace Domain.Models.Actions
     public class AcceptService
     {
         public long Id { get; set; }
-        public long UserId { get; set; }
-        public long? UpdateBy { get; set; }
+        public string ServiceStatus { get; set; }
     }
 }

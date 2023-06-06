@@ -1,21 +1,20 @@
 import { useState, useEffect } from 'react';
-import { Table, TableHeader, Pagination } from 'semantic-ui-react'
+import { Table, TableHeader, Pagination, Search, Button} from 'semantic-ui-react'
 import { useNavigate } from 'react-router-dom'
-import axios from 'axios'
-import { Button, Grid, Search } from 'semantic-ui-react'
 import CommonTable from '../Components/Table';
+import commonDataAccess from '../dataAccess/CommonDataAccess';
 
 function SearchBar() {
     return (
         <div className="main">
-            <div class="ui search">
-                <div class="ui icon input">
-                    <input class="prompt"
+            <div className="ui search">
+                <div className="ui icon input">
+                    <input className="prompt"
                         type="text"
                         placeholder="Search..." />
-                    <i class="search icon"></i>
+                    <i className="search icon"></i>
                 </div>
-                <div class="results"></div>
+                <div className="results"></div>
             </div>
         </div>
     );
@@ -25,38 +24,68 @@ export default function ServicesList() {
 
     const [data, setData] = useState([]);
     const nav = useNavigate();
+    var url = 'https://localhost:7194/api/Service';
 
-    axios.get('https://localhost:7194/api/Service').then((response) => {
-        setData(response.data);
-    })
+    const Columns = [
+        {
+            name: "Service Id",
+            value: "id"
+        },
+        {
+            name: "Sub Category",
+            value: "subCategory"
+        },
+        {
+            name: "Description",
+            value: "description"
+        },
+        {
+            name: "Price",
+            value: "price"
+        },
+        {
+            name: "Image Url",
+            value: "image"
+        },
+    ]
+    const actions = ["Details", "Update", "Delete"];
 
-    const handleDelete = (id) => {
-        axios.delete('https://localhost:7194/api/Service/' + id);
+    const handleRemove = (id) => {
+        commonDataAccess.remove(url + '/' + id).then((response) => {
+        }).catch((error) => {
+            console.error(error);
+        });
+
         nav('/Services');
     }
 
-    const handleUpdate = (id) => {
-        nav('/Update', { state: id });
-    }
+    useEffect(() => {
+        commonDataAccess.get(url)
+          .then((data) => setData(data))
+          .catch((error) => {
+            
+            console.error('Error fetching data:', error);
+          });
+      }, [url]);
 
-    const handleDetails = (id) => {
-        nav('/Details', { state: id });
-    }
+    console.log(data);
+    const functions = [
 
-    const arr = ["Service Id", "Sub Category", "Description", "Price", "Image Url"];
-    const dbData = ["id", "subCategory", "description", "price", "image"];
+    (id) => nav('/ServiceDetails', { state: { link: { url, id } } }),
+    (id) => nav('/UpdateService', { state: { link: { url, id } } }),
+    (id) => {handleRemove(id)}
+
+  ];
 
     return (
+        
         <div className="servicelist">
             <div className="main">
                 <h2>Service Lists</h2>
             </div>
             <SearchBar />
-            <Button onClick={() => { nav('/Create'); }}>Create Services</Button>
-
-            <CommonTable data = {data} headers={arr} dbData = {dbData} />
-
-            <Pagination defaultActivePage={5} totalPages={3}/>
+            <Button primary type="submit" onClick={() => nav('/CreateService', {state:url})}>Create Service</Button>
+            <CommonTable data={data} Columns = {Columns} actions={actions} functions={functions}/>
         </div>
     );
 }

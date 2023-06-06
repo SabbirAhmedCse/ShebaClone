@@ -26,7 +26,7 @@ export default function MechanicDetails() {
     return (
       
         
-        <Container>
+        <div className='contain'>
            
             <Header as='h2' icon textAlign='center'>
             <Header.Content>Mechanics Details</Header.Content>
@@ -100,8 +100,8 @@ export default function MechanicDetails() {
                   
                 </Table.Body>
             </Table>
-            <Button primary onClick={() => { nav('/MechanicListwithSearch') }}>Back to Lists</Button>
+            <Button primary onClick={() => { nav('/Mechanics') }}>Back to Lists</Button>
 
-            </Container>
+            </div>
     );
 }

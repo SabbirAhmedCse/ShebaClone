@@ -1,10 +1,9 @@
 import React from 'react'
+import Button from './Button'
 
 const index = () => {
     return (
-        <div>
-            
-        </div>
+        <Button/>
     )
 }
 

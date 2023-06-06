@@ -1,35 +1,60 @@
 ﻿using Domain.Interfaces;
 using Domain.Models;
 using Domain.Models.Actions;
+using Domain.Models.Views;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace API.Controllers
 {
     [Authorize]
     [Route("api/[controller]")]
     [ApiController]
-    
+
     public class ServiceRequestController : ControllerBase
     {
         private readonly IServiceRequestRepository _serviceRequest;
         private readonly IUserRepository _user;
+        private readonly IServiceCategoryRepository _serviceCategory;
+        private readonly IServiceRepository _service;
         private readonly RejectReason _rejectReason;
-        public ServiceRequestController(IServiceRequestRepository serviceRequest, IUserRepository user, RejectReason rejectReason)
+        private readonly ServiceRequestDetails _serviceRequestDetails;
+        public ServiceRequestController(IServiceRequestRepository serviceRequest, IUserRepository user, IServiceCategoryRepository serviceCategory, IServiceRepository service, ServiceRequestDetails serviceRequestDetails, RejectReason rejectReason)
         {
             _serviceRequest = serviceRequest;
             _user = user;
+            _serviceCategory = serviceCategory;
+            _service = service;
+            _serviceRequestDetails = serviceRequestDetails;
             _rejectReason = rejectReason;
         }
 
         [HttpGet]
         [Route("details")]
-        public ActionResult<ServiceRequest> GetById(long Id)
+        public async Task<ActionResult<ServiceRequestDetails>> GetById(long Id)
         {
             try
             {
-                var serviceRequestDetails = _serviceRequest.Get(Id);
-                return Ok(serviceRequestDetails);
+                var serviceRequest = _serviceRequest.Get(Id);
+                var service = await _service.Get(serviceRequest.ServiceId);
+                var serviceCategory = _serviceCategory.Get(service.ServicesCategoryId);
+                var customer = _user.Get(serviceRequest.CreateBy);
+                if(serviceRequest.MechanicId != null)
+                {
+                    var mechanic = _user.Get((long)serviceRequest.MechanicId);
+                    _serviceRequestDetails.MechanicName = mechanic.Name;
+                }
+
+                _serviceRequestDetails.Id = Id;
+                _serviceRequestDetails.CustomerName = customer.Name;
+                _serviceRequestDetails.ServiceCategory = serviceCategory.CategoryName;
+                _serviceRequestDetails.Description = serviceRequest.Description;
+                _serviceRequestDetails.ServiceDate = serviceRequest.ServiceDate;
+                _serviceRequestDetails.ServiceStatus = serviceRequest.ServiceStatus;
+                _serviceRequestDetails.MechanicStatus = serviceRequest.MechanicStatus;
+                _serviceRequestDetails.Address = customer.Address;
+                return Ok(_serviceRequestDetails);
             }
             catch (Exception ex)
             {
@@ -59,10 +84,10 @@ namespace API.Controllers
             try
             {
                 var serviceRequestDetails = _serviceRequest.Get(acceptService.Id);
-                if(serviceRequestDetails != null)
+                if (serviceRequestDetails != null)
                 {
-                    serviceRequestDetails.ServiceStatus = "Approve";
-                    serviceRequestDetails.UpdateBy = acceptService.UserId;
+                    serviceRequestDetails.ServiceStatus = acceptService.ServiceStatus;
+                    serviceRequestDetails.UpdateBy = 1000;
                     serviceRequestDetails.UpdateAt = DateTime.Now;
                     var acceptResult = _serviceRequest.Update(serviceRequestDetails);
                     return Ok(acceptResult);
@@ -71,7 +96,7 @@ namespace API.Controllers
                 {
                     return NotFound("Service is not available.");
                 }
-                    
+
             }
             catch (Exception ex)
             {
@@ -81,11 +106,12 @@ namespace API.Controllers
 
         [HttpGet]
         [Route("expertmechanics")]
-        public ActionResult<User> GetAllExpertMechanicsByCategory(int serviceId)
+        public ActionResult<User> GetAllExpertMechanicsByCategory(long serviceRequestId)
         {
             try
             {
-                var allExpertMechanics = _user.GetAll("Mechanic", serviceId);
+                var serviceRequestDetails = _serviceRequest.Get(serviceRequestId);
+                var allExpertMechanics = _user.GetAll("Mechanic", serviceRequestDetails.ServiceId);
                 return Ok(allExpertMechanics);
             }
             catch (Exception ex)
@@ -119,7 +145,7 @@ namespace API.Controllers
             {
                 throw ex;
             }
-}
+        }
 
         [HttpPost("reject")]
         public ActionResult<string> RejectService(RejectService rejectService)
@@ -127,7 +153,7 @@ namespace API.Controllers
             try
             {
                 var serviceRequestDetails = _serviceRequest.Get(rejectService.Id);
-                if(serviceRequestDetails != null)
+                if (serviceRequestDetails != null)
                 {
                     serviceRequestDetails.ServiceStatus = "Reject";
                     var acceptResult = _serviceRequest.Update(serviceRequestDetails);
