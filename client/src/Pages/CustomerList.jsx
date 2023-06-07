@@ -72,7 +72,6 @@ export default function CustomerList() {
   ];
 
     return (
-        
         <div className='customerlist'>
             <div className="main">
                 <h2>Mechanic List</h2>
