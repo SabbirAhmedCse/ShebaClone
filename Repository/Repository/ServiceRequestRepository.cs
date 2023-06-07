@@ -26,21 +26,12 @@ namespace Repository.Repository
         }
 
 
-        public string Create(RejectReason entity)
+        public bool Create(RejectReason entity)
         {
             try
             {
                 var acceptResult = _appDbContext.RejectReasons.Add(entity);
-                if (acceptResult != null)
-                {
-                    _appDbContext.SaveChanges();
-                    return "Reject Successfully.";
-                }
-                else
-                {
-                    return "Reject faild";
-                }
-
+                return  _appDbContext.SaveChanges()>0;
             }
             catch (Exception ex)
             {
@@ -62,34 +53,90 @@ namespace Repository.Repository
             }
         }
 
-        public IEnumerable<ServiceRequestDetails> GetAll(int pageNumber, int pageSize)
+        public IEnumerable<ServiceRequestDetails> GetAll(int pageNumber, int pageSize, long userId, string userType)
         {
             try{
                 _pageResponse.TotalRecords = _appDbContext.ServiceRequests.Count();
                 _pageResponse.PageNumber = pageNumber;
                 _pageResponse.PageSize = pageSize;
-                var pagedServiceRequestDatas = (from sr in _appDbContext.ServiceRequests 
-                                                join u in _appDbContext.Users on sr.CreateBy equals u.Id
-                                                join s in _appDbContext.Services on sr.ServiceId equals s.Id
-                                                join sc in _appDbContext.ServiceCategories on s.ServicesCategoryId equals sc.Id
-                                                
-                                                where sr.ServiceStatus != "Reject" 
-                                                select new ServiceRequestDetails
-                                                {
-                                                    Id = sr.Id,
-                                                    CustomerName = u.Name,
-                                                    ServiceCategory=sc.CategoryName,
-                                                    ServiceSubCategory= s.SubCategory,
-                                                    Description = sr.Description,
-                                                    ServiceDate = sr.ServiceDate,
-                                                    Address = u.Address,
-                                                    ServiceStatus = sr.ServiceStatus,
-                                                    MechanicStatus = sr.MechanicStatus,
+                if (userType == "admin")
+                {
+                    var pagedServiceRequestDatas = (from sr in _appDbContext.ServiceRequests
+                                                    join u in _appDbContext.Users on sr.CreateBy equals u.Id
+                                                    join s in _appDbContext.Services on sr.ServiceId equals s.Id
+                                                    join sc in _appDbContext.ServiceCategories on s.ServicesCategoryId equals sc.Id
 
-                                                }).Skip((_pageResponse.PageNumber - 1) * _pageResponse.PageSize)
+                                                    where sr.ServiceStatus != "Reject"
+                                                    select new ServiceRequestDetails
+                                                    {
+                                                        Id = sr.Id,
+                                                        CustomerName = u.Name,
+                                                        ServiceCategory = sc.CategoryName,
+                                                        ServiceSubCategory = s.SubCategory,
+                                                        Description = sr.Description,
+                                                        ServiceDate = sr.ServiceDate,
+                                                        Address = u.Address,
+                                                        ServiceStatus = sr.ServiceStatus,
+                                                        MechanicStatus = sr.MechanicStatus,
+
+                                                    }).Skip((_pageResponse.PageNumber - 1) * _pageResponse.PageSize)
                                                 .Take(_pageResponse.PageSize).ToList();
 
-                return pagedServiceRequestDatas;
+                    return pagedServiceRequestDatas;
+                }
+                else if (userType == "mechanic")
+                {
+                    var pagedServiceRequestDatas = (from sr in _appDbContext.ServiceRequests
+                                                    join u in _appDbContext.Users on sr.CreateBy equals u.Id
+                                                    join s in _appDbContext.Services on sr.ServiceId equals s.Id
+                                                    join sc in _appDbContext.ServiceCategories on s.ServicesCategoryId equals sc.Id
+
+                                                    where sr.MechanicId == userId
+                                                    select new ServiceRequestDetails
+                                                    {
+                                                        Id = sr.Id,
+                                                        CustomerName = u.Name,
+                                                        ServiceCategory = sc.CategoryName,
+                                                        ServiceSubCategory = s.SubCategory,
+                                                        Description = sr.Description,
+                                                        ServiceDate = sr.ServiceDate,
+                                                        Address = u.Address,
+                                                        ServiceStatus = sr.ServiceStatus,
+                                                        MechanicStatus = sr.MechanicStatus,
+
+                                                    }).Skip((_pageResponse.PageNumber - 1) * _pageResponse.PageSize)
+                                                .Take(_pageResponse.PageSize).ToList();
+
+                    return pagedServiceRequestDatas;
+                }
+                else if (userType == "customer")
+                {
+                    var pagedServiceRequestDatas = (from sr in _appDbContext.ServiceRequests
+                                                    join u in _appDbContext.Users on sr.CreateBy equals u.Id
+                                                    join s in _appDbContext.Services on sr.ServiceId equals s.Id
+                                                    join sc in _appDbContext.ServiceCategories on s.ServicesCategoryId equals sc.Id
+
+                                                    where sr.CreateBy == userId
+                                                    select new ServiceRequestDetails
+                                                    {
+                                                        Id = sr.Id,
+                                                        CustomerName = u.Name,
+                                                        ServiceCategory = sc.CategoryName,
+                                                        ServiceSubCategory = s.SubCategory,
+                                                        Description = sr.Description,
+                                                        ServiceDate = sr.ServiceDate,
+                                                        Address = u.Address,
+                                                        ServiceStatus = sr.ServiceStatus,
+                                                        MechanicStatus = sr.MechanicStatus,
+
+                                                    }).Skip((_pageResponse.PageNumber - 1) * _pageResponse.PageSize)
+                                                .Take(_pageResponse.PageSize).ToList();
+
+                    return pagedServiceRequestDatas;
+                }
+                else
+                    return null;
+
             }
             catch (Exception ex)
             {
@@ -97,21 +144,12 @@ namespace Repository.Repository
             }
         }
 
-        public string Update(ServiceRequest entity)
+        public bool Update(ServiceRequest entity)
         {
             try
             {
                 var acceptResult = _appDbContext.ServiceRequests.Update(entity);
-                if (acceptResult != null)
-                {
-                    _appDbContext.SaveChanges();
-                    return "Successfull Update.";
-                }
-                else
-                {
-                    return "Update faild";
-                }
-
+                   return _appDbContext.SaveChanges() > 0;
             }
             catch (Exception ex)
             {

@@ -81,11 +81,11 @@ const Table = () => {
                 <td>{val.address}</td>
                 <td>{val.mechanicStatus}</td>
                 <td>
-                  {val.serviceStatus =='Approved' ? '' : <Button className={"btn btn-success"} name={"Accept"} method={()=>serviceRequestAcceptHandeler(val.id)} />}
+                  {val.serviceStatus != null ?'': <Button className={"btn btn-success"} name={"Accept"} method={()=>serviceRequestAcceptHandeler(val.id)} />}
                   <Link to={`/addmechanic/${val.id}`}>
                     <Button
                       className={"btn btn-primary"}
-                      name={"Add Mechanic"}
+                      name={"View"}
                     />
                   </Link>
                   <Link to={`/reject/${val.id}`}>

@@ -2,7 +2,7 @@ import { Routes, Route } from 'react-router-dom'
 import config from './utils/config';
 import SignUp from './Pages/SignUp';
 import SignIn from './pages/SignIn';
-import DashBoardFinal from './Pages/DashBoardFinal'
+import DashBoard from './Pages/admin/dashboard'
 import { useEffect, useState } from 'react';
 import ServiceRequestList from './Pages/admin/serviceRequestList/ServiceRequestList';
 
@@ -28,7 +28,7 @@ import CustomerDetails from './Pages/CustomerDetails';
 
 
 function App() {
-  const [user, setUser] = useState('');
+  const [user, setUser] = useState();
   const [auth, setAuth] =useState(false);
   const key = () => {
     console.log(config.key)
@@ -37,7 +37,7 @@ function App() {
       setAuth(true);
     }
     else {
-      setUser(null);
+      setUser('');
       setAuth(false);
     }
   }
@@ -49,8 +49,8 @@ function App() {
   return (
     <div>
       <Routes>
-        {user == null && <Route path='/*' element={<PrivateOutlet auth={auth} />}/> }
-        { user.toLowerCase() == 'admin' &&(
+        {user == '' && <Route path='/*' element={<PrivateOutlet auth={auth} />}/> }
+        { user == 'admin' &&(
           <Route path='/*' element={<PrivateOutlet auth={auth} />}>
           <Route path='dashboard' element={<DashBoard />}></Route>
           <Route  path='Mechanics' element={<MechanicListWithSearch/>}></Route>
