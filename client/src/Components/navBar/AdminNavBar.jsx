@@ -1,7 +1,15 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, Navigate, useNavigate } from 'react-router-dom'
+import AuthAccess from '../../DataAccess/AuthAccess'
+import Button from '../button/Button';
 
 const AdminNavBar = () => {
+  const navigate = useNavigate()
+  const logoutHandle = async () =>{
+    AuthAccess.signout();
+    navigate('/signin');
+
+  }
   return (
       <div>
         <nav className="navbar navbar-expand-lg navbar-light bg-light">
@@ -27,7 +35,7 @@ const AdminNavBar = () => {
               
             </ul>
             <form className="form-inline my-2 my-lg-0">
-              <button className="btn btn-outline-dark my-2 my-sm-0" type="submit">Logout</button>
+              <Button className="btn btn-outline-dark my-2 my-sm-0" name={'Logout'} method={logoutHandle}/>
             </form>
           </div>
         </nav>

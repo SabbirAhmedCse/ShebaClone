@@ -1,11 +1,12 @@
 import axios from "axios";
 import config from "../utils/config";
 
-const token = config?.key?.token;
+const token = `Bearer ${config?.key?.token}`;
 
 const get = async (url) => {
   try{
     const list = (await axios.get(url, { headers: { Authorization: token } }));
+    console.log(list)
     return  list.data;
   }
   catch(ex){

@@ -13,6 +13,8 @@ export default function UpdateService() {
     const [serviceimageurl, setServiceimageurl] = useState(null);
     const [servicedescription, setServicedescription] = useState(null);
     const [serviceprice, setServiceprice] = useState(null);
+    const[servicecreateBy, setServicecreateBy] = useState(null);
+    const[serviceupdateBy, setServiceupdateBy] = useState(null);
 
     const nav = useNavigate();
     const location = useLocation();
@@ -35,11 +37,14 @@ export default function UpdateService() {
             setServicesubtitle(data.subCategory);
             setServicedescription(data.description);
             setServiceprice(data.price);
-            setServiceimageurl(data.image);}
+            setServiceimageurl(data.imageUrl);}
      },[data]);
     
     const handleUpdate = () => {
-        var data = {id: link.id, servicesCategoryId: 2, subCategory: servicesubtitle, description: servicedescription, price: serviceprice, image: serviceimageurl};
+        var data = {id: link.id, servicesCategoryId: 2, subCategory: servicesubtitle, 
+        description: servicedescription, price: serviceprice, 
+        imageUrl: serviceimageurl, createBy: 1001, createAt: "2023-06-05T09:24:55.626Z", isActive: true, isDelete: false};
+
         commonDataAccess.update(link.url + '/' + link.id, data).then((response) => {
              nav('/Services');
         }).catch((error) => {

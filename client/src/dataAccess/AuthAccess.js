@@ -3,14 +3,18 @@ import config from "../utils/config";
 
 
 const signin = async (signinData) => {
+
   console.log(signinData);
-  const authData = (await  axios.post(`${config.baseUrl}/User/signin`, signinData)).data;
-   console.log(JSON.stringify(authData))
-  if (authData !=null) {
+  const authData = (await axios.post(`${config.baseUrl}/User/signin`, signinData)).data;
+  console.log(authData);
+
+  if (authData.token!=null) {
+    console.log(JSON.stringify(authData));
     localStorage.setItem('authDetails', JSON.stringify(authData));
-    console.log(JSON.parse(localStorage.getItem('authDetails')).token)
+    console.log(JSON.parse(localStorage.getItem('authDetails')).token);
     return true;
   }
+
   else{
     localStorage.removeItem("authDetails");
     return false;
@@ -18,7 +22,7 @@ const signin = async (signinData) => {
 };
 const signout = () => {
   localStorage.removeItem("authDetails");
-  return {};
+  return false;
 };
 
 

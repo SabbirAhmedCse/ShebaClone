@@ -13,13 +13,17 @@ export default function CreateService() {
     const [serviceimageurl, setServiceimageurl] = useState(null);
     const [servicedescription, setServicedescription] = useState(null);
     const [serviceprice, setServiceprice] = useState(null);
+    const[servicecreateBy, setServicecreateBy] = useState(null);
 
     const nav = useNavigate();
     const location = useLocation();
     const url = location.state;
 
     const handleCreate = () => {
-        var data = {servicesCategoryId: 2, subCategory: servicesubtitle, description: servicedescription, price: serviceprice, image: serviceimageurl};
+        var data = {servicesCategoryId: 2, subCategory: servicesubtitle, 
+        description: servicedescription, price: serviceprice, 
+        imageUrl: serviceimageurl, createBy: 1000, createAt: "2023-06-05T09:24:55.626Z", isActive: true, isDelete: false};
+        
         commonDataAccess.post(url,data).then((response) => {
         }).catch((error) => {
             console.error(error);

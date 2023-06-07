@@ -4,6 +4,7 @@ import React from 'react';
 import {  useNavigate } from 'react-router-dom';
 import { Pagination } from 'semantic-ui-react'
 import { useEffect, useState } from "react"
+import commonDataAccess from '../dataAccess/commonDataAccess';
 
 
 
@@ -12,20 +13,14 @@ export default function MechanicListWithSearch(){
    const nav=useNavigate();
     const [data,setData]=useState([]);
     const[searchApiData,setSearchApiData]=useState([]);
-    const [filterVal,SetFilterVal]=useState('');
-    useEffect(()=>{
-        const FetchData=()=>{
-
-            fetch('https://localhost:7194/api/User/Mechanics')
-            .then(response=>response.json())
-            .then(json=>{
-                setData(json)
-                setSearchApiData(json)
-
-            })
-
-        }
-        FetchData();
+  const [filterVal, SetFilterVal] = useState('');
+  const datalist = async () => {
+    const dl = await commonDataAccess.get('https://localhost:7194/api/User/mechanics')
+    console.log(dl);
+  }
+  useEffect(() => {
+    datalist();
+        
     },[])
     const handleFilter=(e)=>{
         if(e.target.value==='')

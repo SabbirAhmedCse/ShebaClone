@@ -16,7 +16,8 @@ const serviceRequestAccept = (data) => {
 };
 
 const serviceExpertMechanicGetAll = async (id) => {
-  return commonDataAccess.get( `${config.baseUrl}/ServiceRequest/expertmechanics?serviceId=${id}`);
+  console.log(id)
+  return await commonDataAccess.get( `${config.baseUrl}/ServiceRequest/expertmechanics?serviceRequestId=${id}`);
 };
 
 const serviceRequestAddMechanic = (data, params) => {
