@@ -1,26 +1,30 @@
 import React, { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import swal from "sweetalert";
 import serviceRequestDataAccess from "../../dataAccess/serviceRequestDataAccess";
 import Button from "../button/Button";
+import Loader from "../spinner/Loader";
 const Details = () => {
   let { id } = useParams();
   const [requestedServiceDetails, setEequestedServiceDetails] = useState({});
   const [expertMechanics, setExpertMechanics] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
   const [addMechanic, setAddMechanic] = useState({
     serviceId: id,
     mechanicId: null,
   });
   const [selectMechanicName, setSelectMechanicName] = useState("");
-
+  const navigate = useNavigate();
   const details = async () => {
     const serviceRequestData =
       await serviceRequestDataAccess.serviceRequestGetById(id);
     setEequestedServiceDetails({ ...serviceRequestData });
     const expertMechanicList =
       await serviceRequestDataAccess.serviceExpertMechanicGetAll(id);
-    console.log(expertMechanicList);
+    if(expertMechanicList!=null){
     setExpertMechanics([...expertMechanicList]);
+    setIsLoading(true);
+    }
   };
   useEffect(() => {
     details();
@@ -45,8 +49,9 @@ const Details = () => {
       }
     }
   };
-
-  console.log(selectMechanicName);
+  const cancelHandle = () =>{
+    navigate(-1);
+   }
   return (
     <div>
       <h1>Add Menanic?</h1>
@@ -64,7 +69,7 @@ const Details = () => {
       </div>
       <div>
         <label>Service Date: </label>
-        <span>{requestedServiceDetails?.description}</span>
+        <span>{requestedServiceDetails?.serviceDate}</span>
       </div>
       <div>
         <label>Service Status: </label>
@@ -82,7 +87,7 @@ const Details = () => {
       ) : (
         <div>
           <label>Expert Mechanic: </label>
-          <select
+           <select
             id="mechanic"
             onChange={(e) => {
               setAddMechanic((prevState) => ({
@@ -105,14 +110,12 @@ const Details = () => {
       )}
 
       <div>
-        <Button
+        {requestedServiceDetails.mechanicName ? null : <Button
           className={"btn btn-success"}
           name={"Add"}
           method={() => addMechanicHandle()}
-        />
-        <Link to={`/addmechanic/${requestedServiceDetails.id}`}>
-          <Button className={"btn btn-warning"} name={"Cancel"} />
-        </Link>
+        />}
+          <Button className={"btn btn-warning"} name={"Cancel"}  method={cancelHandle}/>
         <Link to={`/reject/${requestedServiceDetails.id}`}>
           <Button className={"btn btn-danger"} name={"Reject"} />
         </Link>

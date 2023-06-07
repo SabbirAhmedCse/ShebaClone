@@ -25,8 +25,8 @@ namespace Domain.Models
         public bool IsAvailable { get; set; } = true;
         public DateTime CreateAt { get; set; }
         public DateTime? UpdateAt { get; set; }
-        public bool IsActive { get; set; }
-        public bool IsDelete { get; set; }
+        public bool IsActive { get; set; } = true;
+        public bool IsDelete { get; set; } = false;
 
     }
 }

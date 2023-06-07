@@ -2,6 +2,7 @@ import { Table,Button,Container,Header } from 'semantic-ui-react'
 import axios from 'axios';
 import React from 'react';
 import {  useNavigate } from 'react-router-dom';
+import commonDataAccess from '../dataAccess/CommonDataAccess';
 
 
 const baseURL = "https://localhost:7194/api/User/Customer";

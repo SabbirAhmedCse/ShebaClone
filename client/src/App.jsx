@@ -28,7 +28,7 @@ import CustomerDetails from './Pages/CustomerDetails';
 
 
 function App() {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState('');
   const [auth, setAuth] =useState(false);
   const key = () => {
     console.log(config.key)
@@ -46,11 +46,11 @@ function App() {
   useEffect(() => {
     key();
   }, []);
-  
   return (
     <div>
       <Routes>
-        { user == 'admin' &&(
+        {user == null && <Route path='/*' element={<PrivateOutlet auth={auth} />}/> }
+        { user.toLowerCase() == 'admin' &&(
           <Route path='/*' element={<PrivateOutlet auth={auth} />}>
           <Route path='dashboard' element={<DashBoard />}></Route>
           <Route  path='Mechanics' element={<MechanicListWithSearch/>}></Route>

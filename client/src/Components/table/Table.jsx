@@ -3,10 +3,11 @@ import { Link } from "react-router-dom";
 import swal from "sweetalert";
 import serviceRequestDataAccess from "../../dataAccess/serviceRequestDataAccess";
 import Button from "../button/Button";
-import Details from '../serviceRequest/Details'
+import Loader from "../spinner/Loader";
 
 const Table = () => {
   const [serviceRequestData, setServiceRequestData] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
   const pageNumber = 1,
     pageSize = 20;
     const serviceRequestAcceptData ={
@@ -19,8 +20,11 @@ const Table = () => {
       pageSize
     );
 
-   
+   if(data!=null){
     setServiceRequestData([...data]);
+    setIsLoading(false);
+   }
+    
   };
   useEffect(() => {
     tableDataHandler();
@@ -39,6 +43,7 @@ const Table = () => {
       const response = await serviceRequestDataAccess.serviceRequestAccept(serviceRequestAcceptData);
       swal({
         text:`${response}`,
+        icon: 'success',
       })
     }
   }
@@ -60,7 +65,10 @@ const Table = () => {
           </tr>
         </thead>
         <tbody>
-          {serviceRequestData && serviceRequestData.map((val) => {
+          {isLoading? 
+                <td colspan="100%">
+                  <Loader/>
+                </td> : serviceRequestData && serviceRequestData.map((val) => {
             return (
               <tr key={val.id}>
                 <td>{val.id}</td>
@@ -73,7 +81,7 @@ const Table = () => {
                 <td>{val.address}</td>
                 <td>{val.mechanicStatus}</td>
                 <td>
-                  <Button className={"btn btn-success"} name={"Accept"} method={()=>serviceRequestAcceptHandeler(val.id)} />
+                  {val.serviceStatus =='Approved' ? '' : <Button className={"btn btn-success"} name={"Accept"} method={()=>serviceRequestAcceptHandeler(val.id)} />}
                   <Link to={`/addmechanic/${val.id}`}>
                     <Button
                       className={"btn btn-primary"}

@@ -25,19 +25,83 @@ namespace API.Controllers
             _userToken = userToken;
         }
 
+        [AllowAnonymous]
+        [HttpPost]
+        [Route("signup")]
+        public ActionResult<UserAuthDetails> SignUp (User userDetails)
+        {
+            try
+            {
+                var user = _user.GetByEmail(userDetails.Email);
+                if (user == null)
+                {
+                    var result = _user.Create(userDetails);
+                    if (result == true)
+                    {
+                        var authData = _userToken.CreateToken(userDetails);
+                        if (authData == null)
+                        {
+                            return Unauthorized();
+                        }
+                        else
+                        {
+                            authData.massage = "signUp successfully!";
+                            return Ok(authData);
+                        }
+                    }
+                    return BadRequest();
+                }
+                return Ok("Email allready exist!");
+            }
+            catch(Exception ex)
+            {
+                throw ex;
+            }
+            
+        }
+
+        [AllowAnonymous]
+        [HttpPost]
+        [Route("signin")]
+        public ActionResult<UserAuthDetails> SignIn(UserAuth userCardinalitis)
+        {
+            try
+            {
+                if (userCardinalitis != null)
+                {
+                    var userDetails = _user.GetByEmail(userCardinalitis.Email);
+                    var authData = _userToken.CreateToken(userDetails);
+                    if (authData == null)
+                    {
+                        return Unauthorized();
+                    }
+
+                    return Ok(authData);
+                }
+
+                return NotFound("Enter User Data");
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+        }
+
         [HttpGet]
         public ActionResult<User> Get(long Id)
         {
             try
             {
-                var obj = _user.Get(Id);
-                if (obj == null)
+                var userDetails = _user.Get(Id);
+                if (userDetails == null)
                 {
                     return NotFound();
                 }
-                else if (obj != null)
+                else if (userDetails != null)
                 {
-                    return Ok(obj);
+                    return Ok(userDetails);
                 }
                 else
                 {
@@ -73,36 +137,6 @@ namespace API.Controllers
             {
                 throw ex;
             }
-        }
-        
-        [AllowAnonymous]
-        [HttpPost]
-        [Route("signin")]
-        public ActionResult<UserAuthDetails> SignIn(UserAuth userCardinalitis)
-        {
-            try
-            {
-                if(userCardinalitis != null)
-                {
-                    var userDetails = _user.GetByEmail(userCardinalitis.Email);
-                    var authData = _userToken.CreateToken(userDetails);
-                    if (authData == null)
-                    {
-                        return Unauthorized();
-                    }
-
-                    return Ok(authData);
-                }
-
-                return NotFound("Enter User Data");
-                 
-            }
-            catch(Exception ex)
-            {
-                throw ex;
-            }
-            
-        }
-
+        }   
     }
 }

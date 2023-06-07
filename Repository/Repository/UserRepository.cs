@@ -16,9 +16,19 @@ namespace Repository.Repository
             _appDbContext = appDbContext;
         }
 
-        public string Insert(User entity)
+        public bool Create(User userDetails)
         {
-            return "";
+            try
+            {
+                userDetails.CreateAt = DateTime.Now;
+                _appDbContext.Users.Add(userDetails);
+                return _appDbContext.SaveChanges() > 0;
+            }
+            catch(Exception ex)
+            {
+                throw ex;
+            }
+            
         }
         public User GetByEmail(string email)
         {
