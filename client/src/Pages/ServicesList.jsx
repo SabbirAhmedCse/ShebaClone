@@ -45,19 +45,10 @@ export default function ServicesList() {
         },
         {
             name: "Image Url",
-            value: "image"
+            value: "imageUrl"
         },
     ]
-    const actions = ["Details", "Update", "Delete"];
-
-    const handleRemove = (id) => {
-        commonDataAccess.remove(url + '/' + id).then((response) => {
-        }).catch((error) => {
-            console.error(error);
-        });
-
-        nav('/Services');
-    }
+    const actions = ["Details", "Update"];
 
     useEffect(() => {
         commonDataAccess.get(url)
@@ -68,12 +59,12 @@ export default function ServicesList() {
           });
       }, [url]);
 
+    console.log(data);
 
     const functions = [
 
     (id) => nav('/ServiceDetails', { state: { link: { url, id } } }),
     (id) => nav('/UpdateService', { state: { link: { url, id } } }),
-    (id) => {handleRemove(id)}
 
   ];
 

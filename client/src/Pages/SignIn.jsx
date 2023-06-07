@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import AuthAccess from "../dataAccess/AuthAccess";
-import { Link, useNavigate,  } from "react-router-dom";
+import AuthAccess from "../DataAccess/AuthAccess";
+import { Link, useNavigate } from "react-router-dom";
 
 const SignIn = () => {
   const [signInData, setSignInData] = useState({ email: "", password: "" });
-  const navigate = useNavigate();
+  const navigate =useNavigate()
   const signIn = (e) => {
     let name = e.target.name;
     let value = e.target.value;
@@ -19,7 +19,8 @@ const SignIn = () => {
 
   const signInHandeler = async  (e) => {
     e.preventDefault();
-    const signInResponse = await AuthAccess.signin(signInData);
+    const signInResponse = await  AuthAccess.signin(signInData);
+    console.log(signInResponse)
     if (signInResponse) {
       navigate('/dashboard')
       window.location.reload();

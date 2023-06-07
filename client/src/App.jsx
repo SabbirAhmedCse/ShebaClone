@@ -10,7 +10,7 @@ import PrivateOutlet from './Pages/PrivateOutlet';
 import Details from './components/serviceRequest/Details';
 import RejectReson from './components/serviceRequest/RejectReson';
 //mechanic List
-import MechanicListWithSearch from "./Pages/MechanicListWithSearch";
+import MechanicListWithSearch from "./Pages/MechanicList";
 import MechanicDetails from './Pages/MechanicDetails';
 //Service List{Problem not solved}
 import ServicesList from './Pages/ServicesList';

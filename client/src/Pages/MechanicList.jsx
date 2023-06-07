@@ -1,47 +1,77 @@
-import { useState} from 'react';
-import {  Pagination } from 'semantic-ui-react'
-
-import axios from 'axios'
-
+import { useState, useEffect } from 'react';
+import { Table, TableHeader, Pagination, Search, Button} from 'semantic-ui-react'
+import { useNavigate } from 'react-router-dom'
 import CommonTable from '../Components/Table';
+import commonDataAccess from '../dataAccess/CommonDataAccess';
 
 function SearchBar() {
     return (
         <div className="main">
-            <div class="ui search">
-                <div class="ui icon input">
-                    <input class="prompt"
+            <div className="ui search">
+                <div className="ui icon input">
+                    <input className="prompt"
                         type="text"
                         placeholder="Search..." />
-                    <i class="search icon"></i>
+                    <i className="search icon"></i>
                 </div>
-                <div class="results"></div>
+                <div className="results"></div>
             </div>
         </div>
     );
 }
 
-export default function ServicesList() {
+export default function MechanicList() {
 
     const [data, setData] = useState([]);
- 
+    const nav = useNavigate();
+    var url = 'https://localhost:7194/api/User/mechanic';
 
-    axios.get('https://localhost:7194/api/User/Mechanics').then((response) => {
-        setData(response.data);
-    })
+    const Columns = [
+        {
+            name: "Id",
+            value: "id"
+        },
+        {
+            name: "Name",
+            value: "name"
+        },
+        {
+            name: "Email",
+            value: "email"
+        },
+        {
+            name: "Mobile Number",
+            value: "mobileNumber"
+        },
+        
+    ]
+    const actions = ["Details"];
 
-    const arr = [" Id", "Name", "Email", "Mobile Number", "City","Area","Address","Active Status"];
-    const dbData = ["id", "name", "email", "mobileNumber", "city","area","address","isActive"];
+   
+
+    useEffect(() => {
+        commonDataAccess.get(url)
+          .then((data) => setData(data))
+          .catch((error) => {
+            
+            console.error('Error fetching data:', error);
+          });
+      }, [url]);
+
+    console.log(data);
+    const functions = [
+
+    (id)=> nav('/MechanicDetails', { state: { link: { url, id } } })
+  ];
 
     return (
-        <div className="servicelist">
+        
+        <div className='servicelist'>
             <div className="main">
-                <h2>Mechanic Lst</h2>
+                <h2>Mechanic List</h2>
             </div>
             <SearchBar />
-           
-            <CommonTable data = {data} headers={arr} dbData = {dbData} actions = {1} />
-            <Pagination defaultActivePage={5} totalPages={3}/>
+            <CommonTable data={data} Columns = {Columns} actions={actions} functions={functions}/>
         </div>
     );
 }
