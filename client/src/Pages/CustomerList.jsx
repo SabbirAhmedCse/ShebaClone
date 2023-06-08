@@ -21,7 +21,6 @@ function SearchBar() {
 }
 
 export default function CustomerList() {
-
     const [data, setData] = useState([]);
     const nav = useNavigate();
     var url = 'https://localhost:7194/api/User/customer';
@@ -54,13 +53,10 @@ export default function CustomerList() {
     ]
     const actions = ["Details"];
 
-   
-
     useEffect(() => {
         commonDataAccess.get(url)
           .then((data) => setData(data))
-          .catch((error) => {
-            
+          .catch((error) => {            
             console.error('Error fetching data:', error);
           });
       }, [url]);
@@ -70,7 +66,7 @@ export default function CustomerList() {
 
     (id)=> nav('/CustomerDetails', { state: { link: { url, id } } })
   ];
-
+    
     return (
         <div className='customerlist'>
             <div className="main">
