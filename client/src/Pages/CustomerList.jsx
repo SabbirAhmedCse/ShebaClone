@@ -74,7 +74,7 @@ export default function CustomerList() {
     return (
         <div className='customerlist'>
             <div className="main">
-                <h2>Mechanic List</h2>
+                <h2>Customer List</h2>
             </div>
             <SearchBar />
             <CommonTable data={data} Columns = {Columns} actions={actions} functions={functions}/>
