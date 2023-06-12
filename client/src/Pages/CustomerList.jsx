@@ -1,74 +1,69 @@
-import { Table,Button,Container,Header } from 'semantic-ui-react'
-import axios from 'axios';
-import React from 'react';
-import {  useNavigate } from 'react-router-dom';
-import commonDataAccess from '../dataAccess/CommonDataAccess';
+import { useState} from 'react';
+import {  Pagination } from 'semantic-ui-react'
+import axios from 'axios'
+import CommonTable from '../Components/Table';
 
+function SearchBar() {
+    return (
+        <div className="main">
+            <div className="ui search">
+                <div className="ui icon input">
+                    <input className="prompt"
+                        type="text"
+                        placeholder="Search..." />
+                    <i className="search icon"></i>
+                </div>
+                <div className="results"></div>
+            </div>
+        </div>
+    );
+}
 
-const baseURL = "https://localhost:7194/api/User/Customer";
 export default function CustomerList() {
 
-  const [post, setPost] = React.useState(null);
-  const nav=useNavigate();
- 
-  React.useEffect(() => {
-    axios.get(baseURL).then((response) => {
-      setPost(response.data);     
-    });
-  }, []);
+    const [data, setData] = useState([]);
+    const nav = useNavigate();
+    var url = 'https://localhost:7194/api/User/customer';
+    const Columns = [
+        {
+            name: "Id",
+            value: "id"
+        },
+        {
+            name: "Name",
+            value: "name"
+        },
+        {
+            name: "Email",
+            value: "email"
+        },
+        {
+            name: "Mobile Number",
+            value: "mobilneNumber"
+        },
+        {
+            name: "City",
+            value: "city"
+        },
+        {
+            name: "Area",
+            value: "area"
+        },
+        {
+            name: "Address",
+            value: "address"
+        },
+    ]
 
-  if (!post) return null;
-  const handleDetails=(id)=>{
-    nav('/CustomerDetails',{state:id});
-  }
-
-
- return <>
- 
- <Container>
- <br />
-   
- <Header as='h2' icon textAlign='center'>
-    <Header.Content>CustomerList</Header.Content>
-    </Header>
-  
-  <Table striped>
-    <Table.Header>
-    
-      <Table.Row>
-        <Table.HeaderCell>Customer Id</Table.HeaderCell>
-        <Table.HeaderCell>Customer Name</Table.HeaderCell>
-        <Table.HeaderCell>Email</Table.HeaderCell>
-        <Table.HeaderCell>MobileNumber</Table.HeaderCell>
-        <Table.HeaderCell>Address</Table.HeaderCell>
-        <Table.HeaderCell>City</Table.HeaderCell>
-        <Table.HeaderCell>Gender</Table.HeaderCell>
-        <Table.HeaderCell>Action</Table.HeaderCell>
-      </Table.Row>
-    </Table.Header>
-
-    <Table.Body>
-     {
-   
-      post.map((item)=> 
-      
-      
-      <Table.Row>
+    return (
         
-      <Table.Cell>{item.id}</Table.Cell>
-      <Table.Cell>{item.name}</Table.Cell>
-      <Table.Cell>{item.email}</Table.Cell>
-      <Table.Cell>{item.mobileNumber}</Table.Cell>
-      <Table.Cell>{item.address}</Table.Cell>
-      <Table.Cell>{item.city}</Table.Cell>
-      <Table.Cell>{item.gender}</Table.Cell>
-      <Button primary type='Submit' onClick={()=>handleDetails(item.id)}> Details</Button>
-    </Table.Row>
-    )
-     }
-    </Table.Body>
-  </Table>
- 
-  </Container>
- </>
-};
+        <div className="customerlist">
+            <div className="main">
+                <h2>CustomerList</h2>
+            </div>
+            <SearchBar />
+            {/* <Button primary type="submit" onClick={() => nav('/CreateService', {state:url})}>Create Service</Button>
+            <CommonTable data={data} Columns = {Columns} actions={actions} functions={functions}/> */}
+        </div>
+    );
+}
