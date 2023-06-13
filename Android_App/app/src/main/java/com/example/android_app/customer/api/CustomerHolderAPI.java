@@ -19,4 +19,6 @@ public interface CustomerHolderAPI {
 
     @GET("User")
     Call<Customer> getCustomer();
+
+
 }
