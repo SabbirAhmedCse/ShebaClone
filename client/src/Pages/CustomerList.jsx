@@ -23,7 +23,7 @@ function SearchBar() {
 export default function CustomerList() {
     const [data, setData] = useState([]);
     const nav = useNavigate();
-    var url = 'https://localhost:7194/api/User/customer';
+    var url = 'https://localhost:7194/api/User/userType?type=customer';
 
     const Columns = [
         {

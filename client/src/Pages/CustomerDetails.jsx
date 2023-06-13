@@ -1,25 +1,25 @@
-import React from 'react'
-import { useNavigate } from 'react-router-dom'
-import { useLocation } from 'react-router-dom'
-import axios from 'axios'
+import React, {useState, useEffect} from 'react'
+import { useNavigate, useLocation } from 'react-router-dom'
 import { Table,Container,Header,  Button } from 'semantic-ui-react'
+import commonDataAccess from '../dataAccess/CommonDataAccess';
 
 
 
 const baseURL = 'https://localhost:7194/api/User?Id=';
 
 export default function CustomerDetails() {
-    const [post, setPost] = React.useState(null);
-   
+    const [post, setPost] = useState(null);
     const nav = useNavigate();
     const location = useLocation();
-    const Uid = location.state;
-
-    React.useEffect(() => {
-        axios.get(baseURL+Uid).then((response) => {
-          setPost(response.data);
-        });
-      }, []);
+    const {link} = location.state;
+    console.log(link.id);
+    useEffect(() => {
+        commonDataAccess.get(baseURL+ link.id).then((response) => {
+            setPost(response);
+        }).catch((error) => {
+            console.error(error);
+        });  
+     }, []);
 
       if (!post) return null;
      

@@ -90,7 +90,6 @@ namespace API.Controllers
         }
 
         [HttpGet]
-        [Route("id")]
         public ActionResult<User> GetUser(long id)
         {
             try
@@ -117,11 +116,11 @@ namespace API.Controllers
         
         [HttpGet]
         [Route("userType")]
-        public ActionResult<User> GetAllUserByType(string userType)
+        public ActionResult<User> GetAllUserByType(string type)
         {
             try
             {
-                var allUsers = _user.GetAll(userType);
+                var allUsers = _user.GetAll(type);
                 if (allUsers == null)
                 {
                     return NotFound();
