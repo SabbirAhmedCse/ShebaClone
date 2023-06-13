@@ -50,7 +50,7 @@ function App() {
     <div>
       <Routes>
         {user == '' && <Route path='/*' element={<PrivateOutlet auth={auth} />}/> }
-        { user == 'admin' &&(
+        { user?.toLowerCase() == 'admin' &&(
           <Route path='/*' element={<PrivateOutlet auth={auth} />}>
           <Route path='dashboard' element={<DashBoard />}></Route>
           <Route  path='Mechanics' element={<MechanicListWithSearch/>}></Route>
