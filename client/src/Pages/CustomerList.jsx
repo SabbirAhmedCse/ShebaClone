@@ -1,74 +1,79 @@
-import { Table,Button,Container,Header } from 'semantic-ui-react'
-import axios from 'axios';
-import React from 'react';
-import {  useNavigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { Table, TableHeader, Pagination, Search, Button} from 'semantic-ui-react'
+import { useNavigate } from 'react-router-dom'
+import CommonTable from '../Components/Table';
 import commonDataAccess from '../dataAccess/CommonDataAccess';
 
+function SearchBar() {
+    return (
+        <div className="main">
+            <div className="ui search">
+                <div className="ui icon input">
+                    <input className="prompt"
+                        type="text"
+                        placeholder="Search..." />
+                    <i className="search icon"></i>
+                </div>
+                <div className="results"></div>
+            </div>
+        </div>
+    );
+}
 
-const baseURL = "https://localhost:7194/api/User/Customer";
 export default function CustomerList() {
+    const [data, setData] = useState([]);
+    const nav = useNavigate();
+    var url = 'https://localhost:7194/api/User/customer';
 
-  const [post, setPost] = React.useState(null);
-  const nav=useNavigate();
- 
-  React.useEffect(() => {
-    axios.get(baseURL).then((response) => {
-      setPost(response.data);     
-    });
-  }, []);
+    const Columns = [
+        {
+            name: "Id",
+            value: "id"
+        },
+        {
+            name: "Name",
+            value: "name"
+        },
+        {
+            name: "Email",
+            value: "email"
+        },
+        {
+            name: "Mobile Number",
+            value: "mobileNumber"
+        },
+        {
+          name: "Area",
+          value: "area"
+      },
+      {
+        name: "Address",
+        value: "address"
+    },
+    ]
+    const actions = ["Details"];
 
-  if (!post) return null;
-  const handleDetails=(id)=>{
-    nav('/CustomerDetails',{state:id});
-  }
+    useEffect(() => {
+        commonDataAccess.get(url)
+          .then((data) => setData(data))
+          .catch((error) => {            
+            console.error('Error fetching data:', error);
+          });
+      }, [url]);
 
+    console.log(data);
+    const functions = [
 
- return <>
- 
- <Container>
- <br />
-   
- <Header as='h2' icon textAlign='center'>
-    <Header.Content>CustomerList</Header.Content>
-    </Header>
-  
-  <Table striped>
-    <Table.Header>
+    (id)=> nav('/CustomerDetails', { state: { link: { url, id } } })
+  ];
     
-      <Table.Row>
-        <Table.HeaderCell>Customer Id</Table.HeaderCell>
-        <Table.HeaderCell>Customer Name</Table.HeaderCell>
-        <Table.HeaderCell>Email</Table.HeaderCell>
-        <Table.HeaderCell>MobileNumber</Table.HeaderCell>
-        <Table.HeaderCell>Address</Table.HeaderCell>
-        <Table.HeaderCell>City</Table.HeaderCell>
-        <Table.HeaderCell>Gender</Table.HeaderCell>
-        <Table.HeaderCell>Action</Table.HeaderCell>
-      </Table.Row>
-    </Table.Header>
-
-    <Table.Body>
-     {
-   
-      post.map((item)=> 
-      
-      
-      <Table.Row>
-        
-      <Table.Cell>{item.id}</Table.Cell>
-      <Table.Cell>{item.name}</Table.Cell>
-      <Table.Cell>{item.email}</Table.Cell>
-      <Table.Cell>{item.mobileNumber}</Table.Cell>
-      <Table.Cell>{item.address}</Table.Cell>
-      <Table.Cell>{item.city}</Table.Cell>
-      <Table.Cell>{item.gender}</Table.Cell>
-      <Button primary type='Submit' onClick={()=>handleDetails(item.id)}> Details</Button>
-    </Table.Row>
-    )
-     }
-    </Table.Body>
-  </Table>
- 
-  </Container>
- </>
-};
+    return (
+        <div className='customerlist'>
+            <div className="main">
+                <h2>Customer List</h2>
+            </div>
+            <SearchBar />
+            <CommonTable data={data} Columns = {Columns} actions={actions} functions={functions}/>
+        </div>
+    );
+}

@@ -6,7 +6,7 @@ const signin = async (signinData) => {
 
   console.log(signinData);
   const authData = (await axios.post(`${config.baseUrl}/User/signin`, signinData)).data;
-   console.log(authData)
+  console.log(authData)
   if (authData.token!=null) {
     console.log(JSON.stringify(authData))
     localStorage.setItem('authDetails', JSON.stringify(authData));
