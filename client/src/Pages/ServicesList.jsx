@@ -3,7 +3,8 @@ import { Table, TableHeader, Pagination, Search, Button} from 'semantic-ui-react
 import { useNavigate } from 'react-router-dom'
 import CommonTable from '../Components/Table';
 import commonDataAccess from '../dataAccess/CommonDataAccess';
- 
+import config from '../utils/config';
+
 
 function SearchBar() {
     return (
@@ -25,7 +26,7 @@ export default function ServicesList() {
 
     const [data, setData] = useState([]);
     const nav = useNavigate();
-    var url = 'https://localhost:7194/api/Service';
+    var url = `${config.baseUrl}/Service`;
 
     const Columns = [
         {

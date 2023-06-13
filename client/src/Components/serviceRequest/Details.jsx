@@ -15,6 +15,8 @@ const Details = () => {
   });
   const [selectMechanicName, setSelectMechanicName] = useState("");
   const navigate = useNavigate();
+
+
   const details = async () => {
     const serviceRequestData =
       await serviceRequestDataAccess.serviceRequestGetById(id);
@@ -26,9 +28,12 @@ const Details = () => {
     setIsLoading(true);
     }
   };
+
+
   useEffect(() => {
     details();
   }, []);
+
   const addMechanicHandle = async () => {
     if (addMechanic.mechanicId == null) {
       alert("please select mechanic");
@@ -46,12 +51,18 @@ const Details = () => {
         swal({
           text: `${response}`,
         });
+        setEequestedServiceDetails(prevState=>({
+          ...prevState,
+          mechanicName : selectMechanicName
+        }))
       }
     }
   };
+
   const cancelHandle = () =>{
     navigate(-1);
    }
+
   return (
     <div>
       <h1>Add Menanic?</h1>

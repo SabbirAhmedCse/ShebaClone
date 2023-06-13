@@ -1,7 +1,7 @@
-const key = JSON.parse(localStorage.getItem('authDetails')) ;
-const baseUrl = "https://localhost:7194/api";
+const key = JSON.parse(localStorage.getItem("authDetails"));
+const baseUrl = "http://shebaapi.xyz/api";
 const config = {
-    key,
-    baseUrl
-}
+  key,
+  baseUrl,
+};
 export default config;
