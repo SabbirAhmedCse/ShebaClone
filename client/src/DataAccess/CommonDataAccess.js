@@ -4,30 +4,25 @@ import config from "../utils/config";
 const token = `Bearer ${config?.key?.token}`;
 
 const get = async (url) => {
-  try{
-    const list = (await axios.get(url, { headers: { Authorization: token } }));
-    console.log(list)
-    return  list.data;
-  }
-  catch(ex){
-
-  }
+  try {
+    const list = await axios.get(url, { headers: { Authorization: token } });
+    console.log(list);
+    return list.data;
+  } catch (ex) {}
 };
 const post = async (url, data) => {
   return (
     await axios.post(url, data, {
-      headers: { Authorization: config.key },
+      headers: { Authorization: token },
     })
   ).data;
 };
 const update = async (url, data) => {
-  return (
-    await axios.put(url, data, { headers: { Authorization: token } })
-  ).data;
+  return (await axios.put(url, data, { headers: { Authorization: token } }))
+    .data;
 };
 const remove = async (url) => {
-  return (await axios.delete(url, { headers: { Authorization: token } }))
-    .data;
+  return (await axios.delete(url, { headers: { Authorization: token } })).data;
 };
 const commonDataAccess = {
   get,
