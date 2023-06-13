@@ -1,12 +1,14 @@
 import {useNavigate } from 'react-router-dom';
-import { useState} from 'react'
-import {Form} from 'semantic-ui-react'
+import { useEffect, useState} from 'react'
+import {Form, Select} from 'semantic-ui-react'
 import { useLocation } from 'react-router-dom';
 import commonDataAccess from '../dataAccess/CommonDataAccess';
 
 export default function CreateService() {
 
     const [data, setData] = useState([]);
+    
+    const[servicesCategoryId, setServicesCategoryId] = useState(null);
 
     const [servicetitle, setServicetitle] = useState(null);
     const [servicesubtitle, setServicesubtitle] = useState(null);
@@ -19,10 +21,12 @@ export default function CreateService() {
     const location = useLocation();
     const url = location.state;
 
+    
+
     const handleCreate = () => {
-        var data = {servicesCategoryId: 2, subCategory: servicesubtitle, 
+        var data = {servicesCategoryId: servicesCategoryId, subCategory: servicesubtitle, 
         description: servicedescription, price: serviceprice, 
-        imageUrl: serviceimageurl, createBy: 1000, createAt: "2023-06-05T09:24:55.626Z", isActive: true, isDelete: false};
+        imageUrl: serviceimageurl, createBy: 1000, isActive: true, isDelete: false};
         
         commonDataAccess.post(url,data).then((response) => {
         }).catch((error) => {
@@ -30,6 +34,22 @@ export default function CreateService() {
         });
         nav('/Services');
     }
+
+    useEffect(() => {
+        commonDataAccess.get(url + '/categories')
+          .then((data) => setData(data))
+          .catch((error) => {
+            
+            console.error('Error fetching data:', error);
+          });
+      }, [url]);
+
+      const serviceOptions = data.map((category) => ({
+        key: category.id.toString(),
+        value: category.categoryName,
+        text: category.categoryName
+      }));
+
 
     return (
         <>
@@ -39,7 +59,20 @@ export default function CreateService() {
             <div className="container">
                 <Form>
                     <Form.Group>
-                        <Form.Input width={4} fluid label='Service Title' placeholder='Service Title' onChange={(e) => setServicetitle(e.target.value)} />
+                    <Form.Field width={4}>
+                    <label>Service Title</label>
+                 <Select
+                     placeholder="Select Service Title"
+                     options={serviceOptions}
+                     onChange={(e, { value }) => {
+                        const selectedCategory = data.find(category => category.categoryName === value);
+                     if (selectedCategory) {
+                              setServicetitle(value);
+                              setServicesCategoryId(selectedCategory.id);
+                    }}
+                }
+              />
+            </Form.Field>
                         <Form.Input width={4} fluid label='Service Subtitle' placeholder='Service Subtitle' onChange={(e) => setServicesubtitle(e.target.value)} />
                     </Form.Group>
                     <Form.Input width={4} fluid label='Service ImageUrl' placeholder='Service ImageUrl' onChange={(e) => setServiceimageurl(e.target.value)} />

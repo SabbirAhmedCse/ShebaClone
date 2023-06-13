@@ -22,5 +22,11 @@ public class SharedPrefsManager {
     public String getJwtToken() {
         return preferences.getString(TOKEN, "");
     }
+
+    public void clearJwtToken()
+    {
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.clear().apply();
+    }
 }
 

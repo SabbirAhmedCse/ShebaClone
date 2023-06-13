@@ -17,7 +17,7 @@ public interface CustomerHolderAPI {
     @POST("User/signin")
     Call<AuthData> signIn(@Body UserAuth userAuth);
 
-    @GET("User")
+    @GET("User/{id}")
     Call<Customer> getCustomer();
 
 
