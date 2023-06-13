@@ -90,12 +90,11 @@ namespace API.Controllers
         }
 
         [HttpGet]
-        public ActionResult<User> GetUser()
+        public ActionResult<User> GetUser(long id)
         {
             try
             {
-                long userId = Convert.ToInt64(User.Claims.First(c => c.Type == "UserId").Value);
-                var userDetails = _user.Get(userId);
+                var userDetails = _user.Get(id);
                 if (userDetails == null)
                 {
                     return NotFound();
@@ -115,12 +114,13 @@ namespace API.Controllers
             }
         }
         
-        [HttpGet("{*type}")]
-        public ActionResult<User> GetAllUserByType(string userType)
+        [HttpGet]
+        [Route("userType")]
+        public ActionResult<User> GetAllUserByType(string type)
         {
             try
             {
-                var allUsers = _user.GetAll(userType);
+                var allUsers = _user.GetAll(type);
                 if (allUsers == null)
                 {
                     return NotFound();

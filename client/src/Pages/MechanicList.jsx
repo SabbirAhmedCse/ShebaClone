@@ -24,7 +24,7 @@ export default function MechanicList() {
 
     const [data, setData] = useState([]);
     const nav = useNavigate();
-    var url = 'https://localhost:7194/api/User/mechanic';
+    var url = 'https://localhost:7194/api/User/userType?type=mechanic';
 
     const Columns = [
         {
