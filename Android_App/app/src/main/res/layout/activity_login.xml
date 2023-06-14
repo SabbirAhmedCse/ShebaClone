@@ -50,19 +50,21 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="12dp"
             android:layout_gravity="center">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Not have any Account? "
+                android:text="Don't have an account? "
                 android:textSize="18sp"/>
+
             <TextView
                 android:id="@+id/register"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text=" Register"
-                android:textSize="18sp"/>
+                android:textColor="#6750A3"
+                android:textSize="18sp" />
         </LinearLayout>
 
     </LinearLayout>

@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
-import { useLocation } from 'react-router-dom'
+import { useNavigate, useLocation } from 'react-router-dom'
 import { Table, Button} from 'semantic-ui-react'
 import commonDataAccess from '../dataAccess/CommonDataAccess'
+import config from '../utils/config';
 
-const baseURL = 'https://localhost:7194/api/User?Id=';
+const baseURL = `${config.baseUrl}/User?Id=`;
 export default function MechanicDetails() {
 
     const [data, setData] = useState([]);

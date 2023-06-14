@@ -1,4 +1,4 @@
-import { Form } from 'semantic-ui-react'
+import { Form, Select } from 'semantic-ui-react'
 import { useNavigate } from 'react-router-dom'
 import { useLocation } from 'react-router-dom';
 import { useEffect, useState } from 'react';
@@ -6,6 +6,10 @@ import commonDataAccess from '../dataAccess/CommonDataAccess';
 
 
 export default function UpdateService() {
+
+    const [edata, setEdata] = useState([]);
+    
+    const[servicesCategoryId, setServicesCategoryId] = useState(null);
 
     const [data, setData] = useState([]);
     const [servicetitle, setServicetitle] = useState(null);
@@ -15,6 +19,7 @@ export default function UpdateService() {
     const [serviceprice, setServiceprice] = useState(null);
     const[servicecreateBy, setServicecreateBy] = useState(null);
     const[serviceupdateBy, setServiceupdateBy] = useState(null);
+    const[servicecreateAt, setServicecreateAt] = useState(null);
 
     const nav = useNavigate();
     const location = useLocation();
@@ -37,13 +42,15 @@ export default function UpdateService() {
             setServicesubtitle(data.subCategory);
             setServicedescription(data.description);
             setServiceprice(data.price);
-            setServiceimageurl(data.imageUrl);}
+            setServiceimageurl(data.imageUrl);
+            setServicecreateAt(data.createAt);
+        }
      },[data]);
     
     const handleUpdate = () => {
-        var data = {id: link.id, servicesCategoryId: 2, subCategory: servicesubtitle, 
+        var data = {id: link.id, servicesCategoryId: servicesCategoryId, subCategory: servicesubtitle, 
         description: servicedescription, price: serviceprice, 
-        imageUrl: serviceimageurl, createBy: 1001, createAt: "2023-06-05T09:24:55.626Z", isActive: true, isDelete: false};
+        imageUrl: serviceimageurl, createBy: 1000, createAt: servicecreateAt, isActive: true, isDelete: false};
 
         commonDataAccess.update(link.url + '/' + link.id, data).then((response) => {
              nav('/Services');
@@ -53,6 +60,22 @@ export default function UpdateService() {
         
     }
 
+    useEffect(() => {
+        commonDataAccess.get(link.url + '/categories')
+          .then((data) => setEdata(data))
+          .catch((error) => {
+            
+            console.error('Error fetching data:', error);
+          });
+      }, [link.url]);
+
+      const serviceOptions = edata.map((category) => ({
+        key: category.id.toString(),
+        value: category.categoryName,
+        text: category.categoryName
+      }));
+
+
     return (
         <>
             <div className="main">
@@ -61,7 +84,20 @@ export default function UpdateService() {
             <div className="container">
                 <Form>
                     <Form.Group>
-                        <Form.Input width={4} fluid label='Service Title' placeholder='Service Title' onChange={(e) => setServicetitle(e.target.value)} defaultValue={"title"} />
+                    <Form.Field width={4}>
+                    <label>Service Title</label>
+                    <Select
+                     placeholder="Select Service Title"
+                     options={serviceOptions}
+                     onChange={(e, { value }) => {
+                        const selectedCategory = edata.find(category => category.categoryName === value);
+                     if (selectedCategory) {
+                              setServicetitle(value);
+                              setServicesCategoryId(selectedCategory.id);
+                    }}
+                }
+                    />
+                    </Form.Field>
                         <Form.Input width={4} fluid label='Service Subtitle' placeholder='Service Subtitle' onChange={(e) => setServicesubtitle(e.target.value)} defaultValue={servicesubtitle} />
                     </Form.Group>
                     <Form.Input width={4} fluid label='Service ImageUrl' placeholder='Service ImageUrl' onChange={(e) => setServiceimageurl(e.target.value)} defaultValue={serviceimageurl} />

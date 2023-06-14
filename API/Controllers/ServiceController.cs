@@ -13,9 +13,11 @@ namespace API.Controllers
     public class ServiceController : ControllerBase
     {
         private readonly IServiceRepository _service;
-        public ServiceController(IServiceRepository service)
+        private readonly IServiceCategoryRepository _categoryRepository;
+        public ServiceController(IServiceRepository service, IServiceCategoryRepository categoryRepository)
         {
             _service = service;
+            _categoryRepository = categoryRepository;
         }
 
         [HttpGet]
@@ -62,5 +64,32 @@ namespace API.Controllers
             }
             return service;
         }
+
+        [HttpGet]
+        [Route("categories")]
+        public ActionResult<ServiceCategory> GetCategories()
+        {
+            try
+            {
+                var allCategories = _categoryRepository.GetAll();
+                if (allCategories == null)
+                {
+                    return NotFound();
+                }
+                else if (allCategories != null)
+                {
+                    return Ok(allCategories);
+                }
+                else
+                {
+                    return BadRequest();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
     }
 }

@@ -1,19 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/screens/signin.dart';
 
 void main() {
   runApp(const ShebaApp());
 }
 
-class ShebaApp extends StatefulWidget {
+class ShebaApp extends StatelessWidget {
   const ShebaApp({super.key});
-
-  @override
-  State<ShebaApp> createState() => _ShebaAppState();
-}
-
-class _ShebaAppState extends State<ShebaApp> {
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return const MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: SignIn(),
+    );
   }
 }

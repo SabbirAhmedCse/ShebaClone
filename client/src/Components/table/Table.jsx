@@ -68,15 +68,15 @@ const Table = () => {
           {isLoading? 
                 <td colspan="100%">
                   <Loader/>
-                </td> : serviceRequestData && serviceRequestData.map((val) => {
+                </td> : serviceRequestData && serviceRequestData.map((val,index) => {
             return (
               <tr key={val.id}>
-                <td>{val.id}</td>
+                <td>{++index}</td>
                 <td>{val.customerName}</td>
                 <td>{val.serviceCategory}</td>
                 <td>{val.serviceSubCategory}</td>
                 <td>{val.description}</td>
-                <td>{val.serviceDate}</td>
+                <td>{ new Date(val.serviceDate).toLocaleString()}</td>
                 <td>{val.serviceStatus}</td>
                 <td>{val.address}</td>
                 <td>{val.mechanicStatus}</td>

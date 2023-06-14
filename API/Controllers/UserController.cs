@@ -70,16 +70,26 @@ namespace API.Controllers
                 if (userCardinalitis != null)
                 {
                     var userDetails = _user.GetByEmail(userCardinalitis.Email);
-                    var authData = _userToken.CreateToken(userDetails);
-                    if (authData == null)
+                    if (userDetails != null)
                     {
-                        return Unauthorized();
-                    }
+                        if (userCardinalitis.Email == userDetails.Email && userCardinalitis.Password == userDetails.Password)
+                        {
+                            var authData = _userToken.CreateToken(userDetails);
+                            if (authData != null)
+                            {
+                                authData.massage = "Successfully signin";
+                                return Ok(authData);
+                            }
+                            return Unauthorized();
+                        }
+                        return BadRequest("Miss match email or password!");
 
-                    return Ok(authData);
+                    }
+                    return NotFound("Email is not found.");
+
                 }
 
-                return NotFound("Enter User Data");
+                return BadRequest("Enter your Data.");
 
             }
             catch (Exception ex)
@@ -90,12 +100,11 @@ namespace API.Controllers
         }
 
         [HttpGet]
-        public ActionResult<User> GetUser()
+        public ActionResult<User> GetUser(long id)
         {
             try
             {
-                long userId = Convert.ToInt64(User.Claims.First(c => c.Type == "UserId").Value);
-                var userDetails = _user.Get(userId);
+                var userDetails = _user.Get(id);
                 if (userDetails == null)
                 {
                     return NotFound();
@@ -115,12 +124,13 @@ namespace API.Controllers
             }
         }
         
-        [HttpGet("{*type}")]
-        public ActionResult<User> GetAllUserByType(string userType)
+        [HttpGet]
+        [Route("userType")]
+        public ActionResult<User> GetAllUserByType(string type)
         {
             try
             {
-                var allUsers = _user.GetAll(userType);
+                var allUsers = _user.GetAll(type);
                 if (allUsers == null)
                 {
                     return NotFound();
