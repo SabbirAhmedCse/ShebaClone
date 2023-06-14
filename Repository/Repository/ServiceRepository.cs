@@ -52,6 +52,7 @@ namespace Repository.Repository
 
         public async Task<Service> Update(Service srv)
         {
+            srv.UpdateAt = DateTime.Now;
             _appDbContext.Entry(srv).State = EntityState.Modified;
             await _appDbContext.SaveChangesAsync();
             return srv;

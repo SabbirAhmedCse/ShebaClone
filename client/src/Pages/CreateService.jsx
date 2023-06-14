@@ -61,7 +61,7 @@ export default function CreateService() {
                     <Form.Group>
                     <Form.Field width={4}>
                     <label>Service Title</label>
-                 <Select
+                    <Select
                      placeholder="Select Service Title"
                      options={serviceOptions}
                      onChange={(e, { value }) => {
@@ -71,9 +71,9 @@ export default function CreateService() {
                               setServicesCategoryId(selectedCategory.id);
                     }}
                 }
-              />
-            </Form.Field>
-                        <Form.Input width={4} fluid label='Service Subtitle' placeholder='Service Subtitle' onChange={(e) => setServicesubtitle(e.target.value)} />
+                    />
+                    </Form.Field>
+                    <Form.Input width={4} fluid label='Service Subtitle' placeholder='Service Subtitle' onChange={(e) => setServicesubtitle(e.target.value)} />
                     </Form.Group>
                     <Form.Input width={4} fluid label='Service ImageUrl' placeholder='Service ImageUrl' onChange={(e) => setServiceimageurl(e.target.value)} />
                     <Form.Input width={4} fluid label='Service Price' placeholder='Service Price' onChange={(e) => setServiceprice(e.target.value)} />
