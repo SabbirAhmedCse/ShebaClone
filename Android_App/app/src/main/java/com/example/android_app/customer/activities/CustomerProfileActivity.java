@@ -68,12 +68,31 @@ public class CustomerProfileActivity extends AppCompatActivity implements Callba
                 genderOther.setChecked(true);
             }
             dateOfBirth.setText(result.getDateOfBirth().toString());
-            assert result.getCity() != null;
-            city.setText(result.getCity().toString());
-            assert result.getArea() != null;
-            area.setText(result.getArea().toString());
-            assert result.getAddress() != null;
-            address.setText(result.getAddress().toString());
+
+            if(result.getCity() != null)
+            {
+                city.setText(result.getCity().toString());
+            }
+            else
+            {
+                city.setText("");
+            }
+            if(result.getArea() != null)
+            {
+                area.setText(result.getArea().toString());
+            }
+            else
+            {
+                area.setText("");
+            }
+            if(result.getAddress() != null)
+            {
+                address.setText(result.getAddress().toString());
+            }
+            else
+            {
+                address.setText("");
+            }
         }
         else
         {
