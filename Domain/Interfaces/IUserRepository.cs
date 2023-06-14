@@ -14,8 +14,8 @@ namespace Domain.Interfaces
         public bool Create(User entity);
         public User GetByEmail(string email);
         public User Get(long Id);
-        public string Update(User entity);
-        public string Delete(long Id);
+        public bool Update(User entity);
+        public bool Delete(long Id);
 
         
     }

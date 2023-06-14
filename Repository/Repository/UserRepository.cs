@@ -87,12 +87,12 @@ namespace Repository.Repository
             }
         }
 
-        public string Update(User entity)
+        public bool Update(User userDetails)
         {
             throw new NotImplementedException();
         }
 
-        public string Delete(long Id)
+        public bool Delete(long Id)
         {
             throw new NotImplementedException();
         }

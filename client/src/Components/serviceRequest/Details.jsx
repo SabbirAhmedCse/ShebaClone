@@ -110,7 +110,7 @@ const Details = () => {
       )}
 
       <div>
-        {requestedServiceDetails.mechanicName ? null : <Button
+        {(requestedServiceDetails.mechanicName != null && requestedServiceDetails.serviceStatus !=null) ? null : <Button
           className={"btn btn-success"}
           name={"Add"}
           method={() => addMechanicHandle()}

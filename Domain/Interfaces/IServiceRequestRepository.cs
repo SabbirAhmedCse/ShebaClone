@@ -11,9 +11,9 @@ namespace Domain.Interfaces
 {
     public interface IServiceRequestRepository
     {
-        public IEnumerable<ServiceRequestDetails> GetAll(int pageNumber,int PageSize);
-        public string Create(RejectReason entity);
+        public IEnumerable<ServiceRequestDetails> GetAll(int pageNumber,int PageSize,long userId, string UserType);
+        public bool Create(RejectReason entity);
         public ServiceRequest Get(long Id);
-        public string Update(ServiceRequest entity);
+        public bool Update(ServiceRequest entity);
     }
 }

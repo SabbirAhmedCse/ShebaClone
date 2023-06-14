@@ -1,7 +1,8 @@
-import { useState} from 'react';
-import {  Pagination } from 'semantic-ui-react'
-import axios from 'axios'
+import { useState, useEffect } from 'react';
+import { Table, TableHeader, Pagination, Search, Button} from 'semantic-ui-react'
+import { useNavigate } from 'react-router-dom'
 import CommonTable from '../Components/Table';
+import commonDataAccess from '../dataAccess/CommonDataAccess';
 
 function SearchBar() {
     return (
@@ -20,10 +21,10 @@ function SearchBar() {
 }
 
 export default function CustomerList() {
-
     const [data, setData] = useState([]);
     const nav = useNavigate();
     var url = 'https://localhost:7194/api/User/customer';
+
     const Columns = [
         {
             name: "Id",
@@ -39,31 +40,40 @@ export default function CustomerList() {
         },
         {
             name: "Mobile Number",
-            value: "mobilneNumber"
+            value: "mobileNumber"
         },
         {
-            name: "City",
-            value: "city"
-        },
-        {
-            name: "Area",
-            value: "area"
-        },
-        {
-            name: "Address",
-            value: "address"
-        },
+          name: "Area",
+          value: "area"
+      },
+      {
+        name: "Address",
+        value: "address"
+    },
     ]
+    const actions = ["Details"];
 
+    useEffect(() => {
+        commonDataAccess.get(url)
+          .then((data) => setData(data))
+          .catch((error) => {            
+            console.error('Error fetching data:', error);
+          });
+      }, [url]);
+
+    console.log(data);
+    const functions = [
+
+    (id)=> nav('/CustomerDetails', { state: { link: { url, id } } })
+  ];
+    
     return (
-        
-        <div className="customerlist">
+        <div className='customerlist'>
             <div className="main">
-                <h2>CustomerList</h2>
+                <h2>Customer List</h2>
             </div>
             <SearchBar />
-            {/* <Button primary type="submit" onClick={() => nav('/CreateService', {state:url})}>Create Service</Button>
-            <CommonTable data={data} Columns = {Columns} actions={actions} functions={functions}/> */}
+            <CommonTable data={data} Columns = {Columns} actions={actions} functions={functions}/>
         </div>
     );
 }

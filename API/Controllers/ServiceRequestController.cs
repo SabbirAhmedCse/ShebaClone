@@ -63,17 +63,41 @@ namespace API.Controllers
         }
 
         [HttpGet]
-        [Route("all")]
-        public ActionResult<ServiceRequest> GetAll(int pageNumber, int pageSize)
+        [Route("requestedService")]
+        public ActionResult<ServiceRequest> GetAllCustomerRequestedService(int pageNumber, int pageSize)
         {
             try
             {
-                var claimData = (User.Identity as ClaimsIdentity).Claims.ToList();
-                long userId = Convert.ToInt64((User.Identity as ClaimsIdentity).Claims.First(c=>c.Type == "UserId").Value);
-                string Type = (User.Identity as ClaimsIdentity).Claims.First(c=>c.Type == "UserType").Value;
-                
-                var serviceRequestedData = _serviceRequest.GetAll(pageNumber, pageSize);
-                return Ok(serviceRequestedData);
+                long userId = Convert.ToInt64((User.Identity as ClaimsIdentity).Claims.First(c => c.Type == "UserId").Value);
+                string type = (User.Identity as ClaimsIdentity).Claims.First(c => c.Type == "UserType").Value;
+                var serviceRequestedData = _serviceRequest.GetAll(pageNumber, pageSize,userId,type);
+                if(serviceRequestedData != null)
+                {
+                    return Ok(serviceRequestedData);
+                }
+                return NotFound(serviceRequestedData);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        [HttpGet]
+        [Route("allocatedService")]
+        public ActionResult<ServiceRequest> GetAllMechanicAllocatedService(int pageNumber, int pageSize)
+        {
+            try
+            {
+                long userId = Convert.ToInt64((User.Identity as ClaimsIdentity).Claims.First(c => c.Type == "UserId").Value);
+                string type = (User.Identity as ClaimsIdentity).Claims.First(c => c.Type == "UserType").Value;
+
+                var serviceRequestedData = _serviceRequest.GetAll(pageNumber, pageSize,userId,type);
+                if (serviceRequestedData != null)
+                {
+                    return Ok(serviceRequestedData);
+                }
+                return NotFound(serviceRequestedData);
             }
             catch (Exception ex)
             {
@@ -87,14 +111,38 @@ namespace API.Controllers
         {
             try
             {
+                long userId = Convert.ToInt64((User.Identity as ClaimsIdentity).Claims.First(c => c.Type == "UserId").Value);
+                string userType = (User.Identity as ClaimsIdentity).Claims.First(c => c.Type == "UserType").Value;
+
                 var serviceRequestDetails = _serviceRequest.Get(acceptService.Id);
                 if (serviceRequestDetails != null)
                 {
-                    serviceRequestDetails.ServiceStatus = acceptService.ServiceStatus;
-                    serviceRequestDetails.UpdateBy = 1000;
-                    serviceRequestDetails.UpdateAt = DateTime.Now;
-                    var acceptResult = _serviceRequest.Update(serviceRequestDetails);
-                    return Ok(acceptResult);
+                    if (userType.ToLower() == "admin")
+                    {
+                        serviceRequestDetails.ServiceStatus = acceptService.ServiceStatus;
+                        serviceRequestDetails.UpdateBy = userId;
+                        serviceRequestDetails.UpdateAt = DateTime.Now;
+                        bool acceptResult = _serviceRequest.Update(serviceRequestDetails);
+                        if (acceptResult)
+                        {
+                            return Ok("Successfully reject service.");
+                        }
+                        return BadRequest();
+                    }
+                    else
+                    {
+                        serviceRequestDetails.ServiceStatus = acceptService.ServiceStatus;
+                        serviceRequestDetails.MechanicStatus = "Approved";
+                        serviceRequestDetails.UpdateBy = userId;
+                        serviceRequestDetails.UpdateAt = DateTime.Now;
+                        bool acceptResult = _serviceRequest.Update(serviceRequestDetails);
+                        if (acceptResult)
+                        {
+                            return Ok("Successfully reject service.");
+                        }
+                        return BadRequest();
+                    }
+                   
                 }
                 else
                 {
@@ -137,7 +185,11 @@ namespace API.Controllers
                     serviceRequestDetails.UpdateBy = addMechanic.MechanicId;
                     serviceRequestDetails.UpdateAt = DateTime.Now;
                     var acceptResult = _serviceRequest.Update(serviceRequestDetails);
-                    return Ok(acceptResult);
+                    if (acceptResult)
+                    {
+                        return Ok("Successfully added mechanic.");
+                    }
+                    return BadRequest();
                 }
                 else
                 {
@@ -156,18 +208,40 @@ namespace API.Controllers
         {
             try
             {
+                long userId = Convert.ToInt64((User.Identity as ClaimsIdentity).Claims.First(c => c.Type == "UserId").Value);
+                string userType = (User.Identity as ClaimsIdentity).Claims.First(c => c.Type == "UserType").Value;
+
                 var serviceRequestDetails = _serviceRequest.Get(rejectService.Id);
                 if (serviceRequestDetails != null)
                 {
-                    serviceRequestDetails.ServiceStatus = "Reject";
-                    var acceptResult = _serviceRequest.Update(serviceRequestDetails);
+                    
+                    if (userType.ToLower() == "admin")
+                    {
+                        serviceRequestDetails.MechanicId = null;
+                        serviceRequestDetails.ServiceStatus = "Reject"; 
+                        serviceRequestDetails.UpdateBy = userId;
+                        serviceRequestDetails.UpdateAt = DateTime.Now;
+                        bool acceptResult = _serviceRequest.Update(serviceRequestDetails);
+                    }
+                    else
+                    {
+                        serviceRequestDetails.MechanicId = null;
+                        serviceRequestDetails.MechanicStatus = "Reject";
+                        serviceRequestDetails.UpdateBy = userId;
+                        serviceRequestDetails.UpdateAt = DateTime.Now;
+                        bool acceptResult = _serviceRequest.Update(serviceRequestDetails);
+                    }
                     _rejectReason.ServiceRequestId = rejectService.Id;
                     _rejectReason.Reason = rejectService.Reason;
-                    _rejectReason.CreateBy = rejectService.UserId;
+                    _rejectReason.CreateBy = userId;
                     _rejectReason.CreateAt = DateTime.Now;
                     _rejectReason.IsActive = true;
-                    var serviceRejectDetails = _serviceRequest.Create(_rejectReason);
-                    return Ok(serviceRejectDetails);
+                    bool serviceRejectDetails = _serviceRequest.Create(_rejectReason);
+                    if (serviceRejectDetails)
+                    {
+                        return Ok("Successfully reject service.");
+                    }
+                    return BadRequest();
                 }
                 else
                 {
