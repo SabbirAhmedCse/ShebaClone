@@ -70,16 +70,26 @@ namespace API.Controllers
                 if (userCardinalitis != null)
                 {
                     var userDetails = _user.GetByEmail(userCardinalitis.Email);
-                    var authData = _userToken.CreateToken(userDetails);
-                    if (authData == null)
+                    if (userDetails != null)
                     {
-                        return Unauthorized();
-                    }
+                        if (userCardinalitis.Email == userDetails.Email && userCardinalitis.Password == userDetails.Password)
+                        {
+                            var authData = _userToken.CreateToken(userDetails);
+                            if (authData != null)
+                            {
+                                authData.massage = "Successfully signin";
+                                return Ok(authData);
+                            }
+                            return Unauthorized();
+                        }
+                        return BadRequest("Miss match email or password!");
 
-                    return Ok(authData);
+                    }
+                    return NotFound("Email is not found.");
+
                 }
 
-                return NotFound("Enter User Data");
+                return BadRequest("Enter your Data.");
 
             }
             catch (Exception ex)

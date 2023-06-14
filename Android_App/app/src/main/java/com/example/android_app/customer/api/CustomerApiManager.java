@@ -56,7 +56,7 @@ public class CustomerApiManager {
                     if (response.isSuccessful()) {
                         AuthData authData = response.body();
                         if (authData != null) {
-                            sharedPrefsManager.setJwtToken(authData.getToken());
+                            sharedPrefsManager.setJwtToken(authData.getToken(), authData.getId());
                             callback.onSuccess(true);
                         } else {
                             callback.onSuccess(false);
@@ -86,7 +86,7 @@ public class CustomerApiManager {
                     if (response.isSuccessful()) {
                         AuthData authData = response.body();
                         if (authData != null) {
-                            sharedPrefsManager.setJwtToken(authData.getToken());
+                            sharedPrefsManager.setJwtToken(authData.getToken(), authData.getId());
                             callback.onSuccess(true);
                         } else {
                             callback.onSuccess(false);
@@ -107,7 +107,8 @@ public class CustomerApiManager {
     }
 
     public void getCustomer(Callbacks<Customer> callback) {
-        Call<Customer> call = customerHolderAPI.getCustomer();
+        String id = sharedPrefsManager.getId();
+        Call<Customer> call = customerHolderAPI.getCustomer(Integer.parseInt(id));
         call.enqueue(new Callback<Customer>() {
             @Override
             public void onResponse(@NonNull Call<Customer> call, @NonNull Response<Customer> response) {

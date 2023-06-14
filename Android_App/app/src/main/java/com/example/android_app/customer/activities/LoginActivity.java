@@ -57,7 +57,7 @@ public class LoginActivity extends AppCompatActivity implements Callbacks<Boolea
     public void onSuccess(Boolean result) {
         if(result)
         {
-            Intent intent = new Intent(getApplicationContext(), CustomerProfileActivity.class);
+            Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
             startActivity(intent);
         }
         else
