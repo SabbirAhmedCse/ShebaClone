@@ -1,5 +1,6 @@
 ﻿using Domain.Interfaces;
 using Domain.Models;
+using Microsoft.EntityFrameworkCore;
 using Repository.Context;
 
 
@@ -88,11 +89,8 @@ namespace Repository.Repository
         {
             try
             {
-                if (userDetails == null)
-                {
-                    return false;
-                }
-                _appDbContext.Users.Update(userDetails);
+                userDetails.UpdateAt = DateTime.Now;
+                _appDbContext.Entry(userDetails).State = EntityState.Modified;
                 return _appDbContext.SaveChanges() > 0;
             }
             catch(Exception ex) {

@@ -10,6 +10,8 @@ import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.PATCH;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 public interface CustomerHolderAPI {
@@ -23,6 +25,6 @@ public interface CustomerHolderAPI {
     @GET("User")
     Call<Customer> getCustomer(@Query("id") Integer id);
 
-    @PATCH("User")
-    Call<Customer> updateCustomer(@Query("id") Integer id, @Body RequestBody patch);
+    @PUT("User/{id}")
+    Call<Customer> updateCustomer(@Path("id") Integer id, @Body Customer customer);
 }

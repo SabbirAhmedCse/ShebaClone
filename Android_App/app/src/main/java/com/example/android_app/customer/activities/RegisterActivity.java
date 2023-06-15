@@ -83,7 +83,6 @@ public class RegisterActivity extends AppCompatActivity implements Callbacks<Boo
         datePickerListener = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker datePicker, int year, int month, int dayOfMonth) {
-                // Update the date of birth field with the selected date
                 Calendar calendar = Calendar.getInstance();
                 calendar.set(Calendar.YEAR, year);
                 calendar.set(Calendar.MONTH, month);
@@ -157,5 +156,10 @@ public class RegisterActivity extends AppCompatActivity implements Callbacks<Boo
         {
             Toast.makeText(getApplicationContext(), "Incorrect Information", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    @Override
+    public void onFailure(Exception e) {
+        Toast.makeText(getApplicationContext(), "Incorrect Information", Toast.LENGTH_SHORT).show();
     }
 }

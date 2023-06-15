@@ -10,6 +10,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using Microsoft.AspNetCore.JsonPatch;
+using Microsoft.EntityFrameworkCore;
 
 namespace API.Controllers
 {
@@ -151,27 +152,31 @@ namespace API.Controllers
             }
         }
 
-        [HttpPatch("{id}")]
-        public IActionResult PatchUser(long id, [FromBody] JsonPatchDocument<User> patchDoc)
+        [HttpPut("{id}")]
+        public IActionResult UpdateUser(long id, User user)
         {
             try
             {
-                if(patchDoc != null)
+                if(user != null)
                 {
-                    var user = _user.Get(id);
-                    if(user == null)
-                    {
-                        return NotFound();
-                    }
+                    var user_details = _user.Get(id);
 
-                    patchDoc.ApplyTo(user, (error) => {
-                        ModelState.AddModelError("Patch Error", error.ErrorMessage);
-                    });
-                    if(!ModelState.IsValid)
+                    if(user_details == null)
                     {
-                        return BadRequest(ModelState);
+                        return BadRequest("No User with this Id");
                     }
-                    var result = _user.Update(user);
+                    user_details.Email = user.Email;
+                    user_details.Password = user.Password;
+                    user_details.Name = user.Name;
+                    user_details.MobileNumber = user.MobileNumber;
+                    user_details.Gender = user.Gender;
+                    user_details.DateOfBirth = user.DateOfBirth;
+                    user_details.Address = user.Address;
+                    user_details.Area = user.Area;
+                    user_details.City = user.City;
+
+                    var result = _user.Update(user_details);
+
                     if (result)
                     {
                         return Ok(user);
@@ -182,7 +187,7 @@ namespace API.Controllers
                     }
                     
                 }
-                return BadRequest();
+                return BadRequest("User came with Empty body");
             }
             catch (Exception ex)
             {

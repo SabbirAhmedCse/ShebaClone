@@ -4,24 +4,15 @@ import androidx.annotation.NonNull;
 
 import android.content.Context;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.example.android_app.customer.model.AuthData;
 import com.example.android_app.customer.model.Customer;
 import com.example.android_app.customer.model.UserAuth;
 import com.example.android_app.customer.network.AuthInterceptor;
 import com.example.android_app.customer.utils.SharedPrefsManager;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.github.fge.jsonpatch.JsonPatch;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-
-import com.fasterxml.jackson.databind.JsonNode;
-import okhttp3.MediaType;
-import okhttp3.RequestBody;
-
-
-
 
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
@@ -80,6 +71,7 @@ public class CustomerApiManager {
                         }
                     } else {
                         Log.d(TAG, String.valueOf(response.code()));
+                        callback.onFailure(new Exception());
                     }
                 } catch (Exception ex) {
                     throw ex;
@@ -110,6 +102,7 @@ public class CustomerApiManager {
                         }
                     } else {
                         Log.d("TAG", String.valueOf(response.code()));
+                        callback.onFailure(new Exception());
                     }
                 } catch (Exception ex) {
                     throw ex;
@@ -159,35 +152,37 @@ public class CustomerApiManager {
 
     }
 
-    public void updateCustomer(JsonPatch patch, Callbacks<Boolean> callback) {
-        try {
-            String id = sharedPrefsManager.getId();
-            ObjectMapper objectMapper = new ObjectMapper();
-            JsonNode patchJsonNode = objectMapper.valueToTree(patch);
+    public void updateCustomer(Customer customer, Callbacks<Customer> callback) {
+        String id = sharedPrefsManager.getId();
+        Call<Customer> call = customerHolderAPI.updateCustomer(Integer.parseInt(id), customer);
 
-            MediaType mediaType = MediaType.parse("application/json-patch+json");
-            RequestBody requestBody = RequestBody.create(mediaType, patchJsonNode.toString());
-
-            Call<Customer> call = customerHolderAPI.updateCustomer(Integer.parseInt(id), requestBody);
-            call.enqueue(new Callback<Customer>() {
-                @Override
-                public void onResponse(@NonNull Call<Customer> call, @NonNull Response<Customer> response) {
+        call.enqueue(new Callback<Customer>() {
+            @Override
+            public void onResponse(@NonNull Call<Customer> call, @NonNull Response<Customer> response) {
+                try {
                     if (response.isSuccessful()) {
-                        callback.onSuccess(true);
+                        Customer updatedCustomer = response.body();
+                        if (updatedCustomer != null) {
+                            callback.onSuccess(updatedCustomer);
+                        } else {
+                            callback.onSuccess(null);
+                        }
                     } else {
-                        callback.onSuccess(false);
-                        Log.d(TAG, "Update customer failed: " + response.code());
+                        Log.d(TAG, "onResponse: response code = " + response.code());
+                        callback.onFailure(new Exception());
                     }
+                } catch (Exception ex) {
+                    throw ex;
                 }
+            }
 
-                @Override
-                public void onFailure(@NonNull Call<Customer> call, @NonNull Throwable t) {
-                    Log.d(TAG, "Update customer failed: " + t.getMessage());
-                }
-            });
-        } catch (Exception ex) {
-            Log.d(TAG, "Update customer failed: " + ex.getMessage());
-        }
+            @Override
+            public void onFailure(@NonNull Call<Customer> call, @NonNull Throwable t) {
+                Log.d(TAG, "onFailure: failed -> ");
+                Log.d(TAG, t.getMessage());
+                t.printStackTrace();
+            }
+        });
     }
 
 

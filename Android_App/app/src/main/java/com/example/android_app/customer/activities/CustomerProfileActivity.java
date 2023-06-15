@@ -2,20 +2,26 @@ package com.example.android_app.customer.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Toast;
 
 import com.example.android_app.R;
 import com.example.android_app.customer.api.Callbacks;
 import com.example.android_app.customer.api.CustomerApiManager;
 import com.example.android_app.customer.model.Customer;
-import com.fasterxml.jackson.databind.node.JsonNodeFactory;
-import com.github.fge.jsonpatch.JsonPatch;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Locale;
 
 public class CustomerProfileActivity extends AppCompatActivity implements Callbacks<Customer> {
 
@@ -30,6 +36,10 @@ public class CustomerProfileActivity extends AppCompatActivity implements Callba
     private EditText area;
     private EditText address;
     private Button btnSave;
+
+    private DatePickerDialog.OnDateSetListener datePickerListener;
+
+    String email,password,createAt;
 
     CustomerApiManager customerApiManager;
     @Override
@@ -52,84 +62,92 @@ public class CustomerProfileActivity extends AppCompatActivity implements Callba
         customerApiManager = new CustomerApiManager(getApplicationContext());
         customerApiManager.getCustomer(CustomerProfileActivity.this);
 
+        dateOfBirth.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showDate();
+            }
+        });
+
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String newName = name.getText().toString();
-                String newMobileNumber = mobileNumber.getText().toString();
-                String newGender;
-                if(genderMale.getText().toString().equals("Male"))
-                {
-                    newGender = genderMale.getText().toString();
-                }
-                else if(genderFemale.getText().toString().equals("Female"))
-                {
-                    newGender = genderFemale.getText().toString();
-                }
-                else {
-                    newGender = genderOther.getText().toString();
-                }
-                String newBirth = dateOfBirth.getText().toString();
-                String newCity = city.getText().toString();
-                String newArea = area.getText().toString();
-                String newAddress = address.getText().toString();
 
-                JsonPatch jsonPatch = JsonPatch.fromJsonArray(
-                        JsonNodeFactory.instance.arrayNode()
-                                .add(JsonNodeFactory.instance.objectNode()
-                                        .put("op", "replace")
-                                        .put("path", "/name")
-                                        .put("value", newName))
-                                .add(JsonNodeFactory.instance.objectNode()
-                                        .put("op", "replace")
-                                        .put("path", "/mobileNumber")
-                                        .put("value", newMobileNumber))
-                                .add(JsonNodeFactory.instance.objectNode()
-                                        .put("op", "replace")
-                                        .put("path", "/gender")
-                                        .put("value", newGender))
-                                .add(JsonNodeFactory.instance.objectNode()
-                                        .put("op", "replace")
-                                        .put("path", "/dateOfBirth")
-                                        .put("value", newBirth))
-                                .add(JsonNodeFactory.instance.objectNode()
-                                        .put("op", "replace")
-                                        .put("path", "/city")
-                                        .put("value", newCity))
-                                .add(JsonNodeFactory.instance.objectNode()
-                                        .put("op", "replace")
-                                        .put("path", "/area")
-                                        .put("value", newArea))
-                                .add(JsonNodeFactory.instance.objectNode()
-                                        .put("op", "replace")
-                                        .put("path", "/address")
-                                        .put("value", newAddress))
-                                .add(JsonNodeFactory.instance.objectNode()
-                                        .put("op", "replace")
-                                        .put("path", "/address")
-                                        .put("value", newAddress))
-                );
-                Callbacks<Boolean> updateCallback = new Callbacks<Boolean>() {
+                String updatedGender = "";
+                int selectedGenderId = gender.getCheckedRadioButtonId();
+                if (selectedGenderId == R.id.genderMale) {
+                    updatedGender = "Male";
+                } else if (selectedGenderId == R.id.genderFemale) {
+                    updatedGender = "Female";
+                } else if (selectedGenderId == R.id.genderOther) {
+                    updatedGender = "Other";
+                }
+
+                Customer updatedCustomer = new Customer();
+                updatedCustomer.setType("customer");
+                updatedCustomer.setEmail(email);
+                updatedCustomer.setPassword(password);
+                updatedCustomer.setName(name.getText().toString());
+                updatedCustomer.setMobileNumber(mobileNumber.getText().toString());
+                updatedCustomer.setGender(updatedGender);
+                updatedCustomer.setDateOfBirth(dateOfBirth.getText().toString());
+                updatedCustomer.setCity(city.getText().toString());
+                updatedCustomer.setArea(area.getText().toString());
+                updatedCustomer.setAddress(address.getText().toString());
+                updatedCustomer.setCreateAt(createAt);
+
+                customerApiManager.updateCustomer(updatedCustomer, new Callbacks<Customer>() {
                     @Override
-                    public void onSuccess(Boolean result) {
-                        // Handle the success response
+                    public void onSuccess(Customer result) {
+                        if(result != null)
+                        {
+                            Toast.makeText(getApplicationContext(), "Updated Successfully", Toast.LENGTH_SHORT).show();
+                        }
+                        else
+                        {
+                            Toast.makeText(getApplicationContext(), "Incorrect Information", Toast.LENGTH_SHORT).show();
+                        }
                     }
 
                     @Override
                     public void onFailure(Exception e) {
-                        // Handle the failure response
+                        Toast.makeText(getApplicationContext(), "Incorrect Information", Toast.LENGTH_SHORT).show();
                     }
-                };
-
-                customerApiManager.updateCustomer(jsonPatch, updateCallback);
-
+                });
             }
         });
-    }
 
+        datePickerListener = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker datePicker, int year, int month, int dayOfMonth) {
+                Calendar calendar = Calendar.getInstance();
+                calendar.set(Calendar.YEAR, year);
+                calendar.set(Calendar.MONTH, month);
+                calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+
+                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.US);
+                String formattedDate = dateFormat.format(calendar.getTime());
+
+                dateOfBirth.setText(formattedDate);
+            }
+        };
+
+    }
+    private void showDate() {
+        Calendar calendar = Calendar.getInstance();
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH);
+        int dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
+
+        DatePickerDialog datePickerDialog = new DatePickerDialog(this, datePickerListener, year, month, dayOfMonth);
+        datePickerDialog.show();
+    }
     @Override
     public void onSuccess(Customer result) {
         if(result != null) {
+            email = result.getEmail().toString();
+            password = result.getPassword().toString();
+            createAt = result.getCreateAt().toString();
             name.setText(result.getName().toString());
             mobileNumber.setText(result.getMobileNumber().toString());
             if(result.getGender().toString().equals("Male"))
@@ -175,5 +193,10 @@ public class CustomerProfileActivity extends AppCompatActivity implements Callba
         {
             Log.d("TAG", "GetUser Failed");
         }
+    }
+
+    @Override
+    public void onFailure(Exception e) {
+        Toast.makeText(getApplicationContext(), "Incorrect Information", Toast.LENGTH_SHORT).show();
     }
 }
