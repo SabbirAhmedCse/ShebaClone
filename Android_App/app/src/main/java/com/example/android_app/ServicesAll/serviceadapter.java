@@ -36,12 +36,11 @@ public class serviceadapter extends RecyclerView.Adapter<serviceadapter.Servicev
         holder.t1.setText(data.get(position).getSubCategory());
         holder.t2.setText(data.get(position).getDescription());
         Glide.with(holder.t1.getContext()).load(data.get(position).getImageUrl()).into(holder.img);
+        /////
         holder.itemView.setOnClickListener(view -> {
             responsemodel item = data.get(position);
-//            Intent intent = new Intent(holder.itemView.getContext(), ServiceDetails.class);
-//            intent.putExtra(MainActivity.KEY_NAME, item.)
             holder.itemView.getContext().startActivity(
-                    ServiceDetailsActivity.getNavIntent(holder.itemView.getContext(), "Bongobondhu")
+                    ServiceDetailsActivity.getNavIntent(holder.itemView.getContext(), item.subCategory, item.description,item.price)
             );
         });
     }
@@ -52,13 +51,13 @@ public class serviceadapter extends RecyclerView.Adapter<serviceadapter.Servicev
         return data.size();
     }
 
-    class Serviceviewholder extends RecyclerView.ViewHolder {
+    static class Serviceviewholder extends RecyclerView.ViewHolder {
         ImageView img;
         TextView t1, t2;
 
         public Serviceviewholder(@NonNull View itemView) {
             super(itemView);
-             img=itemView.findViewById(R.id.img);
+            img = itemView.findViewById(R.id.img);
             t1 = itemView.findViewById(R.id.t1);
             t2 = itemView.findViewById(R.id.t2);
         }

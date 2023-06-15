@@ -3,16 +3,25 @@ package com.example.android_app.ServicesAll;
 
 
 public class responsemodel {
-    String subCategory,description,imageUrl;
+    String subCategory,description,imageUrl,price;
 
     public responsemodel()
     {
 
     }
-    public responsemodel(String subCategory, String description,String imageUrl) {
+    public responsemodel(String subCategory, String description,String imageUrl,String price) {
         this.subCategory = subCategory;
         this.description = description;
         this.imageUrl=imageUrl;
+        this.price=price;
+    }
+
+    public String getPrice() {
+        return price;
+    }
+
+    public void setPrice(String price) {
+        this.price = price;
     }
 
     public String getImageUrl() {

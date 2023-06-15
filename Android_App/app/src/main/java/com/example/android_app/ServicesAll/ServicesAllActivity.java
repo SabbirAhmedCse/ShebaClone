@@ -42,7 +42,7 @@ public class ServicesAllActivity extends AppCompatActivity {
                     recviiew.setAdapter(adapter);
                 } else {
                     // todo: handle error
-                    runOnUiThread(() -> Toast.makeText(getApplicationContext(), "error", Toast.LENGTH_SHORT).show());
+                    runOnUiThread(() -> Toast.makeText(getApplicationContext(), "error code: " + response.code(), Toast.LENGTH_SHORT).show());
                 }
             }
 

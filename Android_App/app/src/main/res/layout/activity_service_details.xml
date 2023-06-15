@@ -52,10 +52,12 @@
                 <Button
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-
+                    android:id="@+id/reuestbutton"
                     android:drawablePadding="4dp"
                     android:drawableTint="#ff0000"
-                    android:text="Request Service" />
+                    android:text="Request Service"
+
+                    />
 
             </LinearLayout>
         </LinearLayout>
