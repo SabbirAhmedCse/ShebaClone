@@ -10,10 +10,25 @@ import com.example.android_app.customer.model.Customer;
 import com.example.android_app.customer.model.UserAuth;
 import com.example.android_app.customer.network.AuthInterceptor;
 import com.example.android_app.customer.utils.SharedPrefsManager;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.github.fge.jsonpatch.JsonPatch;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import okhttp3.MediaType;
+import okhttp3.RequestBody;
+
+
+
+
+import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
+import okhttp3.RequestBody;
 import okhttp3.logging.HttpLoggingInterceptor;
 
+import okio.ByteString;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -37,9 +52,11 @@ public class CustomerApiManager {
                 .addInterceptor(new HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
                 .build();
 
+        Gson gson = new GsonBuilder().serializeNulls().create();
+
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("http://192.168.0.54/api/")
-                .addConverterFactory(GsonConverterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create(gson))
                 .client(client)
                 .build();
 
@@ -141,4 +158,37 @@ public class CustomerApiManager {
         });
 
     }
+
+    public void updateCustomer(JsonPatch patch, Callbacks<Boolean> callback) {
+        try {
+            String id = sharedPrefsManager.getId();
+            ObjectMapper objectMapper = new ObjectMapper();
+            JsonNode patchJsonNode = objectMapper.valueToTree(patch);
+
+            MediaType mediaType = MediaType.parse("application/json-patch+json");
+            RequestBody requestBody = RequestBody.create(mediaType, patchJsonNode.toString());
+
+            Call<Customer> call = customerHolderAPI.updateCustomer(Integer.parseInt(id), requestBody);
+            call.enqueue(new Callback<Customer>() {
+                @Override
+                public void onResponse(@NonNull Call<Customer> call, @NonNull Response<Customer> response) {
+                    if (response.isSuccessful()) {
+                        callback.onSuccess(true);
+                    } else {
+                        callback.onSuccess(false);
+                        Log.d(TAG, "Update customer failed: " + response.code());
+                    }
+                }
+
+                @Override
+                public void onFailure(@NonNull Call<Customer> call, @NonNull Throwable t) {
+                    Log.d(TAG, "Update customer failed: " + t.getMessage());
+                }
+            });
+        } catch (Exception ex) {
+            Log.d(TAG, "Update customer failed: " + ex.getMessage());
+        }
+    }
+
+
 }

@@ -9,6 +9,7 @@ using Repository.Repository;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using Microsoft.AspNetCore.JsonPatch;
 
 namespace API.Controllers
 {
@@ -148,6 +149,45 @@ namespace API.Controllers
             {
                 throw ex;
             }
-        }   
+        }
+
+        [HttpPatch("{id}")]
+        public IActionResult PatchUser(long id, [FromBody] JsonPatchDocument<User> patchDoc)
+        {
+            try
+            {
+                if(patchDoc != null)
+                {
+                    var user = _user.Get(id);
+                    if(user == null)
+                    {
+                        return NotFound();
+                    }
+
+                    patchDoc.ApplyTo(user, (error) => {
+                        ModelState.AddModelError("Patch Error", error.ErrorMessage);
+                    });
+                    if(!ModelState.IsValid)
+                    {
+                        return BadRequest(ModelState);
+                    }
+                    var result = _user.Update(user);
+                    if (result)
+                    {
+                        return Ok(user);
+                    }
+                    else
+                    {
+                        return BadRequest();
+                    }
+                    
+                }
+                return BadRequest();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
     }
 }

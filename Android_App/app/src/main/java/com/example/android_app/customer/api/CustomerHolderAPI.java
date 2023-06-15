@@ -3,15 +3,13 @@ package com.example.android_app.customer.api;
 import com.example.android_app.customer.model.AuthData;
 import com.example.android_app.customer.model.Customer;
 import com.example.android_app.customer.model.UserAuth;
-import com.example.android_app.customer.utils.SharedPrefsManager;
 
-import java.util.Locale;
-
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
+import retrofit2.http.PATCH;
 import retrofit2.http.POST;
-import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 public interface CustomerHolderAPI {
@@ -24,4 +22,7 @@ public interface CustomerHolderAPI {
 
     @GET("User")
     Call<Customer> getCustomer(@Query("id") Integer id);
+
+    @PATCH("User")
+    Call<Customer> updateCustomer(@Query("id") Integer id, @Body RequestBody patch);
 }
