@@ -4,16 +4,22 @@ import androidx.annotation.NonNull;
 
 import android.content.Context;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.example.android_app.customer.model.AuthData;
 import com.example.android_app.customer.model.Customer;
 import com.example.android_app.customer.model.UserAuth;
 import com.example.android_app.customer.network.AuthInterceptor;
 import com.example.android_app.customer.utils.SharedPrefsManager;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
+import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
+import okhttp3.RequestBody;
 import okhttp3.logging.HttpLoggingInterceptor;
 
+import okio.ByteString;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -63,6 +69,7 @@ public class CustomerApiManager {
                         }
                     } else {
                         Log.d(TAG, String.valueOf(response.code()));
+                        callback.onFailure(new Exception());
                     }
                 } catch (Exception ex) {
                     throw ex;
@@ -93,6 +100,7 @@ public class CustomerApiManager {
                         }
                     } else {
                         Log.d("TAG", String.valueOf(response.code()));
+                        callback.onFailure(new Exception());
                     }
                 } catch (Exception ex) {
                     throw ex;
@@ -141,6 +149,7 @@ public class CustomerApiManager {
         });
 
     }
+}
 
 
 }

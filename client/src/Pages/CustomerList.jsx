@@ -73,7 +73,7 @@ export default function CustomerList() {
   ];
 
   return (
-    <div className="customerlist">
+    <div className="servicelist">
       <div className="main">
         <h2>Customer List</h2>
       </div>

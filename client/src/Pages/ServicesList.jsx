@@ -5,23 +5,6 @@ import CommonTable from '../Components/Table';
 import commonDataAccess from '../dataAccess/CommonDataAccess';
 import config from '../utils/config';
 
-
-function SearchBar() {
-    return (
-        <div className="main">
-            <div className="ui search">
-                <div className="ui icon input">
-                    <input className="prompt"
-                        type="text"
-                        placeholder="Search..." />
-                    <i className="search icon"></i>
-                </div>
-                <div className="results"></div>
-            </div>
-        </div>
-    );
-}
-
 export default function ServicesList() {
     const [data, setData] = useState([]);
     const nav = useNavigate();
@@ -89,7 +72,6 @@ export default function ServicesList() {
         <div className="main">
           <h2>Service Lists</h2>
         </div>
-        <SearchBar />
         <Button primary type="submit" onClick={() => nav('/CreateService', { state: url })}>Create Service</Button>
         <CommonTable data={data} Columns={Columns} actions={actions} functions={functions} />
       </div>
