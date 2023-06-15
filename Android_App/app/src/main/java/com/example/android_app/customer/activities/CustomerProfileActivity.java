@@ -83,37 +83,67 @@ public class CustomerProfileActivity extends AppCompatActivity implements Callba
                     updatedGender = "Other";
                 }
 
-                Customer updatedCustomer = new Customer();
-                updatedCustomer.setType("customer");
-                updatedCustomer.setEmail(email);
-                updatedCustomer.setPassword(password);
-                updatedCustomer.setName(name.getText().toString());
-                updatedCustomer.setMobileNumber(mobileNumber.getText().toString());
-                updatedCustomer.setGender(updatedGender);
-                updatedCustomer.setDateOfBirth(dateOfBirth.getText().toString());
-                updatedCustomer.setCity(city.getText().toString());
-                updatedCustomer.setArea(area.getText().toString());
-                updatedCustomer.setAddress(address.getText().toString());
-                updatedCustomer.setCreateAt(createAt);
+                boolean error = false;
 
-                customerApiManager.updateCustomer(updatedCustomer, new Callbacks<Customer>() {
-                    @Override
-                    public void onSuccess(Customer result) {
-                        if(result != null)
-                        {
-                            Toast.makeText(getApplicationContext(), "Updated Successfully", Toast.LENGTH_SHORT).show();
+                if(name.getText().toString().isEmpty())
+                {
+                    name.setError("Name is required");
+                    error = true;
+                }
+                if(mobileNumber.getText().toString().isEmpty())
+                {
+                    mobileNumber.setError("MobileNumber is required");
+                    error = true;
+                }
+                else if(!isValidMobileNumber(mobileNumber.getText().toString()))
+                {
+                    mobileNumber.setError("Invalid Mobile Number format");
+                }
+                if(updatedGender.isEmpty())
+                {
+                    Toast.makeText(getApplicationContext(), "Gender is required", Toast.LENGTH_SHORT).show();
+                    error = true;
+                }
+                if(dateOfBirth.getText().toString().isEmpty())
+                {
+                    dateOfBirth.setError("DateOfBirth is required");
+                    error = true;
+                }
+
+                if(!error){
+
+                    Customer updatedCustomer = new Customer();
+                    updatedCustomer.setType("customer");
+                    updatedCustomer.setEmail(email);
+                    updatedCustomer.setPassword(password);
+                    updatedCustomer.setName(name.getText().toString());
+                    updatedCustomer.setMobileNumber(mobileNumber.getText().toString());
+                    updatedCustomer.setGender(updatedGender);
+                    updatedCustomer.setDateOfBirth(dateOfBirth.getText().toString());
+                    updatedCustomer.setCity(city.getText().toString());
+                    updatedCustomer.setArea(area.getText().toString());
+                    updatedCustomer.setAddress(address.getText().toString());
+                    updatedCustomer.setCreateAt(createAt);
+
+                    customerApiManager.updateCustomer(updatedCustomer, new Callbacks<Customer>() {
+                        @Override
+                        public void onSuccess(Customer result) {
+                            if(result != null)
+                            {
+                                Toast.makeText(getApplicationContext(), "Updated Successfully", Toast.LENGTH_SHORT).show();
+                            }
+                            else
+                            {
+                                Toast.makeText(getApplicationContext(), "Incorrect Information", Toast.LENGTH_SHORT).show();
+                            }
                         }
-                        else
-                        {
+
+                        @Override
+                        public void onFailure(Exception e) {
                             Toast.makeText(getApplicationContext(), "Incorrect Information", Toast.LENGTH_SHORT).show();
                         }
-                    }
-
-                    @Override
-                    public void onFailure(Exception e) {
-                        Toast.makeText(getApplicationContext(), "Incorrect Information", Toast.LENGTH_SHORT).show();
-                    }
-                });
+                    });
+                }
             }
         });
 
@@ -199,4 +229,15 @@ public class CustomerProfileActivity extends AppCompatActivity implements Callba
     public void onFailure(Exception e) {
         Toast.makeText(getApplicationContext(), "Incorrect Information", Toast.LENGTH_SHORT).show();
     }
+
+    private boolean isValidMobileNumber(String mobileNumber) {
+        mobileNumber = mobileNumber.replaceAll("\\D", "");
+        if (mobileNumber.length() < 7 || mobileNumber.length() > 15) {
+            return false;
+        }
+
+        String pattern = "^(\\+\\d{1,3})?\\d{7,15}$";
+        return mobileNumber.matches(pattern);
+    }
+
 }

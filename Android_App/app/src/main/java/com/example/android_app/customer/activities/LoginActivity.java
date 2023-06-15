@@ -51,9 +51,32 @@ public class LoginActivity extends AppCompatActivity implements Callbacks<Boolea
         btnSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                userAuth.setEmail(email.getText().toString());
-                userAuth.setPassword(password.getText().toString());
-                customerApiManager.signIn(userAuth, LoginActivity.this);
+               boolean error = false;
+               if(email.getText().toString().isEmpty())
+               {
+                   email.setError("Email is required");
+                   error = true;
+               }
+               else if (!isValidEmail(email.getText().toString())) {
+                   email.setError("Invalid email format");
+                   error = true;
+               }
+
+               if(password.getText().toString().isEmpty())
+               {
+                   password.setError("Password is required");
+                   error = true;
+               }
+               else if (email.getText().toString().length() < 6) {
+                   password.setError("Password should have at least 6 characters");
+                   error = true;
+               }
+
+               if(!error){
+                   userAuth.setEmail(email.getText().toString());
+                   userAuth.setPassword(password.getText().toString());
+                   customerApiManager.signIn(userAuth, LoginActivity.this);
+               }
             }
         });
     }
@@ -74,5 +97,10 @@ public class LoginActivity extends AppCompatActivity implements Callbacks<Boolea
     @Override
     public void onFailure(Exception e) {
         Toast.makeText(getApplicationContext(), "Email or Password is not correct", Toast.LENGTH_SHORT).show();
+    }
+
+    private boolean isValidEmail(String email) {
+        String emailRegex = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$";
+        return email.matches(emailRegex);
     }
 }

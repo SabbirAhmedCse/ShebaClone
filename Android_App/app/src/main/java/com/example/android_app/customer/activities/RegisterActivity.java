@@ -2,7 +2,6 @@ package com.example.android_app.customer.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -20,10 +19,7 @@ import com.example.android_app.customer.api.CustomerApiManager;
 import com.example.android_app.customer.model.Customer;
 
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.Locale;
 
 public class RegisterActivity extends AppCompatActivity implements Callbacks<Boolean> {
@@ -113,24 +109,67 @@ public class RegisterActivity extends AppCompatActivity implements Callbacks<Boo
         String passwordValue = password.getText().toString();
         String mobileNumberValue = mobileNumber.getText().toString();
         String genderValue = getSelectedGender();
+        String dobValue = dateOfBirth.getText().toString();
 
-        String cityValue = city.getText().toString();
-        String areaValue = area.getText().toString();
-        String addressValue = address.getText().toString();
+        boolean error = false;
 
-        Customer customer = new Customer();
-        customer.setType("customer");
-        customer.setName(nameValue);
-        customer.setEmail(emailValue);
-        customer.setPassword(passwordValue);
-        customer.setDateOfBirth(dateOfBirth.getText().toString());
-        customer.setMobileNumber(mobileNumberValue);
-        customer.setGender(genderValue);
-        customer.setCity(cityValue);
-        customer.setArea(areaValue);
-        customer.setAddress(addressValue);
+        if (nameValue.isEmpty()) {
+            name.setError("Name is required");
+            error = true;
+        }
+        if (emailValue.isEmpty()) {
+            email.setError("Email is required");
+            error = true;
+        }
+        else if (!isValidEmail(emailValue)) {
+            email.setError("Invalid email format");
+            error = true;
+        }
 
-        customerApiManager.signUp(customer, RegisterActivity.this);
+        if (passwordValue.isEmpty()) {
+            password.setError("Password is required");
+            error = true;
+        }
+        else if (passwordValue.length() < 6) {
+            password.setError("Password should have at least 6 characters");
+            error = true;
+        }
+
+        if (mobileNumberValue.isEmpty()) {
+            mobileNumber.setError("Mobile number is required");
+            error = true;
+        }
+        else if(!isValidMobileNumber(mobileNumberValue))
+        {
+            mobileNumber.setError("Invalid Mobile Number format");
+        }
+        if (genderValue.isEmpty()) {
+            Toast.makeText(getApplicationContext(), "Gender is required", Toast.LENGTH_SHORT).show();
+            error = true;
+        }
+        if (dobValue.isEmpty()) {
+            dateOfBirth.setError("Date of birth is required");
+            error = true;
+        }
+        if (!error) {
+            String cityValue = city.getText().toString();
+            String areaValue = area.getText().toString();
+            String addressValue = address.getText().toString();
+
+            Customer customer = new Customer();
+            customer.setType("customer");
+            customer.setName(nameValue);
+            customer.setEmail(emailValue);
+            customer.setPassword(passwordValue);
+            customer.setDateOfBirth(dobValue);
+            customer.setMobileNumber(mobileNumberValue);
+            customer.setGender(genderValue);
+            customer.setCity(cityValue);
+            customer.setArea(areaValue);
+            customer.setAddress(addressValue);
+
+            customerApiManager.signUp(customer, RegisterActivity.this);
+        }
     }
 
     private String getSelectedGender() {
@@ -160,6 +199,22 @@ public class RegisterActivity extends AppCompatActivity implements Callbacks<Boo
 
     @Override
     public void onFailure(Exception e) {
-        Toast.makeText(getApplicationContext(), "Incorrect Information", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(), "Information is Incorrect", Toast.LENGTH_SHORT).show();
     }
+
+    private boolean isValidEmail(String email) {
+        // Simple email format validation using regex
+        String emailRegex = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$";
+        return email.matches(emailRegex);
+    }
+    private boolean isValidMobileNumber(String mobileNumber) {
+        mobileNumber = mobileNumber.replaceAll("\\D", "");
+        if (mobileNumber.length() < 7 || mobileNumber.length() > 15) {
+            return false;
+        }
+
+        String pattern = "^(\\+\\d{1,3})?\\d{7,15}$";
+        return mobileNumber.matches(pattern);
+    }
+
 }

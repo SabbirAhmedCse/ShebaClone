@@ -43,11 +43,9 @@ public class CustomerApiManager {
                 .addInterceptor(new HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
                 .build();
 
-        Gson gson = new GsonBuilder().serializeNulls().create();
-
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("http://192.168.0.54/api/")
-                .addConverterFactory(GsonConverterFactory.create(gson))
+                .addConverterFactory(GsonConverterFactory.create())
                 .client(client)
                 .build();
 
