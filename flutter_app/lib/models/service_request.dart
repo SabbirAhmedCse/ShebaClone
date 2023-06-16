@@ -1,4 +1,4 @@
-class RequestService {
+class ServiceRequest {
   final BigInt id;
   final String category;
   final String subCategory;
@@ -6,5 +6,5 @@ class RequestService {
   final String serviceStatus;
   final String address;
   final String area;
-  RequestService()
+  ServiceRequest(this.id, this.category, this.subCategory, this.serviceDate, this.serviceStatus, this.address, this.area);
 }
