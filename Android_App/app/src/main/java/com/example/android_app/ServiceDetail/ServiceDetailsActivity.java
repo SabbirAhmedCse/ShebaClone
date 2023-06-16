@@ -12,17 +12,19 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.android_app.RequestService.RequestServiceActivity;
+import com.example.android_app.ServicesAll.ServicesAllActivity;
 import com.example.android_app.ServicesAll.responsemodel;
 import com.example.android_app.databinding.ActivityServiceDetailsBinding;
 
 public class ServiceDetailsActivity extends AppCompatActivity {
     public static final String KEY_NAME = "NAME";
 
-    public static Intent getNavIntent(Context context, String subCatagory, String description,String price) {
+    public static Intent getNavIntent(Context context, String subCatagory, String description,String price, int id) {
         Intent intent = new Intent(context, com.example.android_app.ServiceDetail.ServiceDetailsActivity.class);
         intent.putExtra("subCategory", subCatagory);
         intent.putExtra("description", description);
         intent.putExtra("price",price);
+        intent.putExtra("id",id);
 
         return intent;
     }
@@ -41,6 +43,7 @@ public class ServiceDetailsActivity extends AppCompatActivity {
         String subCategory = intent.getStringExtra("subCategory");
         String description=intent.getStringExtra("description");
         String price=intent.getStringExtra("price");
+        int id=intent.getIntExtra("id",0);
 
         binding.t1.setText(subCategory);
         binding.t2.setText(description);
@@ -48,9 +51,12 @@ public class ServiceDetailsActivity extends AppCompatActivity {
         binding.reuestbutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-              //  v.getContext().startActivity(
-                      // new Intent(RequestServiceActivity)
-               // );
+                Intent intent1 = new Intent(ServiceDetailsActivity.this, RequestServiceActivity.class);
+                intent1.putExtra( "subCategory",subCategory);
+                intent1.putExtra("id",id);
+              startActivity(intent1);
+
+
             }
         });
 

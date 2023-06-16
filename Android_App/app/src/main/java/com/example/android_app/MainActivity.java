@@ -12,9 +12,9 @@ import android.widget.TextView;
 public class MainActivity extends AppCompatActivity {
     public static final String KEY_NAME = "NAME";
 
-    public static Intent getNavIntent(Context context, String name) {
+    public static Intent getNavIntent(Context context) {
         Intent intent = new Intent(context, MainActivity.class);
-        intent.putExtra(KEY_NAME, name);
+
         return intent;
     }
 
@@ -22,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Intent intent = getIntent();
-        String name = intent.getStringExtra(KEY_NAME);
+
+
     }
 }

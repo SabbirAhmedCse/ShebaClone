@@ -40,7 +40,7 @@ public class serviceadapter extends RecyclerView.Adapter<serviceadapter.Servicev
         holder.itemView.setOnClickListener(view -> {
             responsemodel item = data.get(position);
             holder.itemView.getContext().startActivity(
-                    ServiceDetailsActivity.getNavIntent(holder.itemView.getContext(), item.subCategory, item.description,item.price)
+                    ServiceDetailsActivity.getNavIntent(holder.itemView.getContext(), item.subCategory, item.description,item.price,item.id)
             );
         });
     }
