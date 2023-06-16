@@ -39,6 +39,19 @@ namespace Repository.Repository
             }
         }
 
+        public bool CreateService(ServiceRequest entity)
+        {
+            try
+            {
+                var acceptResult = _appDbContext.ServiceRequests.Add(entity);
+                return _appDbContext.SaveChanges() > 0;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
         public ServiceRequest Get(long Id)
         {
             try

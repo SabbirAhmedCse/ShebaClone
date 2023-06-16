@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/screens/signin.dart';
-
+import 'package:get/get.dart';
 import '../services/screen_navigation.dart';
 import '../widgets/custom_textfield.dart';
+import 'signin.dart';
 
 class SignUp extends StatefulWidget {
    final String? gender;
@@ -160,7 +160,7 @@ class _SignUpState extends State<SignUp> {
                 ),
                 InkWell(
                   onTap: (){
-                    navigateToNextScreen(context, const SignUp());
+                    Get.to(() => const SignIn());
                   },
                   child: const Text(
                     "Singin",

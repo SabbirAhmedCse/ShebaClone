@@ -38,16 +38,22 @@ namespace API.Controllers
                     var result = _user.Create(userDetails);
                     if (result == true)
                     {
-                        var authData = _userToken.CreateToken(userDetails);
-                        if (authData == null)
+                        var userSigninDetails = _user.GetByEmail(userDetails.Email);
+                        if (userSigninDetails != null)
                         {
-                            return Unauthorized();
+                            if (userDetails.Email == userSigninDetails.Email && userDetails.Password == userSigninDetails.Password)
+                            {
+                                var authData = _userToken.CreateToken(userDetails);
+                                if (authData != null)
+                                {
+                                    authData.massage = "signUp successfully!";
+                                    return Ok(authData);
+                                }
+                                return Unauthorized();
+                            }
+                            return BadRequest("Miss match email or password!");
                         }
-                        else
-                        {
-                            authData.massage = "signUp successfully!";
-                            return Ok(authData);
-                        }
+                        return NotFound("Email is not found.");
                     }
                     return BadRequest();
                 }
@@ -67,20 +73,23 @@ namespace API.Controllers
         {
             try
             {
-                if (userCardinalitis != null)
+                var userDetails = _user.GetByEmail(userCardinalitis.Email);
+                if(userDetails != null)
                 {
-                    var userDetails = _user.GetByEmail(userCardinalitis.Email);
-                    var authData = _userToken.CreateToken(userDetails);
-                    if (authData == null)
+                    if (userCardinalitis.Email == userDetails.Email && userCardinalitis.Password == userDetails.Password)
                     {
+                        var authData = _userToken.CreateToken(userDetails);
+                        if (authData != null)
+                        {
+                            authData.massage = "Signin Successfully!";
+                            return Ok(authData);
+                        }
                         return Unauthorized();
                     }
+                    return BadRequest("Miss match email or password!");
 
-                    return Ok(authData);
                 }
-
-                return NotFound("Enter User Data");
-
+                return NotFound("Email is not found.");
             }
             catch (Exception ex)
             {

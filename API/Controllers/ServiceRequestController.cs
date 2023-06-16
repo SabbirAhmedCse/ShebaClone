@@ -104,7 +104,31 @@ namespace API.Controllers
                 throw ex;
             }
         }
+        
+        [HttpPost]
+        [Route("create")]
+       public ActionResult<string> CreateServiceRequest(ServiceRequest serviceRequest)
+        {
+            try
+            {
+                if(serviceRequest != null)
+                {
+                    var response = _serviceRequest.CreateService(serviceRequest);
+                    if (response)
+                    {
+                        return Ok("Successfully create service request!");
+                    }
+                    return BadRequest();
+                }
 
+                return NotFound("Invalid request");
+            }
+            catch(Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+
+        }
         [HttpPut]
         [Route("accept")]
         public ActionResult<string> AcceptService(AcceptService acceptService)
@@ -125,7 +149,7 @@ namespace API.Controllers
                         bool acceptResult = _serviceRequest.Update(serviceRequestDetails);
                         if (acceptResult)
                         {
-                            return Ok("Successfully reject service.");
+                            return Ok("Successfully approved service.");
                         }
                         return BadRequest();
                     }
@@ -177,12 +201,13 @@ namespace API.Controllers
         [Route("addmachanic")]
         public ActionResult<string> AddMechanic(AddMechanic addMechanic)
         {
-            try { 
+            try {
+                long userId = Convert.ToInt64((User.Identity as ClaimsIdentity).Claims.First(c => c.Type == "UserId").Value);
                 var serviceRequestDetails = _serviceRequest.Get(addMechanic.ServiceId);
                 if (serviceRequestDetails != null)
                 {
                     serviceRequestDetails.MechanicId = addMechanic.MechanicId;
-                    serviceRequestDetails.UpdateBy = addMechanic.MechanicId;
+                    serviceRequestDetails.UpdateBy = userId;
                     serviceRequestDetails.UpdateAt = DateTime.Now;
                     var acceptResult = _serviceRequest.Update(serviceRequestDetails);
                     if (acceptResult)
