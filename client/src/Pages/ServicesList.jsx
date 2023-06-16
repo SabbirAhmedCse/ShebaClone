@@ -40,7 +40,9 @@ export default function ServicesList() {
           commonDataAccess.get(url + '/categories')
             .then((categoryData) => {
               const updatedData = serviceData.map((service) => {
+                console.log('Service:', service);
                 const category = categoryData.find((category) => category.id === service.servicesCategoryId);
+                console.log('Category:', category);
                 if (category) {
                   return {
                     ...service,

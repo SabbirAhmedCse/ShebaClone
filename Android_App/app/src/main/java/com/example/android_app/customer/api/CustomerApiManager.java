@@ -184,4 +184,13 @@ public class CustomerApiManager {
         });
     }
 
+            @Override
+            public void onFailure(@NonNull Call<Customer> call, @NonNull Throwable t) {
+                Log.d(TAG, "onFailure: failed -> ");
+                Log.d(TAG, t.getMessage());
+                t.printStackTrace();
+            }
+        });
+    }
+
 }
