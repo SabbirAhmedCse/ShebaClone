@@ -40,7 +40,7 @@ namespace API.Controllers
                 var service = await _service.Get(serviceRequest.ServiceId);
                 var serviceCategory = _serviceCategory.Get(service.ServicesCategoryId);
                 var customer = _user.Get(serviceRequest.CreateBy);
-                if(serviceRequest.MechanicId != null)
+                if (serviceRequest.MechanicId != null)
                 {
                     var mechanic = _user.Get((long)serviceRequest.MechanicId);
                     _serviceRequestDetails.MechanicName = mechanic.Name;
@@ -63,15 +63,15 @@ namespace API.Controllers
         }
 
         [HttpGet]
-        [Route("requestedService")]
+        [Route("getall")]
         public ActionResult<ServiceRequest> GetAllCustomerRequestedService(int pageNumber, int pageSize)
         {
             try
             {
                 long userId = Convert.ToInt64((User.Identity as ClaimsIdentity).Claims.First(c => c.Type == "UserId").Value);
                 string type = (User.Identity as ClaimsIdentity).Claims.First(c => c.Type == "UserType").Value;
-                var serviceRequestedData = _serviceRequest.GetAll(pageNumber, pageSize,userId,type);
-                if(serviceRequestedData != null)
+                var serviceRequestedData = _serviceRequest.GetAll(pageNumber, pageSize, userId, type);
+                if (serviceRequestedData != null)
                 {
                     return Ok(serviceRequestedData);
                 }
@@ -92,7 +92,7 @@ namespace API.Controllers
                 long userId = Convert.ToInt64((User.Identity as ClaimsIdentity).Claims.First(c => c.Type == "UserId").Value);
                 string type = (User.Identity as ClaimsIdentity).Claims.First(c => c.Type == "UserType").Value;
 
-                var serviceRequestedData = _serviceRequest.GetAll(pageNumber, pageSize,userId,type);
+                var serviceRequestedData = _serviceRequest.GetAll(pageNumber, pageSize, userId, type);
                 if (serviceRequestedData != null)
                 {
                     return Ok(serviceRequestedData);
@@ -104,7 +104,33 @@ namespace API.Controllers
                 throw ex;
             }
         }
+        [HttpPost]
+        [Route("create")]
+        public ActionResult<string> CreateServiceRequest(ServiceRequest serviceRequest)
+        {
+            try
+            {
+                long userId = Convert.ToInt64((User.Identity as ClaimsIdentity).Claims.First(c => c.Type == "UserId").Value);
+                if (serviceRequest != null)
+                {
+                    serviceRequest.CreateBy = userId;
+                    serviceRequest.CreateAt = DateTime.Now;
+                    var response = _serviceRequest.CreateService(serviceRequest);
+                    if (response)
+                    {
+                        return Ok("Successfully create service request!");
+                    }
+                    return BadRequest();
+                }
 
+                return NotFound("Invalid request");
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+
+        }
         [HttpPut]
         [Route("accept")]
         public ActionResult<string> AcceptService(AcceptService acceptService)
@@ -125,7 +151,7 @@ namespace API.Controllers
                         bool acceptResult = _serviceRequest.Update(serviceRequestDetails);
                         if (acceptResult)
                         {
-                            return Ok("Successfully reject service.");
+                            return Ok("Successfully approved service.");
                         }
                         return BadRequest();
                     }
@@ -142,7 +168,7 @@ namespace API.Controllers
                         }
                         return BadRequest();
                     }
-                   
+
                 }
                 else
                 {
@@ -177,12 +203,14 @@ namespace API.Controllers
         [Route("addmachanic")]
         public ActionResult<string> AddMechanic(AddMechanic addMechanic)
         {
-            try { 
+            try
+            {
+                long userId = Convert.ToInt64((User.Identity as ClaimsIdentity).Claims.First(c => c.Type == "UserId").Value);
                 var serviceRequestDetails = _serviceRequest.Get(addMechanic.ServiceId);
                 if (serviceRequestDetails != null)
                 {
                     serviceRequestDetails.MechanicId = addMechanic.MechanicId;
-                    serviceRequestDetails.UpdateBy = addMechanic.MechanicId;
+                    serviceRequestDetails.UpdateBy = userId;
                     serviceRequestDetails.UpdateAt = DateTime.Now;
                     var acceptResult = _serviceRequest.Update(serviceRequestDetails);
                     if (acceptResult)
@@ -214,11 +242,11 @@ namespace API.Controllers
                 var serviceRequestDetails = _serviceRequest.Get(rejectService.Id);
                 if (serviceRequestDetails != null)
                 {
-                    
+
                     if (userType.ToLower() == "admin")
                     {
                         serviceRequestDetails.MechanicId = null;
-                        serviceRequestDetails.ServiceStatus = "Reject"; 
+                        serviceRequestDetails.ServiceStatus = "Reject";
                         serviceRequestDetails.UpdateBy = userId;
                         serviceRequestDetails.UpdateAt = DateTime.Now;
                         bool acceptResult = _serviceRequest.Update(serviceRequestDetails);
