@@ -8,7 +8,8 @@ import 'package:get/get.dart';
 
 import 'screens/service_reject.dart';
 
-const String splash = "/";
+const String home = "/";
+const String splash = "/splash";
 const String signin = "/signin";
 const String signup = "/signup";
 const String profile = '/profile';
@@ -16,6 +17,10 @@ const String assignedService = '/assignedservice';
 const String serviceReject = '/servicereject';
 
 List<GetPage> pages = [
+  GetPage(
+    name: home,
+    page: () => const Home(),
+  ),
   GetPage(
     name: splash,
     page: () => const Splash(),

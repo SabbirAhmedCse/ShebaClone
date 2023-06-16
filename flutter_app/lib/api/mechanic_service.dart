@@ -3,10 +3,10 @@ import '../config/config.dart';
 import 'api_service.dart';
 
 class MechanicService {
-  static Future<dynamic> allAssignedService() async {
+  static Future<dynamic> allAssignedService(int pageNumber, int pageSize) async {
     try {
-      String url = "${Config.baseApiUrl}/service";
-      var response = ApiService.get(url);
+      String url = "${Config.baseApiUrl}/ServiceRequest/allocatedService?pageNumber=$pageNumber&pageSize=$pageSize";
+      var response = await ApiService.get(url);
       return response;
     } catch (e) {
       throw Exception(e);
@@ -16,7 +16,7 @@ class MechanicService {
   static Future<dynamic> serviceDetails(id) async {
     try {
       String url = "${Config.baseApiUrl}/ServiceRequest/details?Id=$id";
-      var response = ApiService.get(url);
+      var response =await ApiService.get(url);
       return response;
     } catch (e) {
       throw Exception(e);
@@ -25,7 +25,7 @@ class MechanicService {
 static Future<dynamic> serviceCategory() async {
     try {
       String url = "${Config.baseApiUrl}/Service/category";
-      var response = ApiService.get(url);
+      var response =await ApiService.get(url);
       return response;
     } catch (e) {
       throw Exception(e);
@@ -36,7 +36,7 @@ static Future<dynamic> serviceCategory() async {
   static Future<dynamic> acceptService(data) async {
     try {
       String url = "${Config.baseApiUrl}/ServiceRequest/accept";
-      var response = ApiService.put(url, data);
+      var response =await ApiService.put(url, data);
       return response;
     } catch (e) {
       throw Exception(e);
@@ -46,7 +46,7 @@ static Future<dynamic> serviceCategory() async {
   static Future<dynamic> rejectService(data) async {
     try {
       String url = "${Config.baseApiUrl}/ServiceRequest/reject";
-      var response = ApiService.post(url, data);
+      var response =await ApiService.post(url, data);
       return response;
     } catch (e) {
       throw Exception(e);

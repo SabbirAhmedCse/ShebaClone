@@ -3,7 +3,7 @@ import 'package:flutter_app/api/auth_service.dart';
 import 'package:flutter_app/screens/signin.dart';
 import 'package:get/get.dart';
 
-import 'assigned_service_list.dart';
+import 'home.dart';
 
 class Splash extends StatefulWidget {
   const Splash({super.key});
@@ -19,7 +19,7 @@ class _SplashState extends State<Splash> {
       Get.to(()=> const SignIn());
     }
     else if(authData["type"]=="mechanic") {
-      Get.to(()=> const AssignedService());
+      Get.to(()=> const Home());
     }
      else {
       Get.to(()=> const SignIn());

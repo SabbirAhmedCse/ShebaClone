@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import '../widgets/custome_listtile.dart';
 
@@ -10,6 +11,12 @@ class ServiceDetails extends StatefulWidget {
 }
 
 class _ServiceDetailsState extends State<ServiceDetails> {
+  var list = Get.arguments;
+  @override
+  void initState(){
+    super.initState();
+    print(list);
+  }
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -18,77 +25,79 @@ class _ServiceDetailsState extends State<ServiceDetails> {
           title: const Text("Duronto Sheba"),
           centerTitle: true,
         ),
-        body:  Column(
-          
-          children: [
-            Title(
-              color: Colors.grey,
-              child: const Text(
-                "Service Details",
-                style: TextStyle(
-                  fontSize: 30,
-                  fontWeight: FontWeight.bold
+        body:  SingleChildScrollView(
+          child: Column(
+            
+            children: [
+              Title(
+                color: Colors.grey,
+                child: const Text(
+                  "Service Details",
+                  style: TextStyle(
+                    fontSize: 30,
+                    fontWeight: FontWeight.bold
+                  ),
                 ),
               ),
-            ),
-            CustomListtile(
-              title: "Category: ",
-              subtitle: "",
-            ),
-            CustomListtile(
-              title: "Sub-category: ",
-              subtitle: "",
-            ),
-            CustomListtile(
-              title: "Service Date: ",
-              subtitle: "",
-            ),
-            CustomListtile(
-              title: "Service Status: ",
-              subtitle: "",
-            ),
-            CustomListtile(
-              title: "Description: ",
-              subtitle: "",
-            ),
-            CustomListtile(
-              title: "Address: ",
-              subtitle: "",
-            ),
-            Row(
-              children: [
-                ElevatedButton(
-                  onPressed: (){}, 
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.blue, 
-                    foregroundColor: Colors.white, 
-                  ),
-                  child: const Text(
-                    "Accept",
-                    style:  TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold   
+              CustomListtile(
+                title: "Category: ",
+                subtitle: "",
+              ),
+              CustomListtile(
+                title: "Sub-category: ",
+                subtitle: "",
+              ),
+              CustomListtile(
+                title: "Service Date: ",
+                subtitle: "",
+              ),
+              CustomListtile(
+                title: "Service Status: ",
+                subtitle: "",
+              ),
+              CustomListtile(
+                title: "Description: ",
+                subtitle: "",
+              ),
+              CustomListtile(
+                title: "Address: ",
+                subtitle: "",
+              ),
+              Row(
+                children: [
+                  ElevatedButton(
+                    onPressed: (){}, 
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.blue, 
+                      foregroundColor: Colors.white, 
+                    ),
+                    child: const Text(
+                      "Accept",
+                      style:  TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold   
+                      ),
                     ),
                   ),
-                ),
-
-                ElevatedButton(
-                  onPressed: (){}, 
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.red, 
-                    foregroundColor: Colors.white, 
-                  ),
-                  child: const Text(
-                    "Reject",
-                    style:  TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold   
+        
+                  ElevatedButton(
+                    onPressed: (){}, 
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.red, 
+                      foregroundColor: Colors.white, 
+                    ),
+                    child: const Text(
+                      "Reject",
+                      style:  TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold   
+                      ),
                     ),
                   ),
-                ),
-              ],
-            )
-          ],
+                ],
+              )
+            ],
+          ),
         ),
       )
     );
