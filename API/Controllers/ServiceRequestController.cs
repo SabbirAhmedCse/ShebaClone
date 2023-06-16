@@ -63,7 +63,7 @@ namespace API.Controllers
         }
 
         [HttpGet]
-        [Route("requestedService")]
+        [Route("getall")]
         public ActionResult<ServiceRequest> GetAllCustomerRequestedService(int pageNumber, int pageSize)
         {
             try
@@ -104,15 +104,17 @@ namespace API.Controllers
                 throw ex;
             }
         }
-        
         [HttpPost]
         [Route("create")]
        public ActionResult<string> CreateServiceRequest(ServiceRequest serviceRequest)
         {
             try
             {
-                if(serviceRequest != null)
+                long userId = Convert.ToInt64((User.Identity as ClaimsIdentity).Claims.First(c => c.Type == "UserId").Value);
+                if (serviceRequest != null)
                 {
+                    serviceRequest.CreateBy = userId;
+                    serviceRequest.CreateAt = DateTime.Now;
                     var response = _serviceRequest.CreateService(serviceRequest);
                     if (response)
                     {
