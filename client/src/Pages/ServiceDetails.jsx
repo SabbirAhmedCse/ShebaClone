@@ -74,7 +74,7 @@ export default function ServiceDetails() {
                             Service Image
                         </Table.Cell>
                         <Table.Cell textAlign='center'>
-                            {data.image}
+                            {data.imageUrl}
                         </Table.Cell>
                     </Table.Row>
                     <Table.Row>

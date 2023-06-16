@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.appbar.AppBarLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/MyToolbarStyle"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:theme="@style/MyToolbarStyle"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/colorPrimary"
+        android:elevation="4dp"
+        app:menu="@menu/main">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <Button
+                android:id="@+id/btnHome"
+                android:layout_width="wrap_content"
+                android:layout_height="48dp"
+                android:layout_marginEnd="110dp"
+                android:fontFamily="sans-serif"
+                android:text="Home"
+                android:textSize="19sp"
+                app:layout_constraintEnd_toStartOf="@+id/btnServices"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <Button
+                android:id="@+id/btnServices"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif"
+                android:text="Services"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.932"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.0" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </androidx.appcompat.widget.Toolbar>
+
+
+</com.google.android.material.appbar.AppBarLayout>

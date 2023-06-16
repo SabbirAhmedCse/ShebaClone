@@ -44,6 +44,7 @@ namespace Repository.Repository
 
         public async Task<Service> Insert(Service srv)
         {
+            srv.CreateAt = DateTime.Now;
             _appDbContext.Add(srv);
             await _appDbContext.SaveChangesAsync();
             return srv;
@@ -51,6 +52,7 @@ namespace Repository.Repository
 
         public async Task<Service> Update(Service srv)
         {
+            srv.UpdateAt = DateTime.Now;
             _appDbContext.Entry(srv).State = EntityState.Modified;
             await _appDbContext.SaveChangesAsync();
             return srv;

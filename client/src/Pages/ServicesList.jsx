@@ -5,80 +5,77 @@ import CommonTable from '../Components/Table';
 import commonDataAccess from '../dataAccess/CommonDataAccess';
 import config from '../utils/config';
 
-
-function SearchBar() {
-    return (
-        <div className="main">
-            <div className="ui search">
-                <div className="ui icon input">
-                    <input className="prompt"
-                        type="text"
-                        placeholder="Search..." />
-                    <i className="search icon"></i>
-                </div>
-                <div className="results"></div>
-            </div>
-        </div>
-    );
-}
-
 export default function ServicesList() {
-
     const [data, setData] = useState([]);
     const nav = useNavigate();
-    var url = `${config.baseUrl}/Service`;
-
+    const url = `${config.baseUrl}/Service`;
+  
     const Columns = [
-        {
-            name: "Service Id",
-            value: "id"
-        },
-        {
-            name: "Sub Category",
-            value: "subCategory"
-        },
-        {
-            name: "Description",
-            value: "description"
-        },
-        {
-            name: "Price",
-            value: "price"
-        },
-        {
-            name: "Image Url",
-            value: "imageUrl"
-        },
-    ]
+      {
+        name: "Category",
+        value: "category"
+      },
+      {
+        name: "Sub Category",
+        value: "subCategory"
+      },
+      {
+        name: "Description",
+        value: "description"
+      },
+      {
+        name: "Price",
+        value: "price"
+      },
+      {
+        name: "Image Url",
+        value: "imageUrl"
+      },
+    ];
     const actions = ["Details", "Update"];
-
+  
     useEffect(() => {
-        commonDataAccess.get(url)
-          .then((data) => setData(data))
-          .catch((error) => {
-            
-            console.error('Error fetching data:', error);
-          });
-      }, [url]);
-
-    console.log(data);
-
+      commonDataAccess.get(url)
+        .then((serviceData) => {
+          commonDataAccess.get(url + '/categories')
+            .then((categoryData) => {
+              const updatedData = serviceData.map((service) => {
+                const category = categoryData.find((category) => category.id === service.servicesCategoryId);
+                if (category) {
+                  return {
+                    ...service,
+                    category: category.categoryName
+                  };
+                }
+                return service;
+              });
+              setData(updatedData);
+            })
+            .catch((error) => {
+              console.error('Error fetching category data:', error);
+            });
+        })
+        .catch((error) => {
+          console.error('Error fetching service data:', error);
+        });
+    }, [url]);
+  
     const functions = [
-
-    (id) => nav('/ServiceDetails', { state: { link: { url, id } } }),
-    (id) => nav('/UpdateService', { state: { link: { url, id } } }),
-
-  ];
-
+      (id) => nav('/ServiceDetails', { state: { link: { url, id } } }),
+      (id) => nav('/UpdateService', { state: { link: { url, id } } }),
+    ];
+  
+    console.log(data);
+  
     return (
-        
-        <div className="servicelist">
-            <div className="main">
-                <h2>Service Lists</h2>
-            </div>
-            <SearchBar />
-            <Button primary type="submit" onClick={() => nav('/CreateService', {state:url})}>Create Service</Button>
-            <CommonTable data={data} Columns = {Columns} actions={actions} functions={functions}/>
+      <div className="servicelist">
+        <div className="main">
+          <h2>Service Lists</h2>
         </div>
+        <Button primary type="submit" onClick={() => nav('/CreateService', { state: url })}>Create Service</Button>
+        <CommonTable data={data} Columns={Columns} actions={actions} functions={functions} />
+      </div>
     );
-}
+  }
+  
+  

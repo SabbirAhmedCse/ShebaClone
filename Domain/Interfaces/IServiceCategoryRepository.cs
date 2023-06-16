@@ -10,5 +10,6 @@ namespace Domain.Interfaces
     public interface IServiceCategoryRepository
     {
         public ServiceCategory Get(int id);
+        public IEnumerable<ServiceCategory> GetAll();
     }
 }

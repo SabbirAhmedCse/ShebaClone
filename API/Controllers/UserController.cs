@@ -9,6 +9,8 @@ using Repository.Repository;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using Microsoft.AspNetCore.JsonPatch;
+using Microsoft.EntityFrameworkCore;
 
 namespace API.Controllers
 {
@@ -147,6 +149,49 @@ namespace API.Controllers
             {
                 throw ex;
             }
-        }   
+        }
+
+        [HttpPut("{id}")]
+        public IActionResult UpdateUser(long id, User user)
+        {
+            try
+            {
+                if(user != null)
+                {
+                    var user_details = _user.Get(id);
+
+                    if(user_details == null)
+                    {
+                        return BadRequest("No User with this Id");
+                    }
+                    user_details.Email = user.Email;
+                    user_details.Password = user.Password;
+                    user_details.Name = user.Name;
+                    user_details.MobileNumber = user.MobileNumber;
+                    user_details.Gender = user.Gender;
+                    user_details.DateOfBirth = user.DateOfBirth;
+                    user_details.Address = user.Address;
+                    user_details.Area = user.Area;
+                    user_details.City = user.City;
+
+                    var result = _user.Update(user_details);
+
+                    if (result)
+                    {
+                        return Ok(user);
+                    }
+                    else
+                    {
+                        return BadRequest();
+                    }
+                    
+                }
+                return BadRequest("User came with Empty body");
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
     }
 }

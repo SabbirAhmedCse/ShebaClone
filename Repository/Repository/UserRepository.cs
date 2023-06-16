@@ -1,10 +1,8 @@
 ﻿using Domain.Interfaces;
 using Domain.Models;
-using Microsoft.IdentityModel.Tokens;
+using Microsoft.EntityFrameworkCore;
 using Repository.Context;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using System.Text;
+
 
 namespace Repository.Repository
 {
@@ -89,7 +87,15 @@ namespace Repository.Repository
 
         public bool Update(User userDetails)
         {
-            throw new NotImplementedException();
+            try
+            {
+                userDetails.UpdateAt = DateTime.Now;
+                _appDbContext.Entry(userDetails).State = EntityState.Modified;
+                return _appDbContext.SaveChanges() > 0;
+            }
+            catch(Exception ex) {
+                throw ex;
+            }
         }
 
         public bool Delete(long Id)

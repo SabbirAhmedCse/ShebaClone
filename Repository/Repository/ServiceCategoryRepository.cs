@@ -16,7 +16,8 @@ namespace Repository.Repository
         {
             _appDbContext = appDbContext;
         }
-    public ServiceCategory Get(int id)
+
+        public ServiceCategory Get(int id)
         {
             
             try
@@ -29,5 +30,21 @@ namespace Repository.Repository
                 throw ex;
             }
         }
+
+        public IEnumerable<ServiceCategory> GetAll()
+        {
+            try
+            {
+                var serviceCategories = _appDbContext.ServiceCategories.ToList();
+                return serviceCategories;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
     }
+
+    
 }
+

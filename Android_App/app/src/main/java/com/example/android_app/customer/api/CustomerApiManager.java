@@ -4,16 +4,22 @@ import androidx.annotation.NonNull;
 
 import android.content.Context;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.example.android_app.customer.model.AuthData;
 import com.example.android_app.customer.model.Customer;
 import com.example.android_app.customer.model.UserAuth;
 import com.example.android_app.customer.network.AuthInterceptor;
 import com.example.android_app.customer.utils.SharedPrefsManager;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
+import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
+import okhttp3.RequestBody;
 import okhttp3.logging.HttpLoggingInterceptor;
 
+import okio.ByteString;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -56,13 +62,14 @@ public class CustomerApiManager {
                     if (response.isSuccessful()) {
                         AuthData authData = response.body();
                         if (authData != null) {
-                            sharedPrefsManager.setJwtToken(authData.getToken());
+                            sharedPrefsManager.setJwtToken(authData.getToken(), authData.getId());
                             callback.onSuccess(true);
                         } else {
                             callback.onSuccess(false);
                         }
                     } else {
                         Log.d(TAG, String.valueOf(response.code()));
+                        callback.onFailure(new Exception());
                     }
                 } catch (Exception ex) {
                     throw ex;
@@ -86,13 +93,14 @@ public class CustomerApiManager {
                     if (response.isSuccessful()) {
                         AuthData authData = response.body();
                         if (authData != null) {
-                            sharedPrefsManager.setJwtToken(authData.getToken());
+                            sharedPrefsManager.setJwtToken(authData.getToken(), authData.getId());
                             callback.onSuccess(true);
                         } else {
                             callback.onSuccess(false);
                         }
                     } else {
                         Log.d("TAG", String.valueOf(response.code()));
+                        callback.onFailure(new Exception());
                     }
                 } catch (Exception ex) {
                     throw ex;
@@ -107,7 +115,8 @@ public class CustomerApiManager {
     }
 
     public void getCustomer(Callbacks<Customer> callback) {
-        Call<Customer> call = customerHolderAPI.getCustomer();
+        String id = sharedPrefsManager.getId();
+        Call<Customer> call = customerHolderAPI.getCustomer(Integer.parseInt(id));
         call.enqueue(new Callback<Customer>() {
             @Override
             public void onResponse(@NonNull Call<Customer> call, @NonNull Response<Customer> response) {
@@ -140,4 +149,7 @@ public class CustomerApiManager {
         });
 
     }
+}
+
+
 }
