@@ -6,6 +6,7 @@ import 'package:flutter_app/screens/signup.dart';
 import 'package:flutter_app/screens/splash.dart';
 import 'package:get/get.dart';
 
+import 'screens/home.dart';
 import 'screens/service_reject.dart';
 
 const String home = "/";
