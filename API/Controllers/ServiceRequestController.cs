@@ -106,7 +106,7 @@ namespace API.Controllers
         }
         [HttpPost]
         [Route("create")]
-        public ActionResult<string> CreateServiceRequest(ServiceRequest serviceRequest)
+       public ActionResult<string> CreateServiceRequest(ServiceRequest serviceRequest)
         {
             try
             {
@@ -125,7 +125,7 @@ namespace API.Controllers
 
                 return NotFound("Invalid request");
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
                 throw new Exception(ex.Message);
             }
@@ -203,8 +203,7 @@ namespace API.Controllers
         [Route("addmachanic")]
         public ActionResult<string> AddMechanic(AddMechanic addMechanic)
         {
-            try
-            {
+            try {
                 long userId = Convert.ToInt64((User.Identity as ClaimsIdentity).Claims.First(c => c.Type == "UserId").Value);
                 var serviceRequestDetails = _serviceRequest.Get(addMechanic.ServiceId);
                 if (serviceRequestDetails != null)
