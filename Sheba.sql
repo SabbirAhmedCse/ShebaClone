@@ -102,7 +102,7 @@ BEGIN
     SubCategory nvarchar(100) Null,
     Description nvarchar(300) Not Null,
 	Price Money Null,
-    Image nvarchar(100) Null,
+    ImageUrl nvarchar(100) Null,
 	CreateBy bigint NOT NULL FOREIGN KEY REFERENCES Users (Id),
     CreateAt date Not Null,
 	UpdateBy bigint NULL FOREIGN KEY REFERENCES Users (Id),

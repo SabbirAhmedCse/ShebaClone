@@ -40,7 +40,7 @@ namespace API.Controllers
                 var service = await _service.Get(serviceRequest.ServiceId);
                 var serviceCategory = _serviceCategory.Get(service.ServicesCategoryId);
                 var customer = _user.Get(serviceRequest.CreateBy);
-                if(serviceRequest.MechanicId != null)
+                if (serviceRequest.MechanicId != null)
                 {
                     var mechanic = _user.Get((long)serviceRequest.MechanicId);
                     _serviceRequestDetails.MechanicName = mechanic.Name;
@@ -70,8 +70,8 @@ namespace API.Controllers
             {
                 long userId = Convert.ToInt64((User.Identity as ClaimsIdentity).Claims.First(c => c.Type == "UserId").Value);
                 string type = (User.Identity as ClaimsIdentity).Claims.First(c => c.Type == "UserType").Value;
-                var serviceRequestedData = _serviceRequest.GetAll(pageNumber, pageSize,userId,type);
-                if(serviceRequestedData != null)
+                var serviceRequestedData = _serviceRequest.GetAll(pageNumber, pageSize, userId, type);
+                if (serviceRequestedData != null)
                 {
                     return Ok(serviceRequestedData);
                 }
@@ -92,7 +92,7 @@ namespace API.Controllers
                 long userId = Convert.ToInt64((User.Identity as ClaimsIdentity).Claims.First(c => c.Type == "UserId").Value);
                 string type = (User.Identity as ClaimsIdentity).Claims.First(c => c.Type == "UserType").Value;
 
-                var serviceRequestedData = _serviceRequest.GetAll(pageNumber, pageSize,userId,type);
+                var serviceRequestedData = _serviceRequest.GetAll(pageNumber, pageSize, userId, type);
                 if (serviceRequestedData != null)
                 {
                     return Ok(serviceRequestedData);
@@ -168,7 +168,7 @@ namespace API.Controllers
                         }
                         return BadRequest();
                     }
-                   
+
                 }
                 else
                 {
@@ -241,11 +241,11 @@ namespace API.Controllers
                 var serviceRequestDetails = _serviceRequest.Get(rejectService.Id);
                 if (serviceRequestDetails != null)
                 {
-                    
+
                     if (userType.ToLower() == "admin")
                     {
                         serviceRequestDetails.MechanicId = null;
-                        serviceRequestDetails.ServiceStatus = "Reject"; 
+                        serviceRequestDetails.ServiceStatus = "Reject";
                         serviceRequestDetails.UpdateBy = userId;
                         serviceRequestDetails.UpdateAt = DateTime.Now;
                         bool acceptResult = _serviceRequest.Update(serviceRequestDetails);

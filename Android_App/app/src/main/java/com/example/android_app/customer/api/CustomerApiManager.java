@@ -149,7 +149,39 @@ public class CustomerApiManager {
         });
 
     }
-}
+
+    public void updateCustomer(Customer customer, Callbacks<Customer> callback) {
+        String id = sharedPrefsManager.getId();
+        Call<Customer> call = customerHolderAPI.updateCustomer(Integer.parseInt(id), customer);
+
+        call.enqueue(new Callback<Customer>() {
+            @Override
+            public void onResponse(@NonNull Call<Customer> call, @NonNull Response<Customer> response) {
+                try {
+                    if (response.isSuccessful()) {
+                        Customer updatedCustomer = response.body();
+                        if (updatedCustomer != null) {
+                            callback.onSuccess(updatedCustomer);
+                        } else {
+                            callback.onSuccess(null);
+                        }
+                    } else {
+                        Log.d(TAG, "onResponse: response code = " + response.code());
+                        callback.onFailure(new Exception());
+                    }
+                } catch (Exception ex) {
+                    throw ex;
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<Customer> call, @NonNull Throwable t) {
+                Log.d(TAG, "onFailure: failed -> ");
+                Log.d(TAG, t.getMessage());
+                t.printStackTrace();
+            }
+        });
+    }
 
 
 }

@@ -31,7 +31,7 @@ namespace Repository.Repository
             try
             {
                 var acceptResult = _appDbContext.RejectReasons.Add(entity);
-                return  _appDbContext.SaveChanges()>0;
+                return _appDbContext.SaveChanges() > 0;
             }
             catch (Exception ex)
             {
@@ -68,7 +68,8 @@ namespace Repository.Repository
 
         public IEnumerable<ServiceRequestDetails> GetAll(int pageNumber, int pageSize, long userId, string userType)
         {
-            try{
+            try
+            {
                 _pageResponse.TotalRecords = _appDbContext.ServiceRequests.Count();
                 _pageResponse.PageNumber = pageNumber;
                 _pageResponse.PageSize = pageSize;
@@ -162,7 +163,7 @@ namespace Repository.Repository
             try
             {
                 var acceptResult = _appDbContext.ServiceRequests.Update(entity);
-                   return _appDbContext.SaveChanges() > 0;
+                return _appDbContext.SaveChanges() > 0;
             }
             catch (Exception ex)
             {

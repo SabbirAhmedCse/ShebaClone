@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.Spinner;
 
 import com.example.android_app.R;
+import com.example.android_app.ServicesAll.ServicesAllActivity;
 import com.example.android_app.customer.utils.SharedPrefsManager;
 
 public class HomeActivity extends AppCompatActivity {
@@ -46,7 +47,8 @@ public class HomeActivity extends AppCompatActivity {
         btnServices.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //Mehedi's Services Activity
+                Intent i = new Intent(getApplicationContext(), ServicesAllActivity.class);
+                startActivity(i);
             }
         });
 

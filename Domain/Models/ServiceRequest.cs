@@ -13,7 +13,7 @@ namespace Domain.Models
         public long Id { get; set; }
         public int ServiceId { get; set; }
         public string? Description { get; set; }
-        public string? ServiceStatus { get; set; }  
+        public string? ServiceStatus { get; set; }
         public string? MechanicStatus { get; set; }
         public DateTime? ServiceDate { get; set; }
         public long? MechanicId { get; set; } = null;

@@ -31,13 +31,17 @@
             android:name=".customer.activities.RegisterActivity"
             android:exported="false" />
         <activity
-            android:name=".ServicesAll.ServicesAllActivity"
-            android:exported="true">
+            android:name=".customer.activities.LoginActivity"
+            android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name=".ServicesAll.ServicesAllActivity"
+            android:exported="false">
 
             <meta-data
                 android:name="android.app.lib_name"

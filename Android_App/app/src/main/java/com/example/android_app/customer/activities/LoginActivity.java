@@ -67,7 +67,7 @@ public class LoginActivity extends AppCompatActivity implements Callbacks<Boolea
                    password.setError("Password is required");
                    error = true;
                }
-               else if (email.getText().toString().length() < 6) {
+               else if (password.getText().toString().length() < 6) {
                    password.setError("Password should have at least 6 characters");
                    error = true;
                }
