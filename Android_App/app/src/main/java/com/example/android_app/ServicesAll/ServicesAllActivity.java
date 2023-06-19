@@ -53,19 +53,19 @@ public class ServicesAllActivity extends AppCompatActivity {
 
         sharedPrefsManager = new SharedPrefsManager(getApplicationContext());
         btnHome.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), ServicesAllActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(intent);
+           @Override
+           public void onClick(View view) {
+               Intent intent = new Intent(getApplicationContext(), ServicesAllActivity.class);
+               intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+               startActivity(intent);
                 finish();
             }
         });
         btnServices.setOnClickListener(new View.OnClickListener() {
-            @Override
+           @Override
             public void onClick(View view) {
                 Intent i = new Intent(getApplicationContext(), ServicesAllActivity.class);
-                startActivity(i);
+               startActivity(i);
             }
         });
 
@@ -76,6 +76,7 @@ public class ServicesAllActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

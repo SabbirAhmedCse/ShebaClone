@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.android_app.MainActivity;
 import com.example.android_app.R;
@@ -21,7 +22,11 @@ import com.example.android_app.customer.utils.SharedPrefsManager;
 import com.example.android_app.databinding.ActivityRequestServiceBinding;
 
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Locale;
+
+import javax.persistence.Id;
 
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -32,16 +37,26 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RequestServiceActivity extends AppCompatActivity {
+    public static Intent getNavIntent(Context context) {
+        Intent intent = new Intent(context, RequestServiceActivity.class);
+
+        return intent;
+    }
+
     int serviceId;
-    String description;
-    String serviceDate;
+    EditText description;
+    Button serviceDate;
 
     private Button pickDateBtn;
     private TextView selectedDateTV;
     Button requestBtn;
 
+    private int Id;
+
     private SharedPrefsManager sharedPrefsManager;
     private RequestServiceApi requestServiceApi;
+
+    private DatePickerDialog.OnDateSetListener datePickerListener;
 
     EditText desccriptionOfProblem;
 
@@ -66,44 +81,32 @@ public class RequestServiceActivity extends AppCompatActivity {
         Intent intent = getIntent();
         String subCategory = intent.getStringExtra("subCategory");
         binding.subCategory.setText(subCategory);
-        int id = intent.getIntExtra("id", 0);
+        Id = intent.getIntExtra("Id", 0);
+
         desccriptionOfProblem = findViewById(R.id.description);
         pickDateBtn = findViewById(R.id.idBtnPickDate);
         selectedDateTV = findViewById(R.id.idTVSelectedDate);
+
         pickDateBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // on below line we are getting
-                // the instance of our calendar.
-                final Calendar c = Calendar.getInstance();
-
-                // on below line we are getting
-                // our day, month and year.
-                int year = c.get(Calendar.YEAR);
-                int month = c.get(Calendar.MONTH);
-                int day = c.get(Calendar.DAY_OF_MONTH);
-
-                // on below line we are creating a variable for date picker dialog.
-                DatePickerDialog datePickerDialog = new DatePickerDialog(
-                        // on below line we are passing context.
-                        RequestServiceActivity.this,
-                        new DatePickerDialog.OnDateSetListener() {
-                            @Override
-                            public void onDateSet(DatePicker view, int year,
-                                                  int monthOfYear, int dayOfMonth) {
-                                // on below line we are setting date to our text view.
-                                selectedDateTV.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year);
-
-                            }
-                        },
-                        // on below line we are passing year,
-                        // month and day for selected date in our date picker.
-                        year, month, day);
-                // at last we are calling show to
-                // display our date picker dialog.
-                datePickerDialog.show();
+                showDate();
             }
         });
+        datePickerListener = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker datePicker, int year, int month, int dayOfMonth) {
+                Calendar calendar = Calendar.getInstance();
+                calendar.set(Calendar.YEAR, year);
+                calendar.set(Calendar.MONTH, month);
+                calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+
+                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.US);
+                String formattedDate = dateFormat.format(calendar.getTime());
+
+                pickDateBtn.setText(formattedDate);
+            }
+        };
 
 
         requestBtn = findViewById(R.id.ReqService);
@@ -116,6 +119,16 @@ public class RequestServiceActivity extends AppCompatActivity {
         });
     }
 
+    private void showDate() {
+        Calendar calendar = Calendar.getInstance();
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH);
+        int dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
+
+        DatePickerDialog datePickerDialog = new DatePickerDialog(this, datePickerListener, year, month, dayOfMonth);
+        datePickerDialog.show();
+    }
+
     public void process() {
         sharedPrefsManager = new SharedPrefsManager(this);
 
@@ -126,21 +139,31 @@ public class RequestServiceActivity extends AppCompatActivity {
                 .build();
 
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://192.168.0.54/api/")
+
+                .baseUrl("http://192.168.0.54/api/ServiceRequest/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(client)
                 .build();
 
         requestServiceApi = retrofit.create(RequestServiceApi.class);
 
-        Call<RequestServiceModel> call = requestServiceApi.adddata(serviceId, description, serviceDate);
+        RequestServiceModel requestServiceModel = new RequestServiceModel();
+
+        requestServiceModel.setServiceId(Id);
+        requestServiceModel.setServiceDate(pickDateBtn.getText().toString());
+        requestServiceModel.setDescription(desccriptionOfProblem.getText().toString());
+
+        Call<RequestServiceModel> call = requestServiceApi.adddata(requestServiceModel);
         call.enqueue(new Callback<RequestServiceModel>() {
             @Override
             public void onResponse(Call<RequestServiceModel> call, Response<RequestServiceModel> response) {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        startActivity(ServicesAllActivity.getNavIntent(RequestServiceActivity.this));
+                        if (!response.isSuccessful()) {
+                            Toast.makeText(RequestServiceActivity.this, "Error: " + response.code(), Toast.LENGTH_SHORT).show();
+                        }
+                        startActivity(RequestServiceActivity.getNavIntent(RequestServiceActivity.this));
                     }
                 });
 
@@ -148,7 +171,7 @@ public class RequestServiceActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<RequestServiceModel> call, Throwable t) {
-//
+                startActivity(ServicesAllActivity.getNavIntent(RequestServiceActivity.this));
             }
         });
 
