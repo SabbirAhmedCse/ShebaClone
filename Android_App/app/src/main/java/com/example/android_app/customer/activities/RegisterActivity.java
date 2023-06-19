@@ -14,6 +14,7 @@ import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.example.android_app.R;
+import com.example.android_app.ServicesAll.ServicesAllActivity;
 import com.example.android_app.customer.api.Callbacks;
 import com.example.android_app.customer.api.CustomerApiManager;
 import com.example.android_app.customer.model.Customer;
@@ -187,7 +188,7 @@ public class RegisterActivity extends AppCompatActivity implements Callbacks<Boo
     @Override
     public void onSuccess(Boolean result) {
         if(result) {
-            Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
+            Intent intent = new Intent(getApplicationContext(), ServicesAllActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
         }

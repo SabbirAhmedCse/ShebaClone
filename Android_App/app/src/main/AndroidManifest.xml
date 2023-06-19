@@ -27,9 +27,6 @@
         <activity
             android:name=".ServiceDetail.ServiceDetailsActivity"
             android:exported="false" />
-        <activity
-            android:name=".customer.activities.HomeActivity"
-            android:exported="false" />
 
         <activity
             android:name=".customer.activities.CustomerProfileActivity"

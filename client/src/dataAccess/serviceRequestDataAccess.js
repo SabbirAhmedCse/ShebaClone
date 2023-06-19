@@ -7,7 +7,7 @@ const  serviceRequestGetById = async (id) => {
 
 const serviceRequestsGetAll = (pageNumber, pageSize) => {
   return commonDataAccess.get(
-    `${config.baseUrl}/ServiceRequest/requestedService?pageNumber=${pageNumber}&pageSize=${pageSize}`
+    `${config.baseUrl}/ServiceRequest/getall?pageNumber=${pageNumber}&pageSize=${pageSize}`
   );
 };
 

@@ -44,7 +44,7 @@ public class CustomerApiManager {
                 .build();
 
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://192.168.0.115/api/")
+                .baseUrl("http://192.168.0.54/api/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(client)
                 .build();
