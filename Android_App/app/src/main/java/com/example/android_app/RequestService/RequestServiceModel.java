@@ -1,14 +1,16 @@
 package com.example.android_app.RequestService;
 
+import androidx.annotation.Nullable;
+
 public class RequestServiceModel {
     int serviceId;
+    @Nullable
     String description;
+    @Nullable
     String serviceDate;
 
-    public RequestServiceModel(int serviceId, String description, String serviceDate) {
-        this.serviceId = serviceId;
-        this.description = description;
-        this.serviceDate = serviceDate;
+    public  RequestServiceModel (){
+
     }
 
     public int getServiceId() {
@@ -23,7 +25,7 @@ public class RequestServiceModel {
         return description;
     }
 
-    public void setDescription(String description) {
+    public void setDescription(@Nullable String description) {
         this.description = description;
     }
 
@@ -31,7 +33,7 @@ public class RequestServiceModel {
         return serviceDate;
     }
 
-    public void setServiceDate(String serviceDate) {
+    public void setServiceDate(@Nullable String serviceDate) {
         this.serviceDate = serviceDate;
     }
 }
