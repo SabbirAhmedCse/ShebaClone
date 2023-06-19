@@ -11,6 +11,6 @@ public interface RequestServiceApi {
     Call<RequestServiceModel> adddata(
             @Field("serviceId") int serviceId,
             @Field("description") String description,
-            @Field("date") String date
+            @Field("serviceDate") String date
     );
 }

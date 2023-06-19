@@ -34,7 +34,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class RequestServiceActivity extends AppCompatActivity {
     int serviceId;
     String description;
-    String date;
+    String serviceDate;
 
     private Button pickDateBtn;
     private TextView selectedDateTV;
@@ -133,14 +133,14 @@ public class RequestServiceActivity extends AppCompatActivity {
 
         requestServiceApi = retrofit.create(RequestServiceApi.class);
 
-        Call<RequestServiceModel> call = requestServiceApi.adddata(serviceId, description, date);
+        Call<RequestServiceModel> call = requestServiceApi.adddata(serviceId, description, serviceDate);
         call.enqueue(new Callback<RequestServiceModel>() {
             @Override
             public void onResponse(Call<RequestServiceModel> call, Response<RequestServiceModel> response) {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        startActivity(MainActivity.getNavIntent(RequestServiceActivity.this));
+                        startActivity(ServicesAllActivity.getNavIntent(RequestServiceActivity.this));
                     }
                 });
 
@@ -148,7 +148,7 @@ public class RequestServiceActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<RequestServiceModel> call, Throwable t) {
-
+//
             }
         });
 

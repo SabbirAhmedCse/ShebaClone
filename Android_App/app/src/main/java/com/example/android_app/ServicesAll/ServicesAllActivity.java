@@ -5,6 +5,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -12,6 +13,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.example.android_app.MainActivity;
 import com.example.android_app.R;
 import com.example.android_app.customer.activities.CustomerProfileActivity;
 import com.example.android_app.customer.activities.HomeActivity;
@@ -25,6 +27,11 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class ServicesAllActivity extends AppCompatActivity {
+    public static Intent getNavIntent(Context context) {
+        Intent intent = new Intent(context, ServicesAllActivity.class);
+
+        return intent;
+    }
     RecyclerView recviiew;
     Button btnServices;
     Button btnHome;

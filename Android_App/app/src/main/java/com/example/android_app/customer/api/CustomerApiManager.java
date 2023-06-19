@@ -44,13 +44,12 @@ public class CustomerApiManager {
                 .build();
 
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://192.168.0.54/api/")
+                .baseUrl("http://192.168.0.115/api/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(client)
                 .build();
 
         customerHolderAPI = retrofit.create(CustomerHolderAPI.class);
-
     }
 
     public void signUp(Customer customer, Callbacks<Boolean> callback) {
@@ -184,13 +183,5 @@ public class CustomerApiManager {
         });
     }
 
-            @Override
-            public void onFailure(@NonNull Call<Customer> call, @NonNull Throwable t) {
-                Log.d(TAG, "onFailure: failed -> ");
-                Log.d(TAG, t.getMessage());
-                t.printStackTrace();
-            }
-        });
-    }
 
 }
