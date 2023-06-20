@@ -30,9 +30,10 @@ class CustomTextField extends StatelessWidget {
         color: Colors.white,
         borderRadius: BorderRadius.all(Radius.circular(10)),
       ),
-      child: TextField(
+      child: TextFormField(
         controller: controller,
         keyboardType: keyboardType,
+        validator: validator,
         obscureText: obscureText,
           decoration: InputDecoration(
         border: const OutlineInputBorder(

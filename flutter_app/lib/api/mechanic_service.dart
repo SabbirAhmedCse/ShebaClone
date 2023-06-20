@@ -1,4 +1,6 @@
 import 'dart:async';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 import '../config/config.dart';
 import 'api_service.dart';
 
@@ -22,16 +24,6 @@ class MechanicService {
       throw Exception(e);
     }
   }
-static Future<dynamic> serviceCategory() async {
-    try {
-      String url = "${Config.baseApiUrl}/Service/category";
-      var response =await ApiService.get(url);
-      return response;
-    } catch (e) {
-      throw Exception(e);
-    }
-  }
-  
 
   static Future<dynamic> acceptService(data) async {
     try {

@@ -9,7 +9,6 @@ using Repository.Repository;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.EntityFrameworkCore;
 
 namespace API.Controllers
@@ -59,7 +58,7 @@ namespace API.Controllers
                     }
                     return BadRequest();
                 }
-                return Ok("Email allready exist!");
+                return BadRequest("Email allready exist!");
             }
             catch(Exception ex)
             {

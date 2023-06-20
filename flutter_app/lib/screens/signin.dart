@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/api/auth_service.dart';
-import 'package:flutter_app/models/signin_model.dart';
-import 'package:flutter_app/screens/assigned_service_list.dart';
 import 'package:flutter_app/screens/signup.dart';
 import 'package:get/get.dart';
 import '../widgets/custom_textfield.dart';
+import 'home.dart';
 
 class SignIn extends StatefulWidget {
   const SignIn({super.key});
@@ -12,7 +11,6 @@ class SignIn extends StatefulWidget {
   @override
   State<SignIn> createState() => _SignInState();
 }
-
 
 class _SignInState extends State<SignIn> {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
@@ -30,20 +28,6 @@ class _SignInState extends State<SignIn> {
           })
         });
   }
-
-  signIn() async {
-    var data = {"email": emailCrtl.text, "password": passCrtl.text};
-    dynamic authData =await AuthService.signin(data);
-
-    if(authData["type"]! == "mechanic"){
-      Get.to(()=> const AssignedService());
-    }
-    else{
-      Get.to(()=> const SignIn());
-    }
-    print(authData);
-  }
-
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
@@ -70,12 +54,29 @@ class _SignInState extends State<SignIn> {
                 labelText: "E-mail",
                 hintText: "Enter your Email",
                 prefixIcon: const Icon(Icons.email),
+                validator: (value){
+                   if(value!.isEmpty){
+                    return "Enter email.";
+                  }
+                  bool emailValid = RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(value);
+                  if(!emailValid){
+                    return "Enter valid email";
+                  }
+                },
               ),
               CustomTextField(
                   controller: passCrtl,
                   labelText: "Password",
                   hintText: "Enter your password",
                   obscureText: !isShowPassword,
+                  validator: (value){
+                   if(value!.isEmpty){
+                    return "Enter password.";
+                  }
+                  if(value.length <6){
+                    return "Password must have gater than 6 latter!";
+                  }
+                },
                   prefixIcon: const Icon(Icons.lock),
                   sufixIcon: IconButton(
                       onPressed: () {
@@ -83,25 +84,31 @@ class _SignInState extends State<SignIn> {
                       },
                       icon: isShowPassword
                           ? const Icon(Icons.visibility)
-                          : const Icon(Icons.visibility_off))),
-              Align(
-                alignment: Alignment.topRight,
-                child: InkWell(
-                  onTap: () {},
-                  child: const Text(
-                    "forget password?",
-                    style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                        fontStyle: FontStyle.italic,
-                        color: Colors.blue),
+                          : const Icon(Icons.visibility_off)
+                    )
+                  ),
+              Container(
+                margin: const EdgeInsets.fromLTRB(30, 30, 30, 10),
+                child: Align(
+                  alignment: Alignment.topRight,
+                  child: InkWell(
+                    onTap: () {},
+                    child: const Text(
+                      "forget password?",
+                      style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                          fontStyle: FontStyle.italic,
+                          color: Colors.blue),
+                    ),
                   ),
                 ),
               ),
               ElevatedButton(
                   onPressed: () {
-                    signIn();
-                    
+                    if(formKey.currentState!.validate()){
+                        signIn();
+                    }
                   },
                   child: const Text(
                     "Signin",
@@ -143,5 +150,31 @@ class _SignInState extends State<SignIn> {
         ),
       ),
     );
+  }
+  signIn() async {
+    var data = {"email": emailCrtl.text, "password": passCrtl.text};
+    print(data);
+    dynamic authData = await AuthService.signin(data);
+    print(authData);
+    if (authData == "mechanic") {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(const SnackBar(content: Text("Signin Successfully")));
+     return Get.to(() => const Home());
+    }
+    else if (authData == "admin") {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text("You are not valid user")));
+     return Get.to(() => const Home());
+    } 
+    else if (authData == "customer") {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text("You are not valid user")));
+     return Get.to(() => const Home());
+    }
+    else {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text(authData)));
+     return Get.to(() => const SignIn());
+    }
   }
 }
