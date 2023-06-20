@@ -27,4 +27,6 @@ public interface CustomerHolderAPI {
 
     @PUT("User/{id}")
     Call<Customer> updateCustomer(@Path("id") Integer id, @Body Customer customer);
+
+
 }

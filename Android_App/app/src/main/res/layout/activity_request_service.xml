@@ -5,6 +5,7 @@
     android:paddingLeft="50dp"
     android:orientation="vertical" android:id="@+id/linearlayout" >
    <TextView
+       android:id="@+id/subCategory"
        android:padding="10dp"
        android:layout_width="wrap_content"
        android:layout_height="wrap_content"
@@ -13,7 +14,7 @@
 
    </TextView>
     <EditText
-        android:id="@+id/txtPwd"
+        android:id="@+id/description"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
@@ -21,34 +22,34 @@
 
         android:hint="Description Of problem"
         android:inputType="text" />
-    <EditText
-        android:id="@+id/city"
-        android:layout_width="wrap_content"
+    <TextView
+        android:id="@+id/idTVSelectedDate"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:textSize="20dp"
+        android:layout_above="@id/idBtnPickDate"
+        android:layout_centerInParent="true"
+        android:layout_margin="20dp"
+        android:gravity="center"
+        android:padding="10dp"
+        android:text="Date"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:textStyle="bold" />
 
-        android:hint="City"
-        android:inputType="text" />
-    <EditText
-        android:id="@+id/area"
-        android:layout_width="wrap_content"
+    <!--on below line we are creating
+        a button for date picker-->
+    <Button
+        android:id="@+id/idBtnPickDate"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:textSize="20dp"
+        android:layout_centerInParent="true"
+        android:layout_margin="20dp"
+        android:text="Pick Date"
+        android:textAllCaps="false" />
 
-        android:hint="Area"
-        android:inputType="text" />
-    <EditText
-        android:id="@+id/address"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:textSize="20dp"
 
-        android:hint="Address"
-        android:inputType="text"
-       />
+
     <Button
         android:id="@+id/ReqService"
         android:layout_width="wrap_content"

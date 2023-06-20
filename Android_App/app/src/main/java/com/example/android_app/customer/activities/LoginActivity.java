@@ -11,6 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.android_app.R;
+import com.example.android_app.ServicesAll.ServicesAllActivity;
 import com.example.android_app.customer.api.Callbacks;
 import com.example.android_app.customer.api.CustomerApiManager;
 import com.example.android_app.customer.model.UserAuth;
@@ -85,7 +86,7 @@ public class LoginActivity extends AppCompatActivity implements Callbacks<Boolea
     public void onSuccess(Boolean result) {
         if(result != null)
         {
-               Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
+               Intent intent = new Intent(getApplicationContext(), ServicesAllActivity.class);
                startActivity(intent);
         }
         else
