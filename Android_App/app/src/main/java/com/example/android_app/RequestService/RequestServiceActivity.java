@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import com.example.android_app.R;
 import com.example.android_app.ServicesAll.ServicesAllActivity;
+import com.example.android_app.customer.activities.RequestHistoryActivity;
 import com.example.android_app.customer.network.AuthInterceptor;
 import com.example.android_app.customer.utils.SharedPrefsManager;
 import com.example.android_app.databinding.ActivityRequestServiceBinding;
@@ -164,10 +165,9 @@ public class RequestServiceActivity extends AppCompatActivity {
                 });
 
             }
-
             @Override
             public void onFailure(Call<RequestServiceModel> call, Throwable t) {
-                startActivity(ServicesAllActivity.getNavIntent(RequestServiceActivity.this));
+                startActivity(RequestHistoryActivity.getNavIntent(RequestServiceActivity.this));
             }
         });
 

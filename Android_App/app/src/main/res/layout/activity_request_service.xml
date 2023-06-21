@@ -13,18 +13,22 @@
        android:textSize="20dp">
 
    </TextView>
+
     <EditText
         android:id="@+id/description"
-        android:layout_width="match_parent"
+        android:layout_width="332dp"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:textSize="20dp"
-
         android:hint="Description Of problem"
-        android:inputType="text" />
+
+        android:inputType="text"
+        android:textSize="20dp" />
+
+    <!--on below line we are creating
+        a button for date picker-->
     <TextView
         android:id="@+id/idTVSelectedDate"
-        android:layout_width="match_parent"
+        android:layout_width="307dp"
         android:layout_height="wrap_content"
         android:layout_above="@id/idBtnPickDate"
         android:layout_centerInParent="true"
@@ -37,8 +41,6 @@
         android:textSize="20sp"
         android:textStyle="bold" />
 
-    <!--on below line we are creating
-        a button for date picker-->
     <Button
         android:id="@+id/idBtnPickDate"
         android:layout_width="match_parent"
@@ -49,12 +51,12 @@
         android:textAllCaps="false" />
 
 
-
     <Button
         android:id="@+id/ReqService"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="submit "
+        android:gravity="center"
         android:textSize="16sp"
         android:textStyle="normal|bold" />
 
