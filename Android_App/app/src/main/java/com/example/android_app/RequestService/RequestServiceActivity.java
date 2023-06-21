@@ -13,10 +13,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.android_app.MainActivity;
 import com.example.android_app.R;
 import com.example.android_app.ServicesAll.ServicesAllActivity;
-import com.example.android_app.customer.api.CustomerHolderAPI;
 import com.example.android_app.customer.network.AuthInterceptor;
 import com.example.android_app.customer.utils.SharedPrefsManager;
 import com.example.android_app.databinding.ActivityRequestServiceBinding;
@@ -25,8 +23,6 @@ import com.example.android_app.databinding.ActivityRequestServiceBinding;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
-
-import javax.persistence.Id;
 
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
