@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
@@ -37,6 +38,8 @@ public class CustomerProfileActivity extends AppCompatActivity implements Callba
     private EditText address;
     private Button btnSave;
 
+    private ProgressBar progressBar;
+
     private DatePickerDialog.OnDateSetListener datePickerListener;
 
     String email,password,createAt;
@@ -46,6 +49,9 @@ public class CustomerProfileActivity extends AppCompatActivity implements Callba
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_customer_profile);
+
+        progressBar = findViewById(R.id.progressBar);
+        progressBar.setVisibility(View.GONE);
 
         name = (EditText) findViewById(R.id.name);
         mobileNumber = (EditText) findViewById(R.id.mobilenumber);
@@ -111,7 +117,7 @@ public class CustomerProfileActivity extends AppCompatActivity implements Callba
                 }
 
                 if(!error){
-
+                    progressBar.setVisibility(View.VISIBLE);
                     Customer updatedCustomer = new Customer();
                     updatedCustomer.setType("customer");
                     updatedCustomer.setEmail(email);
@@ -128,6 +134,7 @@ public class CustomerProfileActivity extends AppCompatActivity implements Callba
                     customerApiManager.updateCustomer(updatedCustomer, new Callbacks<Customer>() {
                         @Override
                         public void onSuccess(Customer result) {
+                            progressBar.setVisibility(View.GONE);
                             if(result != null)
                             {
                                 Toast.makeText(getApplicationContext(), "Updated Successfully", Toast.LENGTH_SHORT).show();
@@ -140,6 +147,7 @@ public class CustomerProfileActivity extends AppCompatActivity implements Callba
 
                         @Override
                         public void onFailure(Exception e) {
+                            progressBar.setVisibility(View.GONE);
                             Toast.makeText(getApplicationContext(), "Incorrect Information", Toast.LENGTH_SHORT).show();
                         }
                     });
@@ -174,6 +182,7 @@ public class CustomerProfileActivity extends AppCompatActivity implements Callba
     }
     @Override
     public void onSuccess(Customer result) {
+        progressBar.setVisibility(View.GONE);
         if(result != null) {
             email = result.getEmail().toString();
             password = result.getPassword().toString();
@@ -227,6 +236,7 @@ public class CustomerProfileActivity extends AppCompatActivity implements Callba
 
     @Override
     public void onFailure(Exception e) {
+        progressBar.setVisibility(View.GONE);
         Toast.makeText(getApplicationContext(), "Incorrect Information", Toast.LENGTH_SHORT).show();
     }
 

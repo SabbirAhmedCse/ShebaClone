@@ -2,7 +2,6 @@ package com.example.android_app.customer.model;
 
 import org.jetbrains.annotations.Nullable;
 import javax.persistence.*;
-import java.util.Date;
 
 public class Customer {
     @Transient

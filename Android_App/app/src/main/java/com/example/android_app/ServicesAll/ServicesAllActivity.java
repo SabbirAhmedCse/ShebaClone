@@ -17,6 +17,7 @@ import android.widget.Toast;
 import com.example.android_app.R;
 import com.example.android_app.customer.activities.CustomerProfileActivity;
 import com.example.android_app.customer.activities.LoginActivity;
+import com.example.android_app.customer.activities.RequestHistoryActivity;
 import com.example.android_app.customer.utils.SharedPrefsManager;
 
 import java.util.List;
@@ -77,7 +78,6 @@ public class ServicesAllActivity extends AppCompatActivity {
         return true;
     }
 
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
@@ -94,7 +94,19 @@ public class ServicesAllActivity extends AppCompatActivity {
             }
             return true;
 
-        } else if (id == R.id.action_SignOut) {
+        } else if (id == R.id.action_RequestedServices) {
+            if(sharedPrefsManager.isLoggedIn())
+            {
+                Intent i = new Intent(getApplicationContext(), RequestHistoryActivity.class);
+                startActivity(i);
+            }
+            else {
+                Intent i = new Intent(getApplicationContext(), LoginActivity.class);
+                startActivity(i);
+            }
+            return true;
+        }
+        else if (id == R.id.action_SignOut) {
             sharedPrefsManager.clearJwtToken();
             Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

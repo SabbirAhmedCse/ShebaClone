@@ -2,7 +2,10 @@ package com.example.android_app.customer.api;
 
 import com.example.android_app.customer.model.AuthData;
 import com.example.android_app.customer.model.Customer;
+import com.example.android_app.customer.model.ServiceHistory;
 import com.example.android_app.customer.model.UserAuth;
+
+import java.util.List;
 
 import okhttp3.RequestBody;
 import retrofit2.Call;
@@ -27,6 +30,9 @@ public interface CustomerHolderAPI {
 
     @PUT("User/{id}")
     Call<Customer> updateCustomer(@Path("id") Integer id, @Body Customer customer);
+
+    @GET("ServiceRequest/getall")
+    Call<List<ServiceHistory>> getServiceHistory(@Query("pageNumber") int pageNumber, @Query("pageSize") int pageSize);
 
 
 }

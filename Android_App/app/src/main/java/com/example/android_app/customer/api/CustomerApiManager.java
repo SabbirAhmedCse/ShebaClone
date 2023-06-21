@@ -2,17 +2,22 @@ package com.example.android_app.customer.api;
 
 import androidx.annotation.NonNull;
 
+import android.app.Service;
 import android.content.Context;
 import android.util.Log;
 import android.widget.Toast;
 
 import com.example.android_app.customer.model.AuthData;
 import com.example.android_app.customer.model.Customer;
+import com.example.android_app.customer.model.ServiceHistory;
 import com.example.android_app.customer.model.UserAuth;
 import com.example.android_app.customer.network.AuthInterceptor;
 import com.example.android_app.customer.utils.SharedPrefsManager;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
@@ -183,5 +188,35 @@ public class CustomerApiManager {
         });
     }
 
+    public void RequestedServices(Callbacks<List<ServiceHistory>> callback) {
+        Call<List<ServiceHistory>> call = customerHolderAPI.getServiceHistory(1, 100);
+        call.enqueue(new Callback<List<ServiceHistory>>() {
+            @Override
+            public void onResponse(@NonNull Call<List<ServiceHistory>> call, @NonNull Response<List<ServiceHistory>> response) {
+                try {
+                    if (response.isSuccessful()) {
+                        List<ServiceHistory> serviceList = new ArrayList<>();
+                        serviceList = response.body();
+                        if (serviceList != null) {
+                            Log.d(TAG, "onResponse: " + serviceList);
+                            callback.onSuccess(serviceList);
+                        } else {
+                            callback.onSuccess(new ArrayList<>());
+                            Log.d(TAG, "onResponse: Empty service list");
+                        }
+                    } else {
+                        Log.d(TAG, "onResponse: response code = " + response.code());
+                    }
+                } catch (Exception ex) {
+                    callback.onFailure(ex);
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<List<ServiceHistory>> call, @NonNull Throwable t) {
+                Log.d(TAG, t.getMessage());
+            }
+        });
+    }
 
 }
