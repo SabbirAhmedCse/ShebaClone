@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,11 +26,14 @@ public class LoginActivity extends AppCompatActivity implements Callbacks<Boolea
     Button btnSignIn;
     TextView register;
 
+    ProgressBar progressBar;
     SharedPrefsManager sharedPrefsManager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        progressBar = findViewById(R.id.progressBar);
+        progressBar.setVisibility(View.GONE);
 
         sharedPrefsManager = new SharedPrefsManager(getApplicationContext());
 
@@ -52,6 +56,7 @@ public class LoginActivity extends AppCompatActivity implements Callbacks<Boolea
         btnSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                boolean error = false;
                if(email.getText().toString().isEmpty())
                {
@@ -74,6 +79,7 @@ public class LoginActivity extends AppCompatActivity implements Callbacks<Boolea
                }
 
                if(!error){
+                   progressBar.setVisibility(View.VISIBLE);
                    userAuth.setEmail(email.getText().toString());
                    userAuth.setPassword(password.getText().toString());
                    customerApiManager.signIn(userAuth, LoginActivity.this);
@@ -84,6 +90,7 @@ public class LoginActivity extends AppCompatActivity implements Callbacks<Boolea
 
     @Override
     public void onSuccess(Boolean result) {
+        progressBar.setVisibility(View.GONE);
         if(result != null)
         {
                Intent intent = new Intent(getApplicationContext(), ServicesAllActivity.class);
@@ -97,6 +104,7 @@ public class LoginActivity extends AppCompatActivity implements Callbacks<Boolea
 
     @Override
     public void onFailure(Exception e) {
+        progressBar.setVisibility(View.GONE);
         Toast.makeText(getApplicationContext(), "Email or Password is not correct", Toast.LENGTH_SHORT).show();
     }
 

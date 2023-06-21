@@ -8,8 +8,14 @@
         app:showAsAction="never" />
 
     <item
-        android:id="@+id/action_SignOut"
+        android:id="@+id/action_RequestedServices"
         android:orderInCategory="2"
-        android:title="SignOut"
+        android:title="ServicesHistory"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_SignOut"
+        android:orderInCategory="3"
+        android:title="Signout"
         app:showAsAction="never" />
 </menu>

@@ -16,7 +16,10 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".RequestServiceList.RequestServiceListActivity"
+            android:name=".customer.activities.RequestedServiceDetailsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".customer.activities.RequestHistoryActivity"
             android:exported="false" />
         <activity
             android:name=".customer.activities.LoginActivity"
@@ -29,9 +32,6 @@
         </activity>
         <activity
             android:name=".ServiceDetail.ServiceDetailsActivity"
-            android:exported="false" />
-        <activity
-            android:name=".customer.activities.HomeActivity"
             android:exported="false" />
         <activity
             android:name=".customer.activities.CustomerProfileActivity"
