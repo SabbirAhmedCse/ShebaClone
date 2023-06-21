@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import com.example.android_app.R;
 import com.example.android_app.ServicesAll.ServicesAllActivity;
+import com.example.android_app.customer.activities.RequestHistoryActivity;
 import com.example.android_app.customer.network.AuthInterceptor;
 import com.example.android_app.customer.utils.SharedPrefsManager;
 import com.example.android_app.databinding.ActivityRequestServiceBinding;
@@ -42,6 +43,7 @@ public class RequestServiceActivity extends AppCompatActivity {
     int serviceId;
     EditText description;
     Button serviceDate;
+    TextView dateText;
 
     private Button pickDateBtn;
     private TextView selectedDateTV;
@@ -82,6 +84,7 @@ public class RequestServiceActivity extends AppCompatActivity {
         desccriptionOfProblem = findViewById(R.id.description);
         pickDateBtn = findViewById(R.id.idBtnPickDate);
         selectedDateTV = findViewById(R.id.idTVSelectedDate);
+        dateText=findViewById(R.id.idTVSelectedDate);
 
         pickDateBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -100,7 +103,7 @@ public class RequestServiceActivity extends AppCompatActivity {
                 SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.US);
                 String formattedDate = dateFormat.format(calendar.getTime());
 
-                pickDateBtn.setText(formattedDate);
+                dateText.setText(formattedDate);
             }
         };
 
@@ -146,7 +149,7 @@ public class RequestServiceActivity extends AppCompatActivity {
         RequestServiceModel requestServiceModel = new RequestServiceModel();
 
         requestServiceModel.setServiceId(Id);
-        requestServiceModel.setServiceDate(pickDateBtn.getText().toString());
+        requestServiceModel.setServiceDate(dateText.getText().toString());
         requestServiceModel.setDescription(desccriptionOfProblem.getText().toString());
 
         Call<RequestServiceModel> call = requestServiceApi.adddata(requestServiceModel);
@@ -167,7 +170,7 @@ public class RequestServiceActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<RequestServiceModel> call, Throwable t) {
-                startActivity(ServicesAllActivity.getNavIntent(RequestServiceActivity.this));
+                startActivity(RequestHistoryActivity.getNavIntent(RequestServiceActivity.this));
             }
         });
 
