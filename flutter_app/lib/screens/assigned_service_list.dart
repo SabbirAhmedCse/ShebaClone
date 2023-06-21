@@ -5,7 +5,6 @@ import 'package:flutter_app/screens/signin.dart';
 import 'package:get/get.dart';
 
 import '../api/mechanic_service.dart';
-import '../models/service_request.dart';
 
 class AssignedService extends StatefulWidget {
   const  AssignedService({super.key});
@@ -32,7 +31,6 @@ class _AssignedServiceState extends State<AssignedService> {
       setState(() {
         serviceList = list ;
       });
-      print(serviceList);
   }
  @override
   Widget build(BuildContext context) {

@@ -6,13 +6,22 @@ import 'assigned_service_list.dart';
 import 'profile.dart';
 import 'signin.dart';
 
-class Home extends StatelessWidget {
+class Home extends StatefulWidget {
   const Home({super.key});
-  logout()async{
-  String response = await AuthService.logout();
-  SnackBar(content: Text(response),);
-  Get.to(()=> const SignIn());
+
+  @override
+  State<Home> createState() => _HomeState();
 }
+
+class _HomeState extends State<Home> {
+  String? userName;
+  String? userEmail;
+
+  @override
+  void initState() {
+    super.initState();
+    getAuthData();    
+  }
   @override
   Widget build(BuildContext context) {
     return  SafeArea(
@@ -27,15 +36,15 @@ class Home extends StatelessWidget {
           drawer: Drawer(
             child: ListView(
               children:  [
-                  const  DrawerHeader(
-                    padding: EdgeInsets.all(0),
+                    DrawerHeader(
+                    padding:const EdgeInsets.all(0),
                   child: UserAccountsDrawerHeader(
-                    decoration: BoxDecoration(color: Colors.black),
-                    currentAccountPicture: Center(
-                      child: Icon(Icons.abc),
+                    decoration:const BoxDecoration(color: Colors.black),
+                    currentAccountPicture: const Center(
+                      child:  Icon(Icons.abc),
                     ),
-                    accountName: Text("Sabbir Ahmed"), 
-                    accountEmail:Text( "sabbir.cse.18@gmail.com")
+                    accountName: Text("$userName"), 
+                    accountEmail:Text( "$userEmail")
                     ),
                 ),
                 ListTile(
@@ -69,5 +78,18 @@ class Home extends StatelessWidget {
          
         )
       );
+  }
+  getAuthData()async{
+    var authData = await AuthService.getAuthData();
+    setState(() {
+      userName= authData["name"];
+      userEmail= authData["email"];
+    });
+
+  }
+    logout()async{
+    String response = await AuthService.logout();
+    SnackBar(content: Text(response),);
+    Get.to(()=> const SignIn());
   }
 }

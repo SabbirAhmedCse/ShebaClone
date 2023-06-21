@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/screens/signin.dart';
+import 'package:flutter_app/screens/home.dart';
 import 'package:flutter_app/screens/splash.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 
