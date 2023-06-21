@@ -62,8 +62,10 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
             public void onClick(View v) {
                 Context context = v.getContext();
                 Intent i = new Intent(context, RequestedServiceDetailsActivity.class);
+                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 i.putExtra("position", position);
                 context.startActivity(i);
+
             }
         });
     }
