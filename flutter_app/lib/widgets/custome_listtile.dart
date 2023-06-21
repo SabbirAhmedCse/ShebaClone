@@ -2,29 +2,20 @@ import 'package:flutter/material.dart';
 
 class CustomListtile extends StatelessWidget {
   final String? title;
-  final String? subtitle;
+  final String? value;
 
   const CustomListtile(
       {Key? key,
       this.title,
-      this.subtitle})
+      this.value})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.fromLTRB(30, 30, 30, 10),
-      decoration: const BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.all(Radius.circular(10)),
-      ),
-      child: ListTile(
+    return ListTile(
         title: Text(
-          title!,
-          
+          "$title : $value",
         ),
-        subtitle: Text(subtitle!),
-      ),
-    );
+      );
   }
 }

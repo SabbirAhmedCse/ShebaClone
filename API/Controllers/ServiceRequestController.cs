@@ -20,6 +20,7 @@ namespace API.Controllers
         private readonly IServiceRepository _service;
         private readonly RejectReason _rejectReason;
         private readonly ServiceRequestDetails _serviceRequestDetails;
+        string? massage;
         public ServiceRequestController(IServiceRequestRepository serviceRequest, IUserRepository user, IServiceCategoryRepository serviceCategory, IServiceRepository service, ServiceRequestDetails serviceRequestDetails, RejectReason rejectReason)
         {
             _serviceRequest = serviceRequest;
@@ -118,7 +119,8 @@ namespace API.Controllers
                     var response = _serviceRequest.CreateService(serviceRequest);
                     if (response)
                     {
-                        return Ok("Successfully create service request!");
+                        massage = "Successfully create service request!";
+                        return Ok(massage);
                     }
                     return BadRequest();
                 }
@@ -151,7 +153,8 @@ namespace API.Controllers
                         bool acceptResult = _serviceRequest.Update(serviceRequestDetails);
                         if (acceptResult)
                         {
-                            return Ok("Successfully approved service.");
+                            massage = "Successfully approved service.";
+                            return Ok(massage);
                         }
                         return BadRequest();
                     }
@@ -164,7 +167,8 @@ namespace API.Controllers
                         bool acceptResult = _serviceRequest.Update(serviceRequestDetails);
                         if (acceptResult)
                         {
-                            return Ok("Successfully reject service.");
+                            massage = "Successfully approved service.";
+                            return Ok(massage);
                         }
                         return BadRequest();
                     }
@@ -214,7 +218,8 @@ namespace API.Controllers
                     var acceptResult = _serviceRequest.Update(serviceRequestDetails);
                     if (acceptResult)
                     {
-                        return Ok("Successfully added mechanic.");
+                        massage = "Successfully added mechanic.";
+                        return Ok(massage);
                     }
                     return BadRequest();
                 }
@@ -266,7 +271,8 @@ namespace API.Controllers
                     bool serviceRejectDetails = _serviceRequest.Create(_rejectReason);
                     if (serviceRejectDetails)
                     {
-                        return Ok("Successfully reject service.");
+                        massage = "Successfully reject service.";
+                        return Ok(massage);
                     }
                     return BadRequest();
                 }

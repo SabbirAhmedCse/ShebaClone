@@ -33,15 +33,15 @@ class _ServiceRejectState extends State<ServiceReject> {
             ),
             CustomListtile(
               title: "Category: ",
-              subtitle: "",
+              value: "",
             ),
             CustomListtile(
               title: "Sub-category: ",
-              subtitle: "",
+              value: "",
             ),
             CustomListtile(
               title: "Service Date: ",
-              subtitle: "",
+              value: "",
             ),
             Row(
               children: [
