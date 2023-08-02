@@ -9,11 +9,13 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.example.android_app.R;
+import com.example.android_app.ServicesAll.ServicesAllActivity;
 import com.example.android_app.customer.api.Callbacks;
 import com.example.android_app.customer.api.CustomerApiManager;
 import com.example.android_app.customer.model.Customer;
@@ -39,12 +41,16 @@ public class RegisterActivity extends AppCompatActivity implements Callbacks<Boo
     private EditText address;
     private Button btnSignUp;
 
+    private ProgressBar progressBar;
     private DatePickerDialog.OnDateSetListener datePickerListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+
+        progressBar = findViewById(R.id.progressBar);
+        progressBar.setVisibility(View.GONE);
 
         name = (EditText) findViewById(R.id.name);
         email = (EditText) findViewById(R.id.email);
@@ -152,6 +158,7 @@ public class RegisterActivity extends AppCompatActivity implements Callbacks<Boo
             error = true;
         }
         if (!error) {
+            progressBar.setVisibility(View.VISIBLE);
             String cityValue = city.getText().toString();
             String areaValue = area.getText().toString();
             String addressValue = address.getText().toString();
@@ -186,8 +193,9 @@ public class RegisterActivity extends AppCompatActivity implements Callbacks<Boo
 
     @Override
     public void onSuccess(Boolean result) {
+        progressBar.setVisibility(View.GONE);
         if(result) {
-            Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
+            Intent intent = new Intent(getApplicationContext(), ServicesAllActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
         }
@@ -199,6 +207,7 @@ public class RegisterActivity extends AppCompatActivity implements Callbacks<Boo
 
     @Override
     public void onFailure(Exception e) {
+        progressBar.setVisibility(View.GONE);
         Toast.makeText(getApplicationContext(), "Information is Incorrect", Toast.LENGTH_SHORT).show();
     }
 

@@ -1,58 +1,114 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
-    <androidx.cardview.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
+    android:orientation="vertical"
+    >
 
-        >
+
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:background="#eae9f0">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Service Details "
+                android:textSize="20dp">
+
+
+            </TextView>
+
             <ImageView
-                android:layout_width="200dp"
-                android:layout_height="200dp"
-                android:src="@color/design_default_color_secondary"
                 android:id="@+id/imgDetails"
-                />
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:src="@color/design_default_color_secondary" />
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
                 android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
                 android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/t1"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Name"
-                    android:textSize="35sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:textSize="30sp"
-                    android:text="Description"
-                    android:id="@+id/t2"/>
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:textSize="30sp"
-                    android:text="Price"
-                    android:id="@+id/t3"/>
-                <Button
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+
+                        android:text="          Name : "
+                        android:textSize="16sp"
+
+                        />
+
+                    <TextView
+                        android:id="@+id/t1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+
+                        android:text="Name"
+                        android:textSize="16sp"
+
+                        />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:text="Description :"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/t2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:text="Description"
+                        android:textSize="16sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:text="            Price :"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/t3"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:text="Price"
+                        android:textSize="16sp" />
+                </LinearLayout>
+
+                <Button
                     android:id="@+id/reuestbutton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:drawablePadding="4dp"
                     android:drawableTint="#ff0000"
                     android:text="Request Service"
@@ -62,5 +118,5 @@
             </LinearLayout>
         </LinearLayout>
 
-    </androidx.cardview.widget.CardView>
+
 </androidx.appcompat.widget.LinearLayoutCompat>
