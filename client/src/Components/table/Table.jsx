@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import {FaEye, FaTrash, FaCheck} from "react-icons/fa";
 import swal from "sweetalert";
 import serviceRequestDataAccess from "../../dataAccess/serviceRequestDataAccess";
 import Button from "../button/Button";
@@ -48,8 +49,8 @@ const Table = () => {
     }
   }
   return (
-    <div>
-      <table className="table table-hover">
+    <div className="table-responsive">
+      <table className="table table-hover" >
         <thead>
           <tr>
             <th>Id</th>
@@ -81,15 +82,15 @@ const Table = () => {
                 <td>{val.address}</td>
                 <td>{val.mechanicStatus}</td>
                 <td>
-                  {val.serviceStatus != null ?'': <Button className={"btn btn-success"} name={"Accept"} method={()=>serviceRequestAcceptHandeler(val.id)} />}
+                  {val.serviceStatus != null ?'': <Button className={"btn"} name={<FaCheck color={"green"} fontSize="20px"/>} method={()=>serviceRequestAcceptHandeler(val.id)} />}
                   <Link to={`/addmechanic/${val.id}`}>
                     <Button
-                      className={"btn btn-primary"}
-                      name={"View"}
+                      className={"btn"}
+                      name={<FaEye color="blue" fontSize="20px"/>}
                     />
                   </Link>
                   <Link to={`/reject/${val.id}`}>
-                    <Button className={"btn btn-danger"} name={"Reject"} />
+                    <Button className={"btn"} name={<FaTrash color="red" fontSize="20px"/>} />
                   </Link>
                 </td>
               </tr>
